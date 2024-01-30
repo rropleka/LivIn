@@ -4,26 +4,60 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="page">
+    <header>
+      <span class="name">LivIn'</span>
+      <input type="text">
+      <span class="icon"></span>
+    </header>
+  </div>
 </template>
 
 <style scoped>
+
+.icon {
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+
+.name {
+  font-size: 30px;
+  font-family: serif;
+}
+
+input {
+  height: 30px;
+  width: 33%;
+  border-radius: 5px;
+  border: solid #FFFFFFF0;
+  padding-inline: 10px;
+  font-size: 15px;
+}
+
 header {
   line-height: 1.5;
-  max-height: 100vh;
+  background-color: #e8871e;
+  color: white;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 20px;
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  //border: 5px solid blue;
 }
 
 .logo {
@@ -58,9 +92,7 @@ nav a:first-of-type {
 
 @media (min-width: 1024px) {
   header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+
   }
 
   .logo {
