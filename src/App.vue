@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 import router from './router/index'
 import {createApp} from 'vue';
 
-import LoginPage from './views/LoginPage.vue'
+import Login from './views/Login.vue'
 
 const app = createApp({});
 app.use(router); //trust me bro
