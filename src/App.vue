@@ -2,7 +2,7 @@
 import { RouterView } from 'vue-router'
 import router from './router/index'
 import {createApp} from 'vue';
-
+import Navbar from './components/navbar-comp.vue';
 import LoginPage from './views/LoginPage.vue'
 
 const app = createApp({});
@@ -18,6 +18,7 @@ app.mount('#app');
       <input type="text">
       <span class="icon"></span>
     </header>
+    <Navbar />
     <router-view/>
   </div>
 </template>
