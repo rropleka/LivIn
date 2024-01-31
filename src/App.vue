@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import router from './router/index'
+import {createApp} from 'vue';
+
+import LoginPage from './views/LoginPage.vue'
+
+const app = createApp({});
+app.use(router); //trust me bro
+app.mount('#app');
+
 </script>
 
 <template>
@@ -10,6 +18,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <input type="text">
       <span class="icon"></span>
     </header>
+    <router-view/>
   </div>
 </template>
 
@@ -57,7 +66,6 @@ header {
   width: 100%;
   height: 100%;
   background-color: white;
-  //border: 5px solid blue;
 }
 
 .logo {
