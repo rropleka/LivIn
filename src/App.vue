@@ -13,11 +13,6 @@ app.mount('#app');
 
 <template>
   <div class="page">
-    <header>
-      <span class="name">LivIn'</span>
-      <input type="text">
-      <span class="icon"></span>
-    </header>
     <Navbar />
     <router-view/>
   </div>

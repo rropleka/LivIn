@@ -8,7 +8,12 @@ export default {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    extend: {},
+    
+    extend: {
+      colors: {
+        orange: '#e8871b'
+      },
+    },
   },
   plugins: [
     flowbitePlugin
