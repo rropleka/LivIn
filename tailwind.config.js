@@ -11,7 +11,12 @@ export default {
     
     extend: {
       colors: {
-        orange: '#e8871b'
+        orange: '#e8871b',
+        'light-orange': '#edb458',
+        'dark-orange': '#a3320b',
+      },
+      fontFamily: {
+        'default-font': ['Poppins'],
       },
     },
   },
