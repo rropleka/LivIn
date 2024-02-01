@@ -4,7 +4,7 @@ import router from './router/index'
 import {createApp} from 'vue';
 import { onBeforeMount } from 'vue';
 import firebase from 'firebase/compat/app';
-
+import Navbar from './components/navbar-comp.vue';
 import Login from './views/Login.vue'
 
 const app = createApp({});
@@ -17,11 +17,7 @@ app.mount('#app');
 
 <template>
   <div class="page">
-    <header>
-      <span class="name">LivIn'</span>
-      <input type="text">
-      <span class="icon"></span>
-    </header>
+    <Navbar />
     <router-view/>
   </div>
 </template>
