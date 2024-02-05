@@ -10,6 +10,7 @@ import router from './router'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,11 +27,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase and Authentication
-const firebaseapp = initializeApp(firebaseConfig);
+const firebaseapp = initializeApp(firebaseConfig)
+const db = getFirestore(firebaseapp)
 const auth = getAuth(firebaseapp)
 
 
 const app = createApp(App)
+
+// Make db available globally
+// app.config.globalProperties.$db = db
 
 app.use(createPinia())
 app.use(router)
