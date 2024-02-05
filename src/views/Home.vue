@@ -6,8 +6,6 @@ import { RouterLink } from 'vue-router';
 <template>
   <main>
     
-    <router-link to="/login">fsgrd</router-link>
-
-    
+    <router-link to="/login">bbbbb</router-link>
   </main>
 </template>
