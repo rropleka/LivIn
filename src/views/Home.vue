@@ -7,5 +7,6 @@ import { RouterLink } from 'vue-router';
   <main>
     
     <router-link to="/login">bbbbb</router-link>
+    <router-link to="/profile">aaaaa</router-link>
   </main>
 </template>
