@@ -6,6 +6,7 @@
           <input type="number" placeholder="Stars" v-model="form.stars"><br/>
           <h2>Enter a review</h2>
           <input type="text" placeholder="Review" v-model="form.text">
+          <br>
           <button v-on:click="sub" type="submit">Submit review</button>
       </div>
   </form>
@@ -25,19 +26,22 @@
         data() {
             return {
                 form: {
-                  stars:0,
+                  stars:'',
                   text:''
+                },
+                loadPack: {
+                  hasReviewed:false,
+                  totalReviews:0,
+                  totalScore:0
                 }
+
             }
         },
         beforeMount() {
           //load data 
           return {
-            loadPack: {
-              hasReviewed:false,
-              totalReviews:0,
-              totalScore:0
-            }
+            //set data
+            this:this.loadPack.hasReviewed=true
           }
         },
         methods: {
@@ -59,14 +63,36 @@
 <style>
 @media (min-width: 1024px) {
   .leaveRev {
-    min-height: 100vh;
     align-items: center;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
   }
   .leaveRev h1 {
     color:black;
   }
   .leaveRev h2 {
     color:red;
+  }
+  input[type='text'],input[type='number']{
+    color: black;
+    border-width: 3px;
+    border-style: dashed;
+    border-color: teal;
+    border-radius: 10px;
+  }
+  button[type='submit']{
+    background-color: cadetblue;
+    margin: 5px;
+    margin-left: 0px;
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
   }
 }
 </style>
