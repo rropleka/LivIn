@@ -25,18 +25,35 @@
         data() {
             return {
                 form: {
-                  stars:'',
+                  stars:0,
                   text:''
                 }
             }
         },
+        beforeMount() {
+          //load data 
+          return {
+            loadPack: {
+              hasReviewed:false,
+              totalReviews:0,
+              totalScore:0
+            }
+          }
+        },
         methods: {
           sub() {
-            
+            console.log(this.loadPack.hasReviewed)
+            if(typeof this.form.stars!='undefined' && this.form.stars) {
+              console.log(this.form.stars)
+              //good submission, continue
+            } else {
+              console.log('issue')
+              //throw error
+            }
+            //console.log(this.form.stars)
           }
         }
     }
-    console.log('hello script setup')
 </script>
 
 <style>
