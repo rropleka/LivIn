@@ -1,9 +1,12 @@
+
 <template>
   <div class="score">
     <h1>Cumulative Scores</h1>
+    <Suspense>
     <h2>{{ loadPack.totalReviews }}</h2>
+    </Suspense>
   </div>
-  <form @submit.prevent="prev">
+  <form>
       <div class="leaveRev">
           <h1>Leave a Review</h1>
           <h2>Enter a star rating</h2>
@@ -21,6 +24,8 @@
     import {ref} from 'vue';
     import router from '../router/index'
     import Vue from 'vue';
+    import { getFirestore, collection, doc, getDocs, updateDoc, getDoc, setDoc, query, where } from 'firebase/firestore/lite'
+    import { firebaseapp } from '../main'
     //import { StarRating } from './components/vue-star-rating/src/star-rating.vue';
 
 
@@ -28,6 +33,19 @@
         components: {
             //starrating: StarRating
         },
+        /*async setup() {
+          const db = getFirestore(firebaseapp)
+          try {
+            const username="test"//replace with current user
+            const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', username)));
+            //get array of reviewed properties from querysnapshot
+            //check against selected listing to set hasReviewed
+            } catch(error) {
+                // Handle any errors
+                const errorMessage = error.message;
+                alert(errorMessage);
+            }
+        },*/
         data() {
             return {
                 form: {
@@ -42,24 +60,56 @@
 
             }
         },
-        beforeMount() {
-          //load data 
+        async beforeMount() {
+          const db = getFirestore(firebaseapp)
+          try {
+            const propname="pname123"//replace with current user
+            const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname)));
+            console.log(querySnapshot.size)
+            querySnapshot.forEach((doc) => {
+              const data = doc.data()
+              this.loadPack.totalReviews=data.totalReviews
+              this.loadPack.totalScore=data.totalScore
+              console.log(this.$data)
+              console.log("hello")
+            })
+            //get array of reviewed properties from querysnapshot
+            //check against selected listing to set hasReviewed
+            } catch(error) {
+                // Handle any errors
+                const errorMessage = "error";
+                alert(errorMessage);
+            }
           return {
             //set data
-            this:this.loadPack.hasReviewed=true
+            this:this.loadPack.hasReviewed=true,//=arry contains property
+
           }
         },
         methods: {
-          sub() {
+          async sub() {
             console.log(this.loadPack.hasReviewed)
             if(typeof this.form.stars!='undefined' && this.form.stars) {
               console.log(this.form.stars)
+              const db = getFirestore(firebaseapp)
+              try {
+                const userDocRef = doc(collection(db, 'properties'), "pname123");
+                await updateDoc(userDocRef, {
+                    reviewText: this.form.text, // Add username to firestore associated with uid
+                    totalReviews: this.loadPack.totalReviews+1,
+                    totalScore: this.loadPack.totalScore+this.form.stars
+                });
+                console.log(this.loadPack.totalScore+this.form.stars)
+              } catch(error) {
+                // Handle any errors
+                const errorMessage = "error";
+                alert(errorMessage);
+            }
               //good submission, continue
             } else {
               console.log('issue')
               //throw error
             }
-            //console.log(this.form.stars)
           }
         }
     }
@@ -84,7 +134,7 @@
   .leaveRev h2 {
     color:red;
   }
-  input[type='text'],input[type='number'],textarea{
+  input[type='text'],input[type='number']{
     color: black;
     border-width: 3px;
     border-style: dashed;
