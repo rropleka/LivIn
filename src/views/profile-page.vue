@@ -3,7 +3,26 @@ import AccountInfo from '../components/account-info.vue'
 </script>
 
 <script>
+import { ref } from 'vue'
 
+const page = ref(1)
+
+export default {
+    components: {
+        AccountInfo
+    },
+    setup() {
+        return {
+            page
+        }
+    },
+    methods: {
+        setPage(page) {
+            this.page = page
+            console.log('page', page)
+        }
+    }
+}
 </script>
 
 <template>
@@ -12,36 +31,36 @@ import AccountInfo from '../components/account-info.vue'
             <div class="h-full px-3 py-4 overflow-y-auto bg-light-orange">
                 <ul class="space-y-2 font-medium">
                     <li>
-                        <router-link to="/" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
+                        <button @click="setPage(1)" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>
                             <span class="text-white text-lg ms-3">Account info</span>
-                        </router-link>
+                        </button>
                     </li>
                     <li>
-                        <router-link to="/" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
+                        <button @click="setPage(2)"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>
                             <span class="text-white text-lg ms-3">Favorite locations</span>
-                        </router-link>
+                        </button>
                     </li>
                     <li>
-                        <router-link to="/" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
+                        <button @click="setPage(3)"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>
                             <span class="text-white text-lg ms-3">Saved Properties</span>
-                        </router-link>
+                        </button>
                     </li>
                     <li>
-                        <router-link to="/" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
+                        <button @click="setPage(4)"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>
                             <span class="text-white text-lg ms-3">Saved lists</span>
-                        </router-link>
+                        </button>
                     </li>
                 </ul>
             </div>

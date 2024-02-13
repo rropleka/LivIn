@@ -1,9 +1,8 @@
 import { createStore } from "vuex";
-
 const store = createStore({
     state() {
         return {
-            user: {
+            user: { // temp user data to test state in account-info
                 id: 1, // wtv temp id
                 username: "testuser",
                 password: "testpassword",
@@ -23,11 +22,11 @@ const store = createStore({
         },
     },
     actions: {
-        login({ commit }, user) {
-            commit("setUser", user);
+        login(context, user) {
+            context.commit("setUser", user);
         },
-        logout({ commit }) {
-            commit("setUser", null)
+        logout(context) {
+            context.commit("setUser", null)
         }
     },
     modules: {},
