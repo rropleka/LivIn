@@ -14,7 +14,7 @@
 
 <script lang="ts">
     import {ref} from 'vue';
-    import router from '../router/index'
+    import router from '@/router/router'
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
     export default {
@@ -58,4 +58,4 @@
     }
   }
   </style>
-  
+  ../router/router
