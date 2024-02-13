@@ -3,7 +3,8 @@
   <div class="score">
     <h1>Cumulative Scores</h1>
     <Suspense>
-    <h2>{{ loadPack.totalReviews }}</h2>
+      <h2 v-if="loadPack.totalReviews > 0">{{ parseFloat(loadPack.totalScore/loadPack.totalReviews+'').toFixed(2) }}</h2>
+      <h2 v-else>No Reviews Yet</h2>
     </Suspense>
   </div>
   <form>
@@ -82,8 +83,6 @@
             }
           return {
             //set data
-            this:this.loadPack.hasReviewed=true,//=arry contains property
-
           }
         },
         methods: {
@@ -134,7 +133,7 @@
   .leaveRev h2 {
     color:red;
   }
-  input[type='text'],input[type='number']{
+  input[type='text'],input[type='number'],textarea{
     color: black;
     border-width: 3px;
     border-style: dashed;
