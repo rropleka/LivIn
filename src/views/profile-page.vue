@@ -2,6 +2,10 @@
 import AccountInfo from '../components/account-info.vue'
 </script>
 
+<script>
+
+</script>
+
 <template>
     <div class="flex flex-nowrap">
         <aside id="default-sidebar" class="z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
