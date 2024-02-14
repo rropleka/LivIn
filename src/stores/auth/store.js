@@ -1,35 +1,30 @@
 import { createStore } from "vuex";
+
 const store = createStore({
-    state() {
-        return {
-            user: { // temp user data to test state in account-info
-                id: 1, // wtv temp id
-                username: "testuser",
-                password: "testpassword",
-                name: "John Doe",
-                age: 25,
-                email: "testemail",
-                class: "Test Class",
-                gender: "Male",
-                aboutme: "I am a test user.",
-                contactinfo: "testcontactinfo",
-            },
-        }
+    state: {
+        user: null,
+        isLoggedIn: false,
     },
     mutations: {
         setUser(state, user) {
             state.user = user;
+            state.isLoggedIn = !!user;
         },
     },
     actions: {
-        login(context, user) {
-            context.commit("setUser", user);
-        },
-        logout(context) {
-            context.commit("setUser", null)
-        }
+    loginUser({ commit }, user) {
+      // Call the setUser mutation to update the user state
+      commit('setUser', user);
     },
-    modules: {},
+    logoutUser({ commit }) {
+      // Call the setUser mutation with null to log the user out
+      commit('setUser', null);
+    },
+  },
+  getters: {
+    isLoggedIn: (state) => state.isLoggedIn,
+    currentUser: (state) => state.user,
+  },
 });
 
 export default store;
