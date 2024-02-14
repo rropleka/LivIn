@@ -12,13 +12,15 @@
     </div>
 </template>
 
-<script lang="ts">
-    import {ref} from 'vue';
-    import router from '@/router/router'
+<script>
+    import { ref } from 'vue';
+    import router from '../router/index'
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+    import { useStore } from "vuex";
 
     export default {
         setup() {
+            const store = useStore();
             const email = ref("");
             const password = ref("");
 
@@ -28,6 +30,8 @@
                     .then((userCredential) => {
                         // Signed in 
                         const user = userCredential.user;
+                        // Dispatch the loginUser action to update the store
+                        store.dispatch('loginUser', user);
                         // ...
                         router.push('/');
                     })

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView, useRouter, useRoute } from 'vue-router'
-import router from './router/router'
-import {createApp} from 'vue';
+import router from './router/index'
+import { createApp } from 'vue';
 import { onBeforeMount } from 'vue';
 import firebase from 'firebase/compat/app';
 import Login from './views/Login.vue'
@@ -13,6 +13,9 @@ const app = createApp({});
 app.use(router);
 
 app.mount('#app');
+
+
+
 </script>
 
 <template>
@@ -22,28 +25,6 @@ app.mount('#app');
 
   </div>
 </template>
-
-<!-- HERE WE WANT TO REDIRECT TO/FROM LOGIN/REGISTER DEPENDING ON AUTH STATUS -->
-<!-- <script>
-export default {
-  pageSetup () {
-    const router = useRouter()
-    const route = useRoute()
-
-    onBeforeMount(() => {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-          router.replace('/login')
-        } else if (route.path == "/login" || route.path == "/register") {
-          router.replace('/')
-        }
-
-      });
-
-    });
-  }
-}
-</script> -->
 
 <style scoped>
 
