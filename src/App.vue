@@ -4,12 +4,17 @@ import router from './router/index'
 import { createApp } from 'vue';
 import { onBeforeMount } from 'vue';
 import firebase from 'firebase/compat/app';
-import Navbar from './components/navbar-comp.vue';
 import Login from './views/Login.vue'
+import Navbar from './components/navbar-comp.vue';
+import GMapItem from './components/GMapItem.vue';
 
 const app = createApp({});
-app.use(router); //trust me bro
+
+app.use(router);
+
 app.mount('#app');
+
+
 
 </script>
 
@@ -17,6 +22,7 @@ app.mount('#app');
   <div class="page">
     <Navbar />
     <router-view/>
+
   </div>
 </template>
 
@@ -121,3 +127,4 @@ nav a:first-of-type {
   }
 }
 </style>
+./router/router
