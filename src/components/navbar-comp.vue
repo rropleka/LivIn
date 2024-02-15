@@ -1,4 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const isLoggedIn = computed(() => store.getters.isLoggedIn);
+
 </script>
 
 <template>
@@ -10,12 +17,16 @@
       </router-link>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
-          <li>
-            <router-link to="/Profile" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
-          </li>
-          <li>
-            <router-link to="/login" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Signup / Login</router-link>
-          </li>
+          <div v-if="isLoggedIn">
+            <li>
+              <router-link to="/Profile" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
+            </li>
+          </div>
+          <div v-else>
+            <li>
+              <router-link to="/login" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Signup / Login</router-link>
+            </li>
+          </div>
         </ul>
       </div>
     </div>
