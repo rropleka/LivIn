@@ -8,8 +8,10 @@
     components: { GoogleMap, Marker },
     data() {
       return {
-        point1: null,
-        point2: null,
+        point1: {lat: 999, lng: 999},
+        point2: {lat: 999, lng: 999},
+        showMarker1: false,
+        showMarker2: false,
       }
     },
     setup() {
@@ -23,16 +25,36 @@
           width: '100%',
           height: mapHeight+'px',
         }
+      },
+      marker1options() {
+        return {
+          position: this.point1,
+          label: '1',
+          title: "Start"
+        }
+      },
+      marker2options() {
+        return {
+          position: this.point2,
+          label: '2',
+          title: "Destination"
+        }
       }
     },
     methods: {
       onMapClick(event: MapMouseEvent) {
-        this.point1 = event.latLng.lat();
-        console.log(this.point1);
-        console.log(this.point2);
+        this.point1 = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+        this.findRoute();
       },
-      onMapRightClick(event) {
-        this.point2 = event.latLng.lat();
+      onMapRightClick(event: MapMouseEvent) {
+        this.point2 = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+        this.findRoute();
+      },
+      findRoute() {
+        if (this.point1.lat == 999 
+         || this.point2.lat == 999) {
+            return;
+        }
         console.log(this.point1);
         console.log(this.point2);
       }
@@ -49,6 +71,10 @@
     @contextmenu="onMapRightClick"
     :zoom="15">
     
+    <Marker :options="marker1options" />
+    <Marker :options="marker2options" />
+
+
   </GoogleMap>
 </template>
 
