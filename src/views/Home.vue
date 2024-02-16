@@ -18,6 +18,9 @@ const currentUser = computed(() => store.getters.currentUser);
           <div class="content">
             <router-link to="/login">Back to Login Screeeeeen</router-link>
           </div>
+          <div class="content">
+            <router-link to="/compare">To compare</router-link>
+          </div>
         <div class="map">
           <GMapItem />
         </div>
