@@ -3,8 +3,9 @@
         <h1 style="color: black;">Register</h1>
         <!-- Create our Register form and prevent submission without necessary data -->
         <form @submit.prevent="register">
-            <input type="text" placeholder="Email" v-model="email"/>
-            <input type="password" placeholder="Password" v-model="password"/>
+            <input type="text" placeholder="Email" v-model="email" class="black-text"/>
+            <input type="password" placeholder="Password" v-model="password" class="black-text"/>
+            <input type="text" placeholder="Username" v-model="username" class="black-text"/>
             <button type="submit">Register</button>
             <p style="color: black;">Have an account? <router-link to="/login">Login Here</router-link></p>
         </form>
@@ -13,38 +14,65 @@
 
 <script>
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import {ref} from 'vue';
+import { ref } from 'vue';
 import router from '../router/index'
+// IMPORT getFirestore and firebaseapp everywhere you want to access the database
+import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+import { firebaseapp } from '../firebaseInit'
 
 export default {
     /* The setup() function is part of the Composition API in Vue 3 and initializes
         the reactive ref variables 'email' and 'password'. */
+        
     setup() {
         const email = ref("");
         const password = ref("");
+        const username = ref("");
+        // !!! Add this line to get the instance of firestore in each location of the app its needed !!!
+        const db = getFirestore(firebaseapp)
 
         // Executed on form submission 
-        const register = () => {
+        const register = async () => {
+            // Validation: Check if the username length is between 8-20 characters
+            if (username.value.length < 8 || username.value.length > 20) {
+                alert("Username must be between 8-20 characters.");
+                return; // Prevent form submission
+            }
+
+            // Create auth reference to signup new users with firebase
             const auth = getAuth();
-            createUserWithEmailAndPassword(auth, email.value, password.value)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
+
+            try {
+                // Check if the username already exists in the database
+                const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', username.value)));
+
+                if (!querySnapshot.empty) {
+                    // Username already exists, inform the user and prevent registration
+                    alert("Username already exists. Please choose a different username.");
+                    return;
+                }
+
+            const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
+            // Create a userDocRef to give each user a unique doc in our users collection
+            const userDocRef = doc(collection(db, 'users'), userCredential.user.uid);
+            await setDoc(userDocRef, {
+                username: username.value // Add username to firestore associated with uid
+            });
+
+            // Redirect to the home page after successful registration
                 router.push('/');
-                            // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
+            } catch(error) {
+                // Handle any errors
                 const errorMessage = error.message;
                 alert(errorMessage);
-                // ..
-            });
-        };
+            }
+};
 
         // Return the necessary attributes needed for authentication
         return {
             register,
             email,
+            username,
             password
         }
     }
@@ -60,5 +88,9 @@ export default {
       align-items: center;
     }
   }
+  .black-text {
+      color: black;
+  }
+
   </style>
-  
+  ../router/router
