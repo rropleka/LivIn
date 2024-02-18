@@ -209,7 +209,7 @@ import type { FirebaseApp } from 'firebase/app';
     border-color: teal;
     border-radius: 10px;
   }
-  button[type='submit']{
+  button[type='submit'],button[type='button']{
     background-color: cadetblue;
     margin: 5px;
     margin-left: 0px;
