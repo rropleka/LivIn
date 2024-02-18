@@ -16,12 +16,13 @@
         data: function(){
             return{
             listings:[
-            { propertyName: 'Lafayette', address: '100 Lafayette Way', price: '$200' },
-            { propertyName: 'Wiley Hall', address: '200 Wiley St', price: '$100' },
-            { propertyName: 'Cedarwood', address: '300 Grant St', price: '$300' },
+            { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
+            { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
+            { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
+            { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
         ],
-            currentSort:'name',
-            currentSortDir:'asc',
+            sortName:'name',
+            sortDir:'asc',
             pageSize:3,
             currentPage:1
             };
@@ -36,27 +37,36 @@
         },*/
         methods:{
             sort:function(s) {
-            //if s == current sort, reverse
-            if(s === this.currentSort) {
-                this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+            if(s === this.sortName) {
+                this.sortDir = this.sortDir==='asc'?'desc':'asc';
             }
-            this.currentSort = s;
+            this.sortName = s;
+            },
+            nextPage:function() {
+                if((this.currentPage*this.pageSize) < this.listings.length) this.currentPage++;
+            },
+            prevPage:function() {
+                if(this.currentPage > 1) this.currentPage--;
             }
         },
         computed:{
             listings:function() {
-            return this.listings.sort((a,b) => {
-                let modifier = 1;
-                if(this.currentSortDir === 'desc') modifier = -1;
-                if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-                if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-                return 0;
-            });
+                return this.listings.sort((a,b) => {
+                    let modifier = 1;
+                    if(this.sortDir === 'desc') modifier = -1;
+                    if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
+                    if(a[this.sortName] > b[this.sortName]) return 1 * modifier;
+                    return 0;
+                }).filter((row, index) => {
+                    let start = (this.currentPage-1)*this.pageSize;
+                    let end = this.currentPage*this.pageSize;
+                    if(index >= start && index < end) return true;
+                
+                });
             }
-        }
 
+        }
     }
-//}
 </script>
 
 <style>
@@ -68,8 +78,12 @@
 <template>
     <div class="listingtext">
         <button @click="sort('propertyName')">Property Name</button>
-        <button @click="sort('address')">Address</button>
+        <button @click="sort('rating')">Rating</button>
         <button @click="sort('price')">Price</button>
+    </div>
+    <div class="listingtext">
+        <button @click="prevPage">Previous</button>
+        <button @click="nextPage">Next</button>
     </div>
     <div class="listings">
         <table>
@@ -78,7 +92,7 @@
                 <td>
                     <div style="width: 400px; height: 150px; border: 1px solid black; color: black;">
                         Property Name: {{ listing.propertyName }} <br>
-                        Address: {{ listing.address }} <br>
+                        Rating: {{ listing.rating }} <br>
                         Price: {{ listing.price }} <br>
                     </div>
                 </td>
