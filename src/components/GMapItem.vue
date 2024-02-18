@@ -2,6 +2,7 @@
   import {GoogleMap, Marker} from "vue3-google-map";
   import {defineComponent} from "vue";
   import {MapMouseEvent} from "google.maps";
+  import axios from "axios";
 
   export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
@@ -43,20 +44,52 @@
     },
     methods: {
       onMapClick(event: MapMouseEvent) {
-        this.point1 = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+        this.point1 = event.latLng;
         this.findRoute();
       },
       onMapRightClick(event: MapMouseEvent) {
-        this.point2 = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+        this.point2 = event.latLng;
         this.findRoute();
       },
       findRoute() {
-        if (this.point1.lat == 999 
-         || this.point2.lat == 999) {
+
+        if (this.point1.lng == 999 
+        || this.point2.lng == 999 
+        || (this.point1.lat == this.point2.lat && this.point1.lng == this.point2.lng)) {
             return;
         }
-        console.log(this.point1);
-        console.log(this.point2);
+
+        axios( {
+          url: 'https://routes.googleapis.com/directions/v2:computeRoutes',
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': 'AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8',
+            'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline',
+          },
+          data: {
+            "origin": {
+              "location": {
+                //"latLng": this.point1
+                "latLng": { latitude: this.point1.lat, longitude: this.point1.lng}
+              }
+            },
+            "destination": {
+              "location": {
+                //"latLng": this.point2
+                "latLng": { latitude: this.point2.lat, longitude: this.point2.lng}
+              }
+            },
+            "travelMode": "DRIVE",
+            "routingPreference": "TRAFFIC_AWARE",
+            "languageCode": "en-US",
+            "units": "IMPERIAL"
+          }
+        }).then((response) => {
+          console.log(response);
+        }).catch((error) => {
+          console.log(error);
+        })
       }
     }
   });
