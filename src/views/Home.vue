@@ -14,16 +14,17 @@ const currentUser = computed(() => store.getters.currentUser);
 
 <template>
   <main>
-        <div class="page">
-          <div class="content">
-            <router-link to="/login">Back to Login Screeeeeen</router-link>
-          </div>
+      <div class="page">
+        <div class="content">
+          <router-link to="/login">Back to Login Screeeeeen</router-link>
+          <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
+        </div>
         <div class="map">
           <GMapItem />
         </div>
       </div>
 
-  <div class="user-status">
+      <div class="user-status">
         <p v-if="isLoggedIn">User logged in: {{ currentUser.email }}</p>
         <p v-else>No user logged in</p>
       </div>

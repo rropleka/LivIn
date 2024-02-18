@@ -31,7 +31,12 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('../views/profile-page.vue')
-    }
+    },
+    {
+      path: '/moderator/hotspots',
+      name: 'hotspots',
+      component: () => import('../views/ModAddHotspots.vue')
+    },
   ]
 })
 
