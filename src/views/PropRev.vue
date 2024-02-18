@@ -6,18 +6,30 @@
       <h2 v-if="loadPack.totalReviews > 0">{{ parseFloat(loadPack.totalScore/loadPack.totalReviews+'').toFixed(2) }}</h2>
       <h2 v-else>No Reviews Yet</h2>
     </Suspense>
-    <ul class="users"></ul>
+  </div>
+  <div class="reviews">
+      <div class="myRev">
+        <h1 v-if="loadPack.hasReviewed==true">My Review</h1>
+        <ul class="mine"></ul>
+        <button v-if="loadPack.hasReviewed==true" v-on:click="edit" type="button">Edit my Review</button>
+      </div>
+      <div class="otherRevs">
+        <h1>Reviews</h1>
+        <ul class="users"></ul>
+        <h2 v-if="loadPack.totalReviews<=0">No Reviews Yet</h2>
+      </div>
   </div>
   <form>
-      <div class="leaveRev">
+      <div v-if="loadPack.hasReviewed==false||loadPack.isEdit==true" class="leaveRev">
           <h1>Leave a Review</h1>
           <h2>Enter a star rating</h2>
-          <input type="number" placeholder="Stars" v-model="form.stars" min="1" max="5"><br/>
+          <input type="number" placeholder="Stars" v-model="form.stars" min="1" max="5" value="5"><br/>
           <h2>Enter a review</h2>
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
-          <textarea v-model="form.text" rows="7"></textarea>
+          <textarea id="ta" v-model="form.text" rows="7"></textarea>
           <br>
-          <button v-on:click="sub" type="submit">Submit review</button>
+          <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
+          <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
       </div>
   </form>
 </template>
@@ -35,19 +47,6 @@ import type { FirebaseApp } from 'firebase/app';
         components: {
             //starrating: StarRating
         },
-        /*async setup() {
-          const db = getFirestore(firebaseapp)
-          try {
-            const username="test"//replace with current user
-            const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', username)));
-            //get array of reviewed properties from querysnapshot
-            //check against selected listing to set hasReviewed
-            } catch(error) {
-                // Handle any errors
-                const errorMessage = error.message;
-                alert(errorMessage);
-            }
-        },*/
         data() {
             return {
                 form: {
@@ -59,7 +58,12 @@ import type { FirebaseApp } from 'firebase/app';
                   totalReviews:0,
                   totalScore:0,
                   usersReviewed: ["t1", "t2"],
-                  docRef: ''
+                  docRef: '',
+                  reviewText: ["t1"],
+                  myReview: '',
+                  myRating:-1,
+                  revRef: '',
+                  isEdit:false
                 }
 
             }
@@ -82,14 +86,27 @@ import type { FirebaseApp } from 'firebase/app';
               this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
               this.loadPack.docRef=doc.ref.path
             })
+
             const userList = document.querySelector('.users');
-            this.loadPack.usersReviewed.forEach(function(user) {
-              console.log("executed")
+            const myList = document.querySelector('.mine')
+            const querySnapshot2 = await getDocs(query(collection(db, 'propertyReviews'), where('propertyName', '==', propname), where('owner', '==', ownername)));
+            this.loadPack.reviewText.pop()
+            querySnapshot2.forEach((doc) => {
+              const data = doc.data()
+              //this.loadPack.reviewText.push(data.reviewText)
               const userItem = document.createElement('li')
               userItem.innerHTML = `
-                Username: ${user}<br>
+                ${data.username} says <br>
+                ${data.reviewText} <br>
               `
-              userList?.appendChild(userItem)
+              if (data.username==username) {
+                this.loadPack.myReview=data.reviewText
+                this.loadPack.myRating=data.stars
+                this.loadPack.revRef=doc.ref.path
+                myList?.appendChild(userItem)
+              } else {
+                userList?.appendChild(userItem)
+              }
             })
             //get array of reviewed properties from querysnapshot
             //check against selected listing to set hasReviewed
@@ -116,11 +133,7 @@ import type { FirebaseApp } from 'firebase/app';
                 } else {
                   this.loadPack.usersReviewed=[username]
                 }
-                /*const docRef = this.getDocRef(firebaseapp, propname, ownername)
-                console.log("docref:" + docRef)*/
-                //console.log("before: " + this.loadPack.docRef)
                 const x = doc(db, this.loadPack.docRef)
-                //console.log("after: " + this.loadPack.docRef)
                 this.submitReview(db, propname, ownername, username) //push to reviews
                 this.updateProperty(db, propname, ownername, x) //update property info
               } catch(error) {
@@ -150,6 +163,21 @@ import type { FirebaseApp } from 'firebase/app';
                 totalScore: this.loadPack.totalScore+this.form.stars,
                 usersReviewed: this.loadPack.usersReviewed
             });
+          },
+          edit() {
+            console.log("edit")
+            this.loadPack.isEdit=true;
+            this.form.text=this.loadPack.myReview
+            this.form.stars=this.loadPack.myRating.toString()
+          },
+          async upd() {
+            const db = getFirestore(firebaseapp)
+            const docRef=doc(db,this.loadPack.revRef)
+            await updateDoc(docRef, {
+              reviewText: this.form.text,
+              stars: this.form.stars,
+              timestamp: Date.now()
+            });
           }
         }
     }
@@ -168,10 +196,10 @@ import type { FirebaseApp } from 'firebase/app';
     margin: 10px;
     padding: 10px;
   }
-  .leaveRev h1 {
+  h1 {
     color:black;
   }
-  .leaveRev h2 {
+  h2 {
     color:red;
   }
   input[type='text'],input[type='number'],textarea{
@@ -204,8 +232,26 @@ import type { FirebaseApp } from 'firebase/app';
     padding: 10px;
     color: black;
   }
-  .score li {
+  .reviews {
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
+  }
+  .reviews li {
     color: blueviolet;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
   }
 }
 </style>
