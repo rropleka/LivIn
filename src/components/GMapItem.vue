@@ -2,6 +2,7 @@
   import {GoogleMap, Marker, Polyline} from "vue3-google-map";
   import {defineComponent} from "vue";
   import {MapMouseEvent} from "google.maps";
+  import {decode} from "@googlemaps/polyline-codec";
   import axios from "axios";
 
   export default defineComponent({
@@ -44,8 +45,16 @@
         }
       },
       polylineOptions() {
+        let coordArrays = decode(this.polylineString);
+        let coordLatlngs: Array<any> = [];
+
+        coordArrays.forEach(item =>
+        {
+          coordLatlngs.push({lat: item[0], lng: item[1]});
+        })
+
         return {
-          path: google.maps.geometry.encoding.decodePath(this.polylineString),
+          path: coordLatlngs,
           geodesic: true,
           strokeColor: '#e8871b',
           strokeWeight: 2
@@ -78,19 +87,12 @@
           data: {
             "origin": {
               "location": {
-                //"latLng": this.point1
                 "latLng": { latitude: this.point1.lat(), longitude: this.point1.lng()}
-                //"latLng": { latitude: 40.420781, longitude: -86.918061 }
               }
             },
             "destination": {
               "location": {
-                //"latLng": this.point2
-                //"latLng": { latitude: this.point2.lat, longitude: this.point2.lng}
-                //"latLng": { latitude: 41.420781, longitude: -87.918061 }
                 "latLng": { latitude: this.point2.lat(), longitude: this.point2.lng()}
-
-
               }
             },
             "travelMode": "DRIVE",
@@ -99,7 +101,6 @@
             "units": "IMPERIAL"
           }
         }).then((response) => {
-          console.log(response.data.routes[0].polyline.encodedPolyline)
           this.polylineString = response.data.routes[0].polyline.encodedPolyline;
           this.renderPolyline = true
         }).catch((error) => {
