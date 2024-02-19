@@ -18,13 +18,16 @@
     export default {
         setup() {
             console.log('hello');
+            //uncomment below line to try to attempt to populate it with data from Firebase (doesn't work currently)
             //const listings = ref([]);
+            //this is the curent hard coded array
             const listings = [
             { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
             { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
             { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
             { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
         ];
+        //this fetchListings should populate listings, but the result is the listings returns empty
             const fetchListings = async () => {
                 console.log('bye');
                 try {
@@ -135,7 +138,7 @@
             <tbody>
             <tr v-for="listing in listings" :key="listing.propertyName">
                 <td>
-                    <div @mouseover="propertyHover = true" @mouseleave="propertyHover = false" style="width: 400px; height: 150px; border: 1px solid black; color: black;">
+                    <div v-bind:id="listing.propertyName" @mouseover="propertyHover = true" @mouseleave="propertyHover = false" style="width: 400px; height: 150px; border: 1px solid black; color: black;">
                         Property Name: {{ listing.propertyName }} <br>
                         Rating: {{ listing.rating }} <br>
                         Price: {{ listing.rent }} <br>
