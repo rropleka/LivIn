@@ -2,6 +2,9 @@
     //import Listing.js from "/objects/Listing.js";
     //Listing1 = new Listing('Property1');
     import router from '../router/index'
+    import { ref } from 'vue';
+    import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+    import { firebaseapp } from '../firebaseInit'
     /*export default {
   setup(){
     const listings = [
@@ -12,19 +15,53 @@
     return{listings}
     },*/
     export default {
+        setup() {
+            console.log('hello');
+            //const listings = ref([]);
+            const listings = [
+            { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
+            { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
+            { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
+            { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
+        ];
+            const fetchListings = async () => {
+                try {
+                    
+                    const db = getFirestore(firebaseapp);
+                    const querySnapshot = await getDocs(collection(db, 'properties'));
+
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const propertyData = {
+                            propertyName: data.propertyName,
+                            rating: data.rating,
+                            price: data.rent
+                        };
+                        listings.value.push(propertyData);
+                    });
+                } catch (error) {
+                    console.error('Error fetching properties:', error);
+                }
+            };
+            console.log(listings.length);
+            return{listings};
+        },
     
         data: function(){
-            return{
+            
+            
+            return{/*
             listings:[
             { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
             { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
             { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
             { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
-        ],
-            sortName:'name',
-            sortDir:'asc',
-            pageSize:3,
-            currentPage:1
+        ],*/
+            sortName: 'name',
+            sortDir: 'asc',
+            pageSize: 3,
+            currentPage: 1,
+            propertyHover: false
             };
         },
         /*created:function() {
@@ -73,31 +110,37 @@
     .listingtext {
         color: black;
     }
+    button {
+        margin-right: 10px;
+    }
 </style>
 
 <template>
-    <div class="listingtext">
-        <button @click="sort('propertyName')">Property Name</button>
-        <button @click="sort('rating')">Rating</button>
-        <button @click="sort('price')">Price</button>
+    <div class="listingtext" style="width: 100%; display: flex;">
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')">Property Name</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rating')">Rating</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
     </div>
-    <div class="listingtext">
-        <button @click="prevPage">Previous</button>
-        <button @click="nextPage">Next</button>
-    </div>
-    <div class="listings">
-        <table>
+    <div class="listings" style="width: 100%; border: 1px solid blue; margin-top: 5px; margin-bottom: 5px;">
+        <div v-show="propertyHover" style="width: 400px; height: 150px; border: 1px solid red; color: black; float: right;"></div>
+        <table style="margin-left: 0; width: 50%; border: 1px solid green;">
             <tbody>
             <tr v-for="listing in listings" :key="listing.propertyName">
                 <td>
-                    <div style="width: 400px; height: 150px; border: 1px solid black; color: black;">
+                    <div @mouseover="propertyHover = true" @mouseleave="propertyHover = false" style="width: 400px; height: 150px; border: 1px solid black; color: black;">
                         Property Name: {{ listing.propertyName }} <br>
                         Rating: {{ listing.rating }} <br>
-                        Price: {{ listing.price }} <br>
+                        Price: {{ listing.rent }} <br>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
+        
     </div>
+    <div class="listingtext" style="width: 100%; display: flex;">
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="prevPage">Previous</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="nextPage">Next</button>
+    </div>
+    
 </template>
