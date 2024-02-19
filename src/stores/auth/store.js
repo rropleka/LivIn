@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 const store = createStore({
     state: {
@@ -11,6 +12,8 @@ const store = createStore({
             state.isLoggedIn = !!user;
         },
     },
+    plugins: [createPersistedState()]
+    ,
     actions: {
     loginUser({ commit }, user) {
       // Call the setUser mutation to update the user state
