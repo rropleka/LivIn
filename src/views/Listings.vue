@@ -2,8 +2,9 @@
     //import Listing.js from "/objects/Listing.js";
     //Listing1 = new Listing('Property1');
     import router from '../router/index'
+    import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
     import { ref } from 'vue';
-    import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+    import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
     import { firebaseapp } from '../firebaseInit'
     /*export default {
   setup(){
@@ -25,12 +26,13 @@
             { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
         ];
             const fetchListings = async () => {
+                console.log('bye');
                 try {
                     
                     const db = getFirestore(firebaseapp);
                     const querySnapshot = await getDocs(collection(db, 'properties'));
 
-                    querySnapshot.forEach((doc) => {
+                    querySnapshot.forEach(doc => {
                         const data = doc.data();
                         const propertyData = {
                             propertyName: data.propertyName,
@@ -39,6 +41,7 @@
                         };
                         listings.value.push(propertyData);
                     });
+
                 } catch (error) {
                     console.error('Error fetching properties:', error);
                 }
@@ -84,6 +87,9 @@
             },
             prevPage:function() {
                 if(this.currentPage > 1) this.currentPage--;
+            },
+            setPageSize:function(event) {
+                this.pageSize = event.target.value;
             }
         },
         computed:{
@@ -104,6 +110,8 @@
 
         }
     }
+    
+
 </script>
 
 <style>
@@ -141,6 +149,11 @@
     <div class="listingtext" style="width: 100%; display: flex;">
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="prevPage">Previous</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="nextPage">Next</button>
+        <select @change="setPageSize($event)">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option selected="selected" value="3">3</option>
+        </select>
     </div>
     
 </template>
