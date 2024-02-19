@@ -7,6 +7,7 @@
             <input type="password" placeholder="Password" v-model="password"/>
             <button type="submit">Login</button>
             <p style="color: black;">Need an account? <router-link to="/register">Register Here</router-link></p>
+            <p style="color: black;">Need a Leasing Company account? <router-link to="/company-register">Register Here</router-link></p>
         </form>
 
     </div>
