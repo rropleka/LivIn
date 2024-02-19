@@ -21,6 +21,9 @@ const isLoggedIn = computed(() => store.getters.isLoggedIn);
             <li>
               <router-link to="/Profile" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
             </li>
+            <li>
+              <router-link to="/revprop" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
+            </li>
           </div>
           <div v-else>
             <li>
