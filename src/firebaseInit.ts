@@ -1,13 +1,6 @@
-import './assets/main.css'
-import './index.css'
-
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
-import App from './App.vue'
-import router from './router'
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import firebase from 'firebase'
+import { initializeApp } from "firebase/app"
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -26,17 +19,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase and Authentication
-export const firebaseapp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseapp)
-const db = getFirestore(firebaseapp)
-
-import store from './stores/auth/store.js'
-
-const app = createApp(App)
-
-
-app.use(createPinia())
-app.use(router)
-app.use(store)
-
-app.mount('#app')
+export const firebaseapp = initializeApp(firebaseConfig)
+export const db = getFirestore(firebaseapp)
+export default db
+export const auth = getAuth(firebaseapp)
