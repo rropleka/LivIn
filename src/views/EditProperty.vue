@@ -1,6 +1,7 @@
 <template>
     <div class="property-form">
       <h1>Edit Property</h1>
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form @submit.prevent="updateProperty">
         <div class="form-group">
           <label for="property-name">Property Name:</label>
@@ -21,7 +22,7 @@
   
         <div class="form-group">
           <label for="rent">Rent per Month ($):</label>
-          <input type="number" id="rent" v-model.number="rent">
+          <input type="number" id="rent" v-model.number="rent" min="0">
         </div>
   
         <div class="form-group">
@@ -72,6 +73,7 @@ import { firebaseapp } from '../main'
       const structureDetails = ref('');
       const location = ref('');
       const propertyId = ref('');
+      const errorMessage = ref('');
       const db = getFirestore(firebaseapp);
   
       const addAmenity = () => {
@@ -108,7 +110,37 @@ import { firebaseapp } from '../main'
     };
   
     const updateProperty = async () => {
-        try {
+          errorMessage.value = '';
+            try {
+              if (!propertyName.value.trim()) {
+                    errorMessage.value = 'Property name cannot be empty';
+                    return;
+                }
+
+                if (amenities.value.length === 0) {
+                    errorMessage.value = 'At least one amenity must be added';
+                    return;
+                }
+
+                if (rent.value <= 0) {
+                    errorMessage.value = 'Rent must be a positive number';
+                    return;
+                }
+
+                if (!propertySize.value.trim()) {
+                    errorMessage.value = 'Property size cannot be empty';
+                    return;
+                }
+
+                if (!structureDetails.value.trim()) {
+                    errorMessage.value = 'Structure details cannot be empty';
+                    return;
+                }
+
+                if (!location.value.trim()) {
+                    errorMessage.value = 'Location cannot be empty';
+                    return;
+                }
           console.log("id val :", propertyId.value);
           const propertyDocRef = doc(db, 'properties', propertyId.value);
           if (typeof rent.value !== 'undefined' && rent.value !== null) {
@@ -147,7 +179,8 @@ import { firebaseapp } from '../main'
         updateProperty,
         searchLocation,
         fetchPropertyData,
-        propertyId
+        propertyId,
+        errorMessage
       };
     }
   }
@@ -217,6 +250,15 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   color: black;
+}
+
+.property-form .error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .property-form ul {

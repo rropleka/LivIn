@@ -1,6 +1,7 @@
 <template>
     <div class="property-form">
       <h1>Add New Property</h1>
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form @submit.prevent="saveProperty">
         <div class="form-group">
           <label for="property-name">Property Name:</label>
@@ -21,7 +22,7 @@
   
         <div class="form-group">
           <label for="rent">Rent per Month ($):</label>
-          <input type="number" id="rent" v-model.number="rent">
+          <input type="number" id="rent" v-model.number="rent" min="0">
         </div>
   
         <div class="form-group">
@@ -65,6 +66,7 @@ import { firebaseapp } from '../main'
       const propertySize = ref('');
       const structureDetails = ref('');
       const location = ref('');
+      const errorMessage = ref('');
       const db = getFirestore(firebaseapp);
   
       const addAmenity = () => {
@@ -79,12 +81,50 @@ import { firebaseapp } from '../main'
     };
   
       const saveProperty = async () => {
+        errorMessage.value = '';
             try {
-            const auth = getAuth();
+              if (!propertyName.value.trim()) {
+                    errorMessage.value = 'Property name cannot be empty';
+                    return;
+                }
+
+                if (amenities.value.length === 0) {
+                    errorMessage.value = 'At least one amenity must be added';
+                    return;
+                }
+
+                if (rent.value <= 0) {
+                    errorMessage.value = 'Rent must be a positive number';
+                    return;
+                }
+
+                if (!propertySize.value.trim()) {
+                    errorMessage.value = 'Property size cannot be empty';
+                    return;
+                }
+
+                if (!structureDetails.value.trim()) {
+                    errorMessage.value = 'Structure details cannot be empty';
+                    return;
+                }
+
+                if (!location.value.trim()) {
+                    errorMessage.value = 'Location cannot be empty';
+                    return;
+                }
+
+                const auth = getAuth();
                 const user = auth.currentUser;
+
+                if (!user) {
+                    errorMessage.value = 'User not authenticated.';
+                    return;
+                }
                 console.log(user);
                 if (!user) {
-                    throw new Error('User not authenticated.');
+                  errorMessage.value = 'User not authenticated.';
+                    return;
+                    // throw new Error('User not authenticated.');
                 }
                 let username = "";
                 if (user) {
@@ -109,7 +149,9 @@ import { firebaseapp } from '../main'
               }
               if(!username) {
                 console.log("Error fetching username!");
-                throw new error("Error fetching username.")
+                errorMessage.value = 'Error fetching username!';
+                return;
+                // throw new error("Error fetching username.")
               }
 
                 const propertyDocRef = doc(collection(db, 'properties'));
@@ -145,7 +187,8 @@ import { firebaseapp } from '../main'
         addAmenity,
         removeAmenity,
         saveProperty,
-        searchLocation
+        searchLocation,
+        errorMessage
       };
     }
   }
@@ -167,6 +210,15 @@ body {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow */
+}
+
+.property-form .error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .property-form h1 {

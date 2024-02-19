@@ -1,6 +1,7 @@
 <template>
     <div class="companyRegister">
         <h1 style="color: black;">Create an leasing company account</h1>
+        <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
         <!-- Create our Register form and prevent submission without necessary data -->
         <form @submit.prevent="companyRegister" class="registrationForm">
             <div class="formGroup">
@@ -43,10 +44,15 @@ export default {
         const username = ref("");
         const phoneNumber = ref("");
         const permanentAddress = ref("");
+        const errorMessage = ref("");
         const db = getFirestore(firebaseapp);
 
         // Executed on form submission 
         const companyRegister = async () => {
+            if (!email.value || !password.value || !username.value || !phoneNumber.value || !permanentAddress.value) {
+                errorMessage.value = "All fields are required.";
+                return;
+            }
             try {
             const auth = getAuth();
                 // Signed up 
@@ -87,7 +93,8 @@ export default {
             password,
             username,
             phoneNumber,
-            permanentAddress
+            permanentAddress,
+            errorMessage
         }
     }
 }
@@ -101,6 +108,15 @@ export default {
   text-align: center;
   background-color: #ffe0b2; /* Pale shade of orange */
   padding: 20px; /* Add padding for spacing */
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .black-text {

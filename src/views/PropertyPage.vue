@@ -15,7 +15,7 @@
       <p class="property-owner-name">{{ property.owner }}</p>
       <!-- <p class="property-owner-company">{{ propertyInfo.ownerCompany }}</p> -->
       <button class="contact-owner-button">Contact Owner</button>
-      <button v-if="isCurrentUserOwner1" class="remove-property-button" @click="removeProperty">Remove Property</button>
+      <button v-if="isCurrentUserOwner1 || isSiteModerator" class="remove-property-button" @click="removeProperty">Remove Property</button>
       <button v-if="isCurrentUserOwner1" class="edit-property-button" @click="editProperty">Edit Property</button>
       <hr>
       <p class="amenities-title">Amenities:</p>
@@ -39,7 +39,7 @@
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   import {ref} from 'vue';
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
   
   export default {
@@ -57,6 +57,7 @@ import { firebaseapp } from '../main'
     return {
       property: null,
       isCurrentUserOwner1: false,
+      isSiteModerator: false,
     };
   },
   async mounted() {
@@ -89,15 +90,16 @@ import { firebaseapp } from '../main'
       const usersCollectionRef = collection(db, 'users');
     const userQuerySnapshot = await getDocs(query(usersCollectionRef, where("username", "==", this.leasingCompany)));
     let isCurrentUserOwner = false;
+    let isSiteModerator = false;
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const currentUserID = currentUser.uid;
     userQuerySnapshot.forEach(userDoc => {
         // Retrieve the property data
-        const propertyData = userDoc.data();
+        const userData = userDoc.data();
         // Retrieve the UID assigned to the property
         const userUID = userDoc.id;
         console.log("User UID:", userUID);
-        const auth = getAuth();
-        const currentUser = auth.currentUser;
-        const currentUserID = currentUser.uid;
         console.log("current user ID", currentUserID);
         console.log("are equivalent", currentUserID == userUID);
         if(userUID == currentUserID) {
@@ -105,6 +107,27 @@ import { firebaseapp } from '../main'
         }
     });
     this.isCurrentUserOwner1 = isCurrentUserOwner;
+
+    try {
+        const userDocRef = doc(db, 'users', currentUserID);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          console.log(userData);
+          if (userData.userType) {
+              if(userData.userType == "sitemoderator") {
+                isSiteModerator = true;
+              }
+        }
+        } else {
+          console.error('Property document does not exist.');
+        }
+      } catch (error) {
+        console.error('Error fetching property data:', error.message);
+      }
+
+    this.isSiteModerator = isSiteModerator;
 
     },
     async editProperty() {
