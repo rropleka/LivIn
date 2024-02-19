@@ -1,18 +1,20 @@
 <script lang="ts">
-  import {GoogleMap, Marker} from "vue3-google-map";
+  import {GoogleMap, Marker, Polyline} from "vue3-google-map";
   import {defineComponent} from "vue";
   import {MapMouseEvent} from "google.maps";
   import axios from "axios";
 
   export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
-    components: { GoogleMap, Marker },
+    components: { GoogleMap, Marker, Polyline },
     data() {
       return {
-        point1: {lat: 999, lng: 999},
-        point2: {lat: 999, lng: 999},
+        point1: null,
+        point2: null,
         showMarker1: false,
         showMarker2: false,
+        polylineString: "",
+        renderPolyline: false,
       }
     },
     setup() {
@@ -40,12 +42,20 @@
           label: '2',
           title: "Destination"
         }
+      },
+      polylineOptions() {
+        return {
+          path: google.maps.geometry.encoding.decodePath(this.polylineString),
+          geodesic: true,
+          strokeColor: '#e8871b',
+          strokeWeight: 2
+        }
       }
     },
     methods: {
       onMapClick(event: MapMouseEvent) {
         this.point1 = event.latLng;
-        this.findRoute();
+        this.findRoute()
       },
       onMapRightClick(event: MapMouseEvent) {
         this.point2 = event.latLng;
@@ -53,9 +63,7 @@
       },
       findRoute() {
 
-        if (this.point1.lng == 999 
-        || this.point2.lng == 999 
-        || (this.point1.lat == this.point2.lat && this.point1.lng == this.point2.lng)) {
+        if (this.point1 == null || this.point2 == null){
             return;
         }
 
@@ -71,13 +79,18 @@
             "origin": {
               "location": {
                 //"latLng": this.point1
-                "latLng": { latitude: this.point1.lat, longitude: this.point1.lng}
+                "latLng": { latitude: this.point1.lat(), longitude: this.point1.lng()}
+                //"latLng": { latitude: 40.420781, longitude: -86.918061 }
               }
             },
             "destination": {
               "location": {
                 //"latLng": this.point2
-                "latLng": { latitude: this.point2.lat, longitude: this.point2.lng}
+                //"latLng": { latitude: this.point2.lat, longitude: this.point2.lng}
+                //"latLng": { latitude: 41.420781, longitude: -87.918061 }
+                "latLng": { latitude: this.point2.lat(), longitude: this.point2.lng()}
+
+
               }
             },
             "travelMode": "DRIVE",
@@ -86,7 +99,9 @@
             "units": "IMPERIAL"
           }
         }).then((response) => {
-          console.log(response);
+          console.log(response.data.routes[0].polyline.encodedPolyline)
+          this.polylineString = response.data.routes[0].polyline.encodedPolyline;
+          this.renderPolyline = true
         }).catch((error) => {
           console.log(error);
         })
@@ -106,7 +121,7 @@
     
     <Marker :options="marker1options" />
     <Marker :options="marker2options" />
-
+    <Polyline v-if="renderPolyline" :options="polylineOptions"/>
 
   </GoogleMap>
 </template>
