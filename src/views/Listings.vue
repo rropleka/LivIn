@@ -6,6 +6,7 @@
     import { ref } from 'vue';
     import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
     import { firebaseapp } from '../firebaseInit'
+
     /*export default {
   setup(){
     const listings = [
@@ -15,41 +16,52 @@
         ]
     return{listings}
     },*/
+            // const listings = [
+            // { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
+            // { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
+            // { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
+            // { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
+            // ];
+
     export default {
         setup() {
             console.log('hello');
-            //uncomment below line to try to attempt to populate it with data from Firebase (doesn't work currently)
-            //const listings = ref([]);
-            //this is the curent hard coded array
-            const listings = [
-            { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
-            { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
-            { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
-            { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
-        ];
-        //this fetchListings should populate listings, but the result is the listings returns empty
-            const fetchListings = async () => {
-                console.log('bye');
-                try {
-                    
-                    const db = getFirestore(firebaseapp);
-                    const querySnapshot = await getDocs(collection(db, 'properties'));
+            const dataArray = []
+            const db = getFirestore(firebaseapp)
+            const collectionRef = collection(db, 'properties')
 
+            getDocs(collectionRef)
+                .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
-                        const data = doc.data();
-                        const propertyData = {
-                            propertyName: data.propertyName,
-                            rating: data.rating,
-                            price: data.rent
-                        };
-                        listings.value.push(propertyData);
+                        dataArray.push(doc.data())
                     });
+                    // console.log(dataArray)
+                })
+                .catch(error => {
+                    console.error('Error getting documents: ', error);
+                })
 
-                } catch (error) {
-                    console.error('Error fetching properties:', error);
-                }
-            };
-            console.log(listings.length);
+
+            const listings = dataArray
+            console.log(listings)
+            
+            /* 
+            Element structure
+
+            amenities: ['test1', 'test3']
+            location: ""
+            owner: "leasinguser4"
+            propertyName: ""
+            propertySize: ""
+            rating: 3.2
+            rent: 0
+            structureDetails: "" 
+            
+            To access the owner property of an element: listings[0].owner or listings[0]['owner']
+
+            */
+
+            // console.log(listings.length);
             return{listings};
         },
     
