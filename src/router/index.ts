@@ -37,12 +37,12 @@ const router = createRouter({
     {
       path: '/company-register',
       name: 'company-register',
-      component: () => import('../views/companyRegister.vue')
+      component: () => import('../views/CompanyRegister.vue')
     },
     {
       path: '/add-property',
       name: 'add-property',
-      component: () => import('../views/addProperty.vue')
+      component: () => import('../views/AddProperty.vue')
     },
     {
       path: '/property-page',
@@ -99,6 +99,11 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('../views/profile-page.vue')
+    },
+    {
+      path: '/compare',
+      name: 'compare',
+      component: () => import('../views/compare-page.vue')
     }
     ,
     {
