@@ -16,7 +16,7 @@ const currentUser = computed(() => store.getters.currentUser);
   <main>
         <div class="page">
           <div class="content">
-            <router-link to="/login">Back to Login Screeeeeen</router-link>
+            <router-link to="/login" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Back to Login Screeeeeen</router-link>
           </div>
           <div class="map">
             <GMapItem />
@@ -24,8 +24,8 @@ const currentUser = computed(() => store.getters.currentUser);
         </div>
 
   <div class="user-status">
-        <p v-if="isLoggedIn">User logged in: {{ currentUser.email }}</p>
-        <p v-else>No user logged in</p>
+        <p v-if="isLoggedIn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User logged in: {{ currentUser.email }}</p>
+        <p v-else class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No user logged in</p>
       </div>
   </main>
 </template>
