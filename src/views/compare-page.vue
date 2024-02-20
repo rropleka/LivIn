@@ -38,20 +38,15 @@ export default {
     const propList1 = ref(properties.value)
     const propList2 = ref(properties.value)
 
-    const property1 = ref({
+    const emptyProp = {
       name: "",
       address: "",
       owner: "",
       reviews: 0,
       details: ""
-    })
-    const property2 = ref({
-      name: "",
-      address: "",
-      owner: "",
-      reviews: 0,
-      details: ""
-    })
+    }
+    const property1 = ref(emptyProp)
+    const property2 = ref(emptyProp)
 
     const search1 = ref('')
     const search2 = ref('')
@@ -72,6 +67,7 @@ export default {
     }
 
     return {
+      emptyProp,
       properties,
       property1,
       property2,
@@ -143,6 +139,7 @@ export default {
             <textarea v-model="property1.details" type="details" id="details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly></textarea>
           </div>
         </div>
+        <button @click.prevent="setProperty1(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
       </div>
 
       <!-- Second half -->
@@ -194,6 +191,8 @@ export default {
             <textarea v-model="property2.details" type="details" id="details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly></textarea>
           </div>
         </div>
+        <button @click.prevent="setProperty2(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
       </div>
+      
     </div>
 </template>

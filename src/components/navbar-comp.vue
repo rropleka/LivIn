@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex';
-import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where } from 'firebase/firestore/lite'
+import { getFirestore,  doc,  getDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
 import { getAuth } from "firebase/auth";
 
@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth";
 const store = useStore();
 
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
+const logout = computed(() => store.dispatch('logoutUser'));
 
 const isLeasingCompany = ref(false);
 
@@ -49,15 +50,21 @@ onMounted(async () => {
       </router-link>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
-          <div v-if="isLoggedIn">
+          <li>
+              <router-link to="/compare" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Compare</router-link>
+            </li>
+          <div v-if="isLoggedIn" class="flex flex-row">
             <li>
-              <router-link to="/Profile" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
+              <router-link to="/Profile" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
             </li>
             <li>
-              <router-link to="/revprop" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
+              <router-link to="/revprop" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
             </li>
             <li v-if="isLeasingCompany">
-              <router-link to="/add-property" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
+              <router-link to="/add-property" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
+            </li>
+            <li>
+              <button @click.prevent="logout" class="block ml-4 py-1 px-2 rounded hover:bg-orange-200 md:bg-light-orange md:text-white text-lg font-default-font">Logout</button>
             </li>
           </div>
           <div v-else>
