@@ -11,12 +11,18 @@
                 </div>
             </div>
             <div class="mb-6">
-                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                <input v-model="user.username" type="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                <div v-if="isEditable === true">
+                    <input v-model="user.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div v-else>
+                    <input v-model="user.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                </div>
+
             </div> 
             <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input v-model="user.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                <input v-model="user.username" type="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
             </div> 
             <div class="mb-6">
                 <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
@@ -38,7 +44,7 @@
                 <label for="contactinfo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact info</label>
                 <input v-model="user.contactinfo" type="contactinfo" id="contactinfo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
             </div>
-            <button @click.prevent="toggleEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ isEditable ? 'Cancel' : 'Edit email' }}</button>
+            <button @click.prevent="toggleEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ isEditable ? 'Cancel' : 'Edit login' }}</button>
             <button v-if="isEditable" @click.prevent="saveChanges" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
         </form>
 </template>
@@ -77,6 +83,8 @@ export default {
 
                 if (this.user.password) {
                     await updatePassword(user, this.user.password);
+                    alert("Your account password has been updated please login again with your new credentials.")
+                    router.push('/login')
                 }
             } catch (error) {
                     alert(error.message);
