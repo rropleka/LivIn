@@ -87,8 +87,8 @@ export default {
         ...mapState({
             user: state => state.user
         }),
+        // Check if the user's email ends with '@purdue.edu'
         isPurdueEmail() {
-            // Check if the user's email ends with '@purdue.edu'
             return this.user.email.endsWith('@purdue.edu');
         }
     }
