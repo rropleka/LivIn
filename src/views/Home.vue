@@ -18,10 +18,10 @@ const currentUser = computed(() => store.getters.currentUser);
           <div class="content">
             <router-link to="/login">Back to Login Screeeeeen</router-link>
           </div>
-        <div class="map">
-          <GMapItem />
+          <div class="map">
+            <GMapItem />
+          </div>
         </div>
-      </div>
 
   <div class="user-status">
         <p v-if="isLoggedIn">User logged in: {{ currentUser.email }}</p>
@@ -40,9 +40,11 @@ const currentUser = computed(() => store.getters.currentUser);
   }
   .map {
     width: 66%;
+    height: 100%;
   }
   .page {
     display: flex;
     justify-content: space-between;
+    height: 100%;
   }
 </style>
