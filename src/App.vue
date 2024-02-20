@@ -35,6 +35,10 @@ app.mount('#app');
   border-radius: 15px;
 }
 
+.router-view {
+  height: 100%;
+}
+
 .name {
   font-size: 30px;
   font-family: serif;
