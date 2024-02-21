@@ -53,8 +53,19 @@ export default {
                 errorMessage.value = "All fields are required.";
                 return;
             }
+
+            if (phoneNumber.value.length < 10) {
+                errorMessage.value = "Phone number must be at least 10 digits long.";
+                return;
+            }
             try {
             const auth = getAuth();
+
+            const usernameExistsQuerySnapshot = await getDocs(query(collection(db, 'users'), where("username", "==", username.value)));
+            if (!usernameExistsQuerySnapshot.empty) {
+                errorMessage.value = "Username already exists. Please choose a different one.";
+                return;
+            }
                 // Signed up 
                 // const user = userCredential.user;
                 const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
@@ -65,7 +76,7 @@ export default {
                 permanentAddress: permanentAddress.value,
                 userType: "leasingCompany"
             });
-            router.push('/');
+            router.push('/login');
             console.log("success with company regiseration");
         } catch(error) {
             console.error("Error registering user:", error.message);

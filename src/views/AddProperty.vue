@@ -26,8 +26,8 @@
         </div>
   
         <div class="form-group">
-          <label for="property-size">Property Size:</label>
-          <input type="text" id="property-size" v-model="propertySize">
+          <label for="property-size">Property Size: (in acres)</label>
+          <input type="text" id="property-size" v-model="propertySize" pattern="[0-9]*">
         </div>
   
         <div class="form-group">
@@ -42,6 +42,9 @@
   
         <div class="map-container">
           <!-- Map display area -->
+          <!-- <GoogleMap api-key="AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8" style="width: 100%; height: 300px" :center="mapCenter" :zoom="15">
+          <Marker :position="mapCenter"></Marker>
+        </GoogleMap> -->
           <div id="map"></div>
         </div>
   
@@ -54,10 +57,50 @@
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   import {ref} from 'vue';
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDoc, setDoc, query, where } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
+import { GoogleMap, Marker } from "vue3-google-map";
+import GMapItem from '@/components/GMapItem.vue';
+
+
   
   export default {
+    async mounted() {
+    const auth = getAuth();
+  const currentUser = auth.currentUser;
+
+  // If the user is not logged in, redirect to the login page
+  if (!currentUser) {
+    router.push({ name: 'login' });
+    return;
+  }
+  const currentUserID = auth.currentUser.uid;
+  const db = getFirestore(firebaseapp);
+  try {
+        const userDocRef = doc(db, 'users', currentUserID);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          console.log(userData);
+          if (userData.userType) {
+              if(userData.userType == "sitemoderator") {
+                router.push({ name: 'login' });
+                alert("only leasing companies can add properties")
+                return;
+              }
+        } else {
+            router.push({ name: 'login' });
+            alert("only leasing companies can add properties")
+            return;
+        }
+        } else {
+          console.error('User data does not exist.');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+},
     setup() {
       const propertyName = ref('');
       const amenities = ref([]);
@@ -67,6 +110,7 @@ import { firebaseapp } from '../main'
       const structureDetails = ref('');
       const location = ref('');
       const errorMessage = ref('');
+      const mapCenter = ref({ lat: 0, lng: 0 }); // Initialize with default coordinates
       const db = getFirestore(firebaseapp);
   
       const addAmenity = () => {
@@ -154,6 +198,16 @@ import { firebaseapp } from '../main'
                 // throw new error("Error fetching username.")
               }
 
+              // Check if a property with the same name and owner already exists
+              const propertyExistsQuerySnapshot = await getDocs(query(collection(db, 'properties'), 
+                  where("propertyName", "==", propertyName.value),
+                  where("owner", "==", username)));
+
+              if (!propertyExistsQuerySnapshot.empty) {
+                  errorMessage.value = "A property with the same name already exists for this owner.";
+                  return;
+              }
+
                 const propertyDocRef = doc(collection(db, 'properties'));
                 await setDoc(propertyDocRef, {
                 propertyName: propertyName.value,
@@ -171,9 +225,19 @@ import { firebaseapp } from '../main'
         }
       };
   
-      const searchLocation = () => {
+      const searchLocation = async () => {
         // Implement location search using autocomplete
         // Update map marker position accordingly
+        try {
+        // Use the Google Maps Geocoding API to convert location into coordinates
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8`);
+        const data = await response.json();
+        console.log(data);
+        const coordinates = data.results[0].geometry.location;
+        mapCenter.value = { lat: coordinates.lat, lng: coordinates.lng };
+      } catch (error) {
+        console.error('Error searching location:', error.message);
+      }
       };
   
       return {
@@ -188,7 +252,8 @@ import { firebaseapp } from '../main'
         removeAmenity,
         saveProperty,
         searchLocation,
-        errorMessage
+        errorMessage,
+        mapCenter
       };
     }
   }
