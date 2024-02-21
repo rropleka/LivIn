@@ -110,7 +110,12 @@ const router = createRouter({
       path: '/revprop',
       name: 'revprop',
       component: () => import('../views/PropRev.vue')
-    }
+    },
+    {
+      path: '/moderator/hotspots',
+      name: 'hotspots',
+      component: () => import('../views/ModAddHotspots.vue')
+    },
   ]
 })
 

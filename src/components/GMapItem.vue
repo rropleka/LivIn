@@ -1,6 +1,8 @@
 <script lang="ts">
   import {GoogleMap, Marker, Polyline} from "vue3-google-map";
-  import {defineComponent} from "vue";
+  import {defineComponent, normalizeProps} from "vue";
+  import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+  import { firebaseapp } from '../firebaseInit'
   import {MapMouseEvent} from "google.maps";
   import {decode} from "@googlemaps/polyline-codec";
   import axios from "axios";
@@ -20,9 +22,33 @@
         renderTravelTimes: false,
       }
     },
-    setup() {
-      const center = { lat: 40.420781, lng: -86.918061 };
-      return { center };
+    async setup() {
+
+      const db = getFirestore(firebaseapp)
+      const campus = "West Lafayette"; //placeholder
+      const hotspotsSnapshot = await getDocs(query(collection(db, 'hotspots'), where('campus', '==', campus)));
+      let hotspots: Array<object> = [];
+      hotspotsSnapshot.forEach((doc) => {
+        try {
+          const data = doc.data();
+          const coords = JSON.parse(data.coords);
+          hotspots.push({
+            position: coords,
+
+          });
+        } catch (error) {
+          console.log("Misformatted hotspot, skipping");
+        }
+
+      })
+
+      console.log(hotspots);
+
+      return { 
+        center: { lat: 40.420781, lng: -86.918061 },
+        campus,
+        hotspots,
+       };
     },
     computed: {
       style() {
@@ -195,6 +221,10 @@
     @click="onMapClick"
     @contextmenu="onMapRightClick"
     :zoom="15">
+
+    <div class="hotspotMarker" v-for="hotspot in hotspots" :key="hotspot.position">
+      <Marker :options="hotspot"/>
+    </div>
     
     <Marker :options="marker1options" />
     <Marker :options="marker2options" />
