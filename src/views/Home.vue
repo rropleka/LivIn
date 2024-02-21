@@ -26,9 +26,9 @@ const currentUser = computed(() => store.getters.currentUser);
         </div>
       </div>
 
-      <div class="user-status">
-        <p v-if="isLoggedIn">User logged in: {{ currentUser.email }}</p>
-        <p v-else>No user logged in</p>
+  <div class="user-status">
+        <p v-if="isLoggedIn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User logged in: {{ currentUser.email }}</p>
+        <p v-else class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No user logged in</p>
       </div>
   </main>
 </template>
@@ -43,13 +43,15 @@ const currentUser = computed(() => store.getters.currentUser);
   }
   .map {
     width: 66%;
+    height: 100%;
   }
   .page {
     display: flex;
     justify-content: space-between;
+    height: 100%;
   }
-
   a {
     color: black;
   }
+
 </style>

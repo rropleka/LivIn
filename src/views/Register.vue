@@ -13,9 +13,10 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { ref } from 'vue';
 import router from '../router/index'
+import { useStore } from "vuex";
 // IMPORT getFirestore and firebaseapp everywhere you want to access the database
 import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
@@ -28,6 +29,7 @@ export default {
         const email = ref("");
         const password = ref("");
         const username = ref("");
+        const store = useStore();
         // !!! Add this line to get the instance of firestore in each location of the app its needed !!!
         const db = getFirestore(firebaseapp)
 
@@ -52,12 +54,22 @@ export default {
                     return;
                 }
 
-            const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
+            
+            /* FIREBASE USER CREATION */
+            const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+            // Send email verification
+            await sendEmailVerification(auth.currentUser);
+            alert("Check email for verification link");
+            console.log("Verification email sent!");
+
             // Create a userDocRef to give each user a unique doc in our users collection
             const userDocRef = doc(collection(db, 'users'), userCredential.user.uid);
             await setDoc(userDocRef, {
                 username: username.value // Add username to firestore associated with uid
             });
+
+            const user = userCredential.user;
+            store.dispatch('loginUser', user);
 
             // Redirect to the home page after successful registration
                 router.push('/');
@@ -93,4 +105,3 @@ export default {
   }
 
   </style>
-  ../router/router

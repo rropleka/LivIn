@@ -1,25 +1,22 @@
-<script setup>
-import AccountInfo from '../components/account-info.vue'
-</script>
 
 <script>
 import { ref } from 'vue'
-
-const page = ref(1)
+import AccountInfo from '../components/account-info.vue'
 
 export default {
     components: {
         AccountInfo
     },
     setup() {
-        return {
-            page
+        const page = ref(1)
+
+        function setPage(num) {
+            page.value = num
         }
-    },
-    methods: {
-        setPage(page) {
-            this.page = page
-            console.log('page', page)
+
+        return {
+            page,
+            setPage
         }
     }
 }
