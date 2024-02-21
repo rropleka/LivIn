@@ -1,5 +1,5 @@
 <template>
-  <div class="property-card" v-if="property">
+  <div class="property-card" v-if="property && loadPack.hasLoaded">
     <div class="property-image">
       <img src="../assets/house.jpeg" alt="Property Image">
     </div>
@@ -22,17 +22,49 @@
       <div class="amenities-list">
   <button v-for="(amenity, index) in property.amenities" :key="index" class="amenity-button">{{ amenity }}</button>
 </div>
-
       <div class="rating">
-        <!-- <p class="owner-rating">Owner rating: {{ propertyInfo.ownerRating }}</p> -->
-        <!-- <p class="property-rating">Property rating: {{ propertyInfo.propertyRating }}</p> -->
       </div>
     </div>
+    
   </div>
   <div v-else>
     <!-- <p>Loading...</p> -->
     <div class="loading-spinner"></div>
   </div>
+  <div class="score">
+    <h1>Cumulative Scores</h1>
+    
+      <h2 v-if="loadPack.totalReviews > 0">{{ parseFloat(loadPack.totalScore/loadPack.totalReviews+'').toFixed(2) }}</h2>
+      <h2 v-else>No Reviews Yet</h2>
+    
+  </div>
+  <div class="reviews">
+      <div class="myRev">
+        <h1 v-if="loadPack.hasReviewed==true">My Review</h1>
+        <ul class="mine"></ul>
+        <button v-if="loadPack.hasReviewed==true" v-on:click="edit" type="button">Edit my Review</button>
+      </div>
+      <div class="otherRevs">
+        <h1>Reviews</h1>
+        <ul class="users"></ul>
+        <h2 v-if="loadPack.totalReviews<=0">No Reviews Yet</h2>
+      </div>
+  </div>
+  <form>
+      <div class="leaveRev">
+          <h1>Leave a Review</h1>
+          <h2>Enter a star rating</h2>
+          <input type="number" placeholder="Stars" v-model="form.stars" min="1" max="5" value="5"><br/>
+          <h2>Enter a review</h2>
+          <!--<input type="text" placeholder="Review" v-model="form.text">-->
+          <textarea id="ta" v-model="form.text" rows="7"></textarea>
+          <br>
+          <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
+          <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
+      </div>
+  </form>
+
+  
 </template>
   
   <script>
@@ -58,6 +90,23 @@ import { firebaseapp } from '../main'
       property: null,
       isCurrentUserOwner1: false,
       isSiteModerator: false,
+      form: {
+        stars:'',
+        text:''
+      },
+      loadPack: {
+        hasReviewed:false,
+        totalReviews:0,
+        totalScore:0,
+        usersReviewed: ["t1", "t2"],
+        docRef: '',
+        reviewText: ["t1"],
+        myReview: '',
+        myRating:-1,
+        revRef: '',
+        isEdit:false,
+        hasLoaded:false
+      }
     };
   },
   async mounted() {
@@ -83,6 +132,64 @@ import { firebaseapp } from '../main'
       router.push({ name: 'not-found' });
     }
   },
+  async beforeMount() {
+          const db = getFirestore(firebaseapp)
+          
+          try {
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const propname=this.propertyName//replace with current property
+            const username=currentUser.name
+            const ownername=this.leasingCompany
+                
+            const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname), where('owner', '==', ownername)));
+            //console.log(querySnapshot.size)
+            querySnapshot.forEach((doc) => {
+              const data = doc.data()
+              this.loadPack.totalReviews=data.totalReviews
+              this.loadPack.totalScore=data.totalScore
+              this.loadPack.usersReviewed=data.usersReviewed
+              this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
+              this.loadPack.docRef=doc.ref.path
+            })
+            console.log("qsempty" + querySnapshot.empty)
+            this.loadPack.hasLoaded=!querySnapshot.empty
+
+            const userList = document.querySelector('.users');
+            const myList = document.querySelector('.mine')
+            const querySnapshot2 = await getDocs(query(collection(db, 'propertyReviews'), where('propertyName', '==', propname), where('owner', '==', ownername)));
+            console.log("qsempty2" + querySnapshot2.empty)
+            this.loadPack.reviewText.pop()
+            querySnapshot2.forEach((doc) => {
+              console.log("in qs2 loop")
+              const data = doc.data()
+              //this.loadPack.reviewText.push(data.reviewText)
+              const userItem = document.createElement('li')
+              userItem.innerHTML = `
+                ${data.username} says <br>
+                ${data.reviewText} <br>
+              `
+              if (data.username==username) {
+                this.loadPack.myReview=data.reviewText
+                this.loadPack.myRating=data.stars
+                this.loadPack.revRef=doc.ref.path
+                myList?.appendChild(userItem)
+              } else {
+                console.log("other appeand***")
+                userList?.appendChild(userItem)
+              }
+            })
+            //get array of reviewed properties from querysnapshot
+            //check against selected listing to set hasReviewed
+            } catch(error) {
+                // Handle any errors
+                const errorMessage = error;
+                alert(errorMessage);
+            }
+          return {
+            //set data
+          }
+        },
   methods: {
     async validateCurrentUserOwner() {
       console.log("inside currentUserOwner");
@@ -215,7 +322,77 @@ import { firebaseapp } from '../main'
           amenities: ['Amenity 1', 'Amenity 2']};
     return defdata;
 }
-    }
+    },
+    async sub() {
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const propname=this.propertyName//replace with current property
+            const username=currentUser.name
+            const ownername=this.leasingCompany
+            if(typeof this.form.stars!='undefined' && this.form.stars) {
+              //console.log(this.form.stars)
+              const db = getFirestore(firebaseapp)
+              try {
+                if(this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0) { 
+                  this.loadPack.usersReviewed.push(username)
+                } else {
+                  this.loadPack.usersReviewed=[username]
+                }
+                console.log("andrew here 1")
+                const x = doc(db, this.loadPack.docRef)
+                console.log("andrew here 2")
+                const sr = this.submitReview(db, propname, ownername, username) //push to reviews
+                console.log("andrew here 3: " + sr)
+                this.updateProperty(db, propname, ownername, x) //update property info
+                console.log("andrew here 4")
+              } catch(error) {
+                // Handle any errors
+                const errorMessage = error;
+                alert(errorMessage);
+            }
+              //good submission, continue
+            } else {
+              console.log('issue')
+              //throw error
+            }
+          }, 
+          async submitReview (db, propname, ownername, username){
+            const db2 = getFirestore(firebaseapp)
+            console.log("db2 type " + typeof db2)
+            const docRef = await addDoc(collection(db2, "propertyReviews"), {
+              owner: ownername,
+              propertyName: propname,
+              username: username,
+              reviewText: this.form.text,
+              stars: this.form.stars,
+              timestamp: Date.now()
+            }).then((value) => {return value});
+            return docRef
+          }, 
+          async updateProperty (db, propname, ownername, userDocRef) {
+            console.log("in update" + userDocRef)
+            await updateDoc(userDocRef, {
+                totalReviews: this.loadPack.totalReviews+1,
+                totalScore: this.loadPack.totalScore+this.form.stars,
+                usersReviewed: this.loadPack.usersReviewed
+            });
+          },
+          edit() {
+            console.log("edit")
+            this.loadPack.isEdit=true;
+            this.form.text=this.loadPack.myReview
+            this.form.stars=this.loadPack.myRating.toString()
+          },
+          async upd() {
+            const db = getFirestore(firebaseapp)
+            const docRef=doc(db,this.loadPack.revRef)
+            await updateDoc(docRef, {
+              reviewText: this.form.text,
+              stars: this.form.stars,
+              timestamp: Date.now()
+            });
+            //this.rel()
+          }
   }
 };
   </script>
@@ -388,6 +565,74 @@ div[property] > p {
 
   .edit-property-button:hover {
     background-color: #0056b3; /* Darker blue color on hover */
+  }
+  .leaveRev {
+    align-items: center;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
+  }
+  h1 {
+    color:black;
+  }
+  h2 {
+    color:red;
+  }
+  input[type='text'],input[type='number'],textarea{
+    color: black;
+    border-width: 3px;
+    border-style: dashed;
+    border-color: teal;
+    border-radius: 10px;
+  }
+  button[type='submit'],button[type='button']{
+    background-color: cadetblue;
+    margin: 5px;
+    margin-left: 0px;
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
+  }
+  button[type='submit']:hover {
+    background-color: lightcoral;
+  }
+  .score {
+    align-items: center;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
+    color: black;
+  }
+  .reviews {
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
+  }
+  .reviews li {
+    color: blueviolet;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
   }
 
 </style> 
