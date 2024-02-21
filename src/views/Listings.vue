@@ -1,6 +1,4 @@
 <script>
-    //import Listing.js from "/objects/Listing.js";
-    //Listing1 = new Listing('Property1');
     import router from '../router/index'
     import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
     import { ref } from 'vue';
@@ -8,6 +6,7 @@
     import { firebaseapp } from '../firebaseInit'
 
     export default {
+        //async method to get all listings from firebase
         async mounted () {
             try {
                 const listingsData = await this.getListings(this.listings);
@@ -49,6 +48,7 @@
             setPageSize:function(event) {
                 this.pageSize = event.target.value;
             },
+            //return all listings in an array
             async getListings() {
                 try {
                     const db = getFirestore(firebaseapp);
@@ -69,6 +69,7 @@
                     return null;
                 }
             },
+            //return one property object identified by property name given when hovering a property on the table
             async getPropertyData(propertyName) {
                 try {
                     const db = getFirestore(firebaseapp);
@@ -88,6 +89,7 @@
             },
         },
         computed:{
+            //performs sort and pagination
             listings:function() {
                 return this.listings.sort((a,b) => {
                     let modifier = 1;
