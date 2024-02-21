@@ -51,9 +51,9 @@
       </div>
   </div>
   <form>
-      <div class="leaveRev">
+      <div v-if="loadPack.hasReviewed==false||loadPack.isEdit==true" class="leaveRev">
           <h1>Leave a Review</h1>
-          <h2>Enter a star rating</h2>
+          <h2>Enter a rating</h2>
           <input type="number" placeholder="Stars" v-model="form.stars" min="1" max="5" value="5"><br/>
           <h2>Enter a review</h2>
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
@@ -71,7 +71,7 @@
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   import {ref} from 'vue';
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where, addDoc, updateDoc, Firestore, DocumentReference } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
   
   export default {
@@ -105,7 +105,8 @@ import { firebaseapp } from '../main'
         myRating:-1,
         revRef: '',
         isEdit:false,
-        hasLoaded:false
+        hasLoaded:false,
+        username:''
       }
     };
   },
@@ -139,7 +140,12 @@ import { firebaseapp } from '../main'
             const auth = getAuth();
             const currentUser = auth.currentUser;
             const propname=this.propertyName//replace with current property
-            const username=currentUser.name
+            const userDoc=currentUser.uid
+            const userDocRef = doc(db, 'users', userDoc);
+            const userDocSnap = await getDoc(userDocRef);
+            const username=userDocSnap.data().username
+            this.loadPack.username=username
+            console.log("***username: " + username)
             const ownername=this.leasingCompany
                 
             const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname), where('owner', '==', ownername)));
@@ -167,7 +173,7 @@ import { firebaseapp } from '../main'
               const userItem = document.createElement('li')
               userItem.innerHTML = `
                 ${data.username} says <br>
-                ${data.reviewText} <br>
+                ${data.reviewText} <br><br>
               `
               if (data.username==username) {
                 this.loadPack.myReview=data.reviewText
@@ -324,14 +330,22 @@ import { firebaseapp } from '../main'
 }
     },
     async sub() {
+            console.log("submethod")
             const auth = getAuth();
             const currentUser = auth.currentUser;
             const propname=this.propertyName//replace with current property
-            const username=currentUser.name
+            const userDoc=currentUser.uid
+            const db = getFirestore(firebaseapp)
+            const userDocRef = doc(db, 'users', userDoc);
+            console.log("did i hang here")
+            //const userDocSnap = await getDoc(userDocRef);
+            //const username=userDocSnap.data().username
+            const username = this.loadPack.username
+            console.log("***sub username: " + username)
             const ownername=this.leasingCompany
             if(typeof this.form.stars!='undefined' && this.form.stars) {
               //console.log(this.form.stars)
-              const db = getFirestore(firebaseapp)
+              //const db = getFirestore(firebaseapp)
               try {
                 if(this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0) { 
                   this.loadPack.usersReviewed.push(username)
@@ -342,8 +356,8 @@ import { firebaseapp } from '../main'
                 const x = doc(db, this.loadPack.docRef)
                 console.log("andrew here 2")
                 const sr = this.submitReview(db, propname, ownername, username) //push to reviews
-                console.log("andrew here 3: " + sr)
-                this.updateProperty(db, propname, ownername, x) //update property info
+                //console.log("andrew here 3: " + sr)
+                this.updateProperty(x) //update property info
                 console.log("andrew here 4")
               } catch(error) {
                 // Handle any errors
@@ -352,30 +366,39 @@ import { firebaseapp } from '../main'
             }
               //good submission, continue
             } else {
-              console.log('issue')
+              alert("Please enter a numerical rating")
               //throw error
             }
           }, 
           async submitReview (db, propname, ownername, username){
-            const db2 = getFirestore(firebaseapp)
-            console.log("db2 type " + typeof db2)
-            const docRef = await addDoc(collection(db2, "propertyReviews"), {
-              owner: ownername,
-              propertyName: propname,
+            const c = collection(db, "propertyReviews");
+            try {
+            const docRef = await addDoc(c, {
+              owner: this.leasingCompany,
+              propertyName: this.propertyName,
               username: username,
               reviewText: this.form.text,
               stars: this.form.stars,
               timestamp: Date.now()
-            }).then((value) => {return value});
-            return docRef
-          }, 
-          async updateProperty (db, propname, ownername, userDocRef) {
-            console.log("in update" + userDocRef)
-            await updateDoc(userDocRef, {
-                totalReviews: this.loadPack.totalReviews+1,
-                totalScore: this.loadPack.totalScore+this.form.stars,
-                usersReviewed: this.loadPack.usersReviewed
             });
+            console.log("doc with id: " + docRef)
+          } catch (error) {
+            const errorMessage = error;
+                alert(errorMessage);
+          }
+          }, 
+          async updateProperty (userDocRef) {
+            try {
+              console.log("***in update" + userDocRef)
+              await updateDoc(userDocRef, {
+                  totalReviews: this.loadPack.totalReviews+1,
+                  totalScore: Number(this.loadPack.totalScore)+Number(this.form.stars),
+                  usersReviewed: this.loadPack.usersReviewed
+              });
+            } catch (error) {
+              const errorMessage = error;
+              alert(errorMessage);
+            }
           },
           edit() {
             console.log("edit")
@@ -384,14 +407,47 @@ import { firebaseapp } from '../main'
             this.form.stars=this.loadPack.myRating.toString()
           },
           async upd() {
+            const db = getFirestore(firebaseapp);
+            const x = doc(db, this.loadPack.docRef)
+            if(typeof this.form.stars!='undefined' && this.form.stars) {
             const db = getFirestore(firebaseapp)
             const docRef=doc(db,this.loadPack.revRef)
-            await updateDoc(docRef, {
-              reviewText: this.form.text,
-              stars: this.form.stars,
-              timestamp: Date.now()
-            });
+            /*await updateDoc(x, {
+                  totalReviews: this.loadPack.totalReviews,
+                  totalScore: this.loadPack.totalScore-this.loadPack.myRating+this.form.stars-100,
+                  usersReviewed: this.loadPack.usersReviewed
+              });*/
+            this.updateReview()
+            this.updatePropScore()
             //this.rel()
+          } else {
+            alert("Please enter a numerical rating")
+          }
+          }, async updateReview() {
+              const db = getFirestore(firebaseapp);
+              const x = doc(db, this.loadPack.docRef)
+              if(typeof this.form.stars!='undefined' && this.form.stars) {
+              const db = getFirestore(firebaseapp)
+              const docRef=doc(db,this.loadPack.revRef)
+              await updateDoc(docRef, {
+                reviewText: this.form.text,
+                stars: this.form.stars,
+                timestamp: Date.now()
+              });
+            }
+          }, async updatePropScore() {
+              const db = getFirestore(firebaseapp);
+              const x = doc(db, this.loadPack.docRef)
+              if(typeof this.form.stars!='undefined' && this.form.stars) {
+              const db = getFirestore(firebaseapp)
+              const docRef=doc(db,this.loadPack.revRef)
+              console.log("total: " + typeof this.loadPack.totalScore + " mine: " + typeof this.loadPack.myRating + " stars: " + typeof this.form.stars)
+              await updateDoc(x, {
+                    totalReviews: this.loadPack.totalReviews,
+                    totalScore: Number(this.loadPack.totalScore)-Number(this.loadPack.myRating)+Number(this.form.stars),
+                    usersReviewed: this.loadPack.usersReviewed
+                });
+            }
           }
   }
 };
@@ -576,6 +632,8 @@ div[property] > p {
     height: fit-content;
     margin: 10px;
     padding: 10px;
+    min-width: 400px;
+    background-color: bisque;
   }
   h1 {
     color:black;
@@ -612,6 +670,8 @@ div[property] > p {
     margin: 10px;
     padding: 10px;
     color: black;
+    min-width: 400px;
+    background-color: bisque;
   }
   .reviews {
     border-width: 5px;
@@ -622,6 +682,9 @@ div[property] > p {
     height: fit-content;
     margin: 10px;
     padding: 10px;
+    min-width: 400px;
+    background-color: bisque;
+    color:red;
   }
   .reviews li {
     color: blueviolet;
