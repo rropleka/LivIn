@@ -28,12 +28,16 @@ export default defineComponent ({
                 return;
             }
             console.log("Can add hotspot");
+            try {
+                const hotspotsRef = collection(this.db, "hotspots");
+                await addDoc(hotspotsRef, {
+                    campus: this.campus,
+                    coords: JSON.stringify(coords),
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
-            const hotspotsRef = collection(this.db, "hotspots");
-            await addDoc(hotspotsRef, {
-                campus: this.campus,
-                coords: coords
-            })
         }
     }
 })

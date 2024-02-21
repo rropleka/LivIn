@@ -20,7 +20,9 @@ const currentUser = computed(() => store.getters.currentUser);
           <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
         </div>
         <div class="map">
-          <GMapItem />
+          <Suspense>
+            <GMapItem />
+          </Suspense>
         </div>
       </div>
 
@@ -45,5 +47,9 @@ const currentUser = computed(() => store.getters.currentUser);
   .page {
     display: flex;
     justify-content: space-between;
+  }
+
+  a {
+    color: black;
   }
 </style>
