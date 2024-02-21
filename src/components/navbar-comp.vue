@@ -53,6 +53,9 @@ onMounted(async () => {
           <li>
               <router-link to="/compare" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Compare</router-link>
             </li>
+            <li>
+              <router-link to="/listings" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Properties</router-link>
+            </li>
           <div v-if="isLoggedIn" class="flex flex-row">
             <li>
               <router-link to="/Profile" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
