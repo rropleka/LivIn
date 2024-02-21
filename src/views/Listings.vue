@@ -7,74 +7,24 @@
     import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
     import { firebaseapp } from '../firebaseInit'
 
-    /*export default {
-  setup(){
-    const listings = [
-            { propertyName: 'Lafayette', address: '100 Lafayette Way', price: '$100' },
-            { propertyName: 'Wiley Hall', address: '200 Wiley St', price: '$200' },
-            { propertyName: 'Cedarwood', address: '300 Grant St', price: '$300' },
-        ]
-    return{listings}
-    },*/
-            // const listings = [
-            // { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
-            // { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
-            // { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
-            // { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
-            // ];
-
     export default {
-        setup() {
-            console.log('hello');
-            const dataArray = []
-            const db = getFirestore(firebaseapp)
-            const collectionRef = collection(db, 'properties')
-
-            getDocs(collectionRef)
-                .then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        dataArray.push(doc.data())
-                    });
-                    // console.log(dataArray)
-                })
-                .catch(error => {
-                    console.error('Error getting documents: ', error);
-                })
-
-
-            const listings = dataArray
-            console.log(listings)
-            
-            /* 
-            Element structure
-
-            amenities: ['test1', 'test3']
-            location: ""
-            owner: "leasinguser4"
-            propertyName: ""
-            propertySize: ""
-            rating: 3.2
-            rent: 0
-            structureDetails: "" 
-            
-            To access the owner property of an element: listings[0].owner or listings[0]['owner']
-
-            */
-
-            // console.log(listings.length);
-            return{listings};
+        async mounted () {
+            try {
+                const listingsData = await this.getListings(this.listings);
+            if (listingsData) {
+                this.listings = listingsData;
+            } else {
+                router.push({ listings: [] });
+            }
+            } catch (error) {
+                console.error("Error fetching listings data:", error);
+            }
         },
-    
         data: function(){
             
             
-            return{/*
-            listings:[
-            { propertyName: 'Lafayette', rating: '3.2', price: '$200' },
-            { propertyName: 'Wiley Hall', rating: '3.1', price: '$100' },
-            { propertyName: 'Cedarwood', rating: '3.3', price: '$300' },
-            { propertyName: 'Tarkington Hall', rating: '3.0', price: '$400' },
-        ],*/
+            return{
+            listings: [],
             sortName: 'name',
             sortDir: 'asc',
             pageSize: 3,
@@ -82,14 +32,6 @@
             propertyHover: false
             };
         },
-        /*created:function() {
-            this.listings = [
-            { propertyName: 'Lafayette', address: '100 Lafayette Way', price: '$100' },
-            { propertyName: 'Wiley Hall', address: '200 Wiley St', price: '$200' },
-            { propertyName: 'Cedarwood', address: '300 Grant St', price: '$300' },
-        ]
-        return{listings}
-        },*/
         methods:{
             sort:function(s) {
             if(s === this.sortName) {
@@ -105,7 +47,28 @@
             },
             setPageSize:function(event) {
                 this.pageSize = event.target.value;
-            }
+            },
+            async getListings() {
+                try {
+                    const db = getFirestore(firebaseapp);
+                    const collectionRef = collection(db, 'properties');
+                    const querySnapshot = await getDocs(collection(db, 'properties'));
+
+                    if (querySnapshot.empty) {
+                        return false;
+                    }
+                    const listingsArray = [];
+
+                    querySnapshot.forEach(doc => {
+                        listingsArray.push(doc.data());
+                    });
+                    return listingsArray;
+                } catch (error) {
+                    console.error('Error checking property existence:', error);
+                    return null;
+                }
+            },
+  
         },
         computed:{
             listings:function() {
@@ -135,16 +98,18 @@
     }
     button {
         margin-right: 10px;
+        margin-top: 5px;
     }
 </style>
 
 <template>
+    <div class="listings-page" v-if="listings">
     <div class="listingtext" style="width: 100%; display: flex;">
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')">Property Name</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rating')">Rating</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
     </div>
-    <div class="listings" style="width: 100%; border: 1px solid blue; margin-top: 5px; margin-bottom: 5px;">
+    <div class="listings" style="width: 100%; border: 1px solid blue; margin-top: 5px;">
         <div v-show="propertyHover" style="width: 400px; height: 150px; border: 1px solid red; color: black; float: right;"></div>
         <table style="margin-left: 0; width: 50%; border: 1px solid green;">
             <tbody>
@@ -164,11 +129,12 @@
     <div class="listingtext" style="width: 100%; display: flex;">
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="prevPage">Previous</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="nextPage">Next</button>
+        <p style="margin: auto 10px auto 0px">Properties per Page</p>
         <select @change="setPageSize($event)">
             <option value="1">1</option>
             <option value="2">2</option>
             <option selected="selected" value="3">3</option>
         </select>
     </div>
-    
+    </div>
 </template>
