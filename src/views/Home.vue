@@ -14,14 +14,17 @@ const currentUser = computed(() => store.getters.currentUser);
 
 <template>
   <main>
-        <div class="page">
-          <div class="content">
-            <router-link to="/login" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Back to Login Screeeeeen</router-link>
-          </div>
-          <div class="map">
-            <GMapItem />
-          </div>
+      <div class="page">
+        <div class="content">
+          <router-link to="/login">Back to Login Screeeeeen</router-link>
+          <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
         </div>
+        <div class="map">
+          <Suspense>
+            <GMapItem />
+          </Suspense>
+        </div>
+      </div>
 
   <div class="user-status">
         <p v-if="isLoggedIn" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User logged in: {{ currentUser.email }}</p>
@@ -47,4 +50,8 @@ const currentUser = computed(() => store.getters.currentUser);
     justify-content: space-between;
     height: 100%;
   }
+  a {
+    color: black;
+  }
+
 </style>
