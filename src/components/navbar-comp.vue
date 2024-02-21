@@ -63,8 +63,8 @@ onMounted(async () => {
             <li v-if="isLeasingCompany">
               <router-link to="/add-property" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
             </li>
-            <li>
-              <button @click.prevent="logout" class="block ml-4 py-1 px-2 rounded hover:bg-orange-200 md:bg-light-orange md:text-white text-lg font-default-font">Logout</button>
+            <li @click.prevent="logout">
+              <router-link to="/"  class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Logout</router-link>
             </li>
           </div>
           <div v-else>
