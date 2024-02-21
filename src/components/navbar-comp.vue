@@ -10,33 +10,33 @@ const store = useStore();
 
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
 
-const isLeasingCompany = ref(false);
+const isLeasingCompany = ref(true);
 
 onMounted(async () => {
   const auth = getAuth();
-  
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      try {
-        const db = getFirestore(firebaseapp);
-        const userDocRef = doc(db, 'users', user.uid);
-        const userDocSnap = await getDoc(userDocRef);
+  // console.log(auth.currentUser);
+  // auth.onAuthStateChanged(async (user) => {
+  //   if (user) {
+  //     try {
+  //       const db = getFirestore(firebaseapp);
+  //       const userDocRef = doc(db, 'users', user.uid);
+  //       const userDocSnap = await getDoc(userDocRef);
 
-        if (userDocSnap.exists()) {
-          const userData = userDocSnap.data();
-          if (userData.userType === "leasingCompany") {
-            isLeasingCompany.value = true;
-          }
-        } else {
-          console.error('User document does not exist.');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    } else {
-      console.error('User not authenticated!');
-    }
-  });
+  //       if (userDocSnap.exists()) {
+  //         const userData = userDocSnap.data();
+  //         if (userData.userType === "leasingCompany") {
+  //           isLeasingCompany.value = true;
+  //         }
+  //       } else {
+  //         console.error('User document does not exist.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     }
+  //   } else {
+  //     console.error('User not authenticated!');
+  //   }
+  // });
 });
 </script>
 

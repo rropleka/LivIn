@@ -37,12 +37,12 @@ const router = createRouter({
     {
       path: '/company-register',
       name: 'company-register',
-      component: () => import('../views/companyRegister.vue')
+      component: () => import('../views/CompanyRegister.vue')
     },
     {
       path: '/add-property',
       name: 'add-property',
-      component: () => import('../views/addProperty.vue')
+      component: () => import('../views/AddProperty.vue')
     },
     {
       path: '/property-page',
