@@ -31,26 +31,34 @@
         </div>
   
         <div class="form-group">
-          <label for="structure-details">Structure Details:</label>
+          <label for="structure-details">Property Details:</label>
           <textarea id="structure-details" v-model="structureDetails"></textarea>
         </div>
   
         <div class="form-group">
           <label for="location">Location:</label>
-          <input type="text" id="location" placeholder="Search Location" v-model="location" @keyup.enter="searchLocation">
+          <input type="text" id="location" placeholder="Store Location" v-model="location" @keyup.enter="searchLocation">
         </div>
   
-        <div class="map-container">
+        <!-- <div class="map-container"> -->
           <!-- Map display area -->
-          <div id="map"></div>
-        </div>
+          <!-- <div id="map"></div> -->
+          <div class="map">
+            <GMapItem :location="location" />
+          </div>
+        <!-- </div> -->
   
         <button type="submit">Update Property</button>
       </form>
     </div>
   </template>
+
+<!-- <script setup>
+import GMapItem from '@/components/GMapItem2.vue';
+</script> -->
   
   <script>
+  import GMapItem from '@/components/GMapItem2.vue';
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   import {ref} from 'vue';
   import router from '../router/index'
@@ -64,6 +72,27 @@ import { firebaseapp } from '../main'
     console.log('Property ID:', propertyId);
     this.fetchPropertyData(propertyId);
   },
+  components: {
+      GMapItem // Register GMapItem as a component
+    },
+    data() {
+      return {
+        center: { lat: 40.420781, lng: -86.918061 },
+        location: '',
+        point1: null,
+        point2: null,
+        polylineString: '',
+        renderPolyline: false,
+        formattedTravelTimes: [0, 0, 0],
+        renderTravelTimes: false,
+        errorMessage: '',
+        amenities: [],
+        newAmenity: '',
+        rent: 0,
+        propertySize: '',
+        structureDetails: ''
+      };
+    },
     setup() {
       const propertyName = ref('');
       const amenities = ref([]);
@@ -135,7 +164,7 @@ import { firebaseapp } from '../main'
                 }
 
                 if (!structureDetails.value.trim()) {
-                    errorMessage.value = 'Structure details cannot be empty';
+                    errorMessage.value = 'Property details cannot be empty';
                     return;
                 }
 
