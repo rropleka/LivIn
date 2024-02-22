@@ -31,27 +31,54 @@
         </div>
   
         <div class="form-group">
-          <label for="structure-details">Structure Details:</label>
+          <label for="structure-details">Property Details:</label>
           <textarea id="structure-details" v-model="structureDetails"></textarea>
         </div>
   
         <div class="form-group">
           <label for="location">Location:</label>
-          <input type="text" id="location" placeholder="Search Location" v-model="location" @keyup.enter="searchLocation">
+          <!-- <input type="text" id="location" placeholder="Search Location" v-model="location" @keyup.enter="searchLocation"> -->
+          <input type="text" id="location" placeholder="Store Location" v-model="location" @focus="initAutocomplete">
         </div>
   
-        <div class="map-container">
+        <!-- <div class="map-container"> -->
           <!-- Map display area -->
-          <!-- <GoogleMap api-key="AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8" style="width: 100%; height: 300px" :center="mapCenter" :zoom="15">
-          <Marker :position="mapCenter"></Marker>
-        </GoogleMap> -->
-          <div id="map"></div>
-        </div>
+          <!-- <GoogleMap api-key="AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8" style="width: 100%; height: 300px" :center="mapCenter" :zoom="15"> -->
+          <!-- <Marker :position="mapCenter"></Marker> -->
+        <!-- </GoogleMap> -->
+          <!-- <div id="map"></div> -->
+          <div class="map">
+            <GMapItem />
+          </div>
+          <!-- <GoogleMap 
+    api-key="AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8" 
+    :style=style 
+    :center="center" 
+    @click="onMapClick"
+    @contextmenu="onMapRightClick"
+    :zoom="15">
+
+    <div class="hotspotMarker" v-for="hotspot in hotspots" :key="hotspot.position">
+      <Marker :options="hotspot"/>
+    </div>
+    
+    <Marker :options="marker1options" />
+    <Marker :options="marker2options" />
+    <Polyline v-if="renderPolyline" :options="polylineOptions"/>
+
+  </GoogleMap> -->
+        <!-- </div> -->
   
         <button type="submit">Save Property</button>
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8&libraries=places"></script> -->
       </form>
     </div>
   </template>
+
+  <!-- <script setup>
+  import GMapItem from '@/components/GMapItem2.vue';
+
+  </script> -->
   
   <script>
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -60,7 +87,8 @@
   import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
 import { GoogleMap, Marker } from "vue3-google-map";
-import GMapItem from '@/components/GMapItem.vue';
+import GMapItem from '@/components/GMapItem2.vue';
+
 
 
   
@@ -71,7 +99,7 @@ import GMapItem from '@/components/GMapItem.vue';
 
   // If the user is not logged in, redirect to the login page
   if (!currentUser) {
-    router.push({ name: 'login' });
+    // router.push({ name: 'login' });
     return;
   }
   const currentUserID = auth.currentUser.uid;
@@ -101,6 +129,27 @@ import GMapItem from '@/components/GMapItem.vue';
         console.error('Error fetching user data:', error.message);
       }
 },
+components: {
+      GMapItem // Register GMapItem as a component
+    },
+    data() {
+      return {
+        center: { lat: 40.420781, lng: -86.918061 },
+        location: '',
+        point1: null,
+        point2: null,
+        polylineString: '',
+        renderPolyline: false,
+        formattedTravelTimes: [0, 0, 0],
+        renderTravelTimes: false,
+        errorMessage: '',
+        amenities: [],
+        newAmenity: '',
+        rent: 0,
+        propertySize: '',
+        structureDetails: ''
+      };
+    },
     setup() {
       const propertyName = ref('');
       const amenities = ref([]);
@@ -110,10 +159,10 @@ import GMapItem from '@/components/GMapItem.vue';
       const structureDetails = ref('');
       const location = ref('');
       const errorMessage = ref('');
-      const mapCenter = ref({ lat: 0, lng: 0 }); // Initialize with default coordinates
       const db = getFirestore(firebaseapp);
   
       const addAmenity = () => {
+        console.log("adding amenity");
         if (newAmenity.value.trim() !== '') {
           amenities.value.push(newAmenity.value);
           newAmenity.value = '';
@@ -123,7 +172,29 @@ import GMapItem from '@/components/GMapItem.vue';
       const removeAmenity = (index) => {
         amenities.value.splice(index, 1);
     };
-  
+
+    // const initAutocomplete = () => {
+    // const inputElement = document.getElementById('location');
+    // const autocomplete = new google.maps.places.Autocomplete(inputElement);
+
+    // // Set options for the Autocomplete service (if needed)
+    // autocomplete.setFields(['formatted_address', 'geometry']);
+
+    // // Listen for the 'place_changed' event to retrieve the selected place
+    // autocomplete.addListener('place_changed', () => {
+    //   const place = autocomplete.getPlace();
+
+    //   if (!place.geometry) {
+    //     // Place details not found for the input.
+    //     return;
+    //   }
+
+    //   // Update the location value with the formatted address
+    //   location.value = place.formatted_address;
+
+    //   // You can also access other properties like place.geometry.location to get the coordinates
+    // });
+    // }
       const saveProperty = async () => {
         errorMessage.value = '';
             try {
@@ -148,7 +219,7 @@ import GMapItem from '@/components/GMapItem.vue';
                 }
 
                 if (!structureDetails.value.trim()) {
-                    errorMessage.value = 'Structure details cannot be empty';
+                    errorMessage.value = 'Property details cannot be empty';
                     return;
                 }
 
@@ -225,20 +296,20 @@ import GMapItem from '@/components/GMapItem.vue';
         }
       };
   
-      const searchLocation = async () => {
-        // Implement location search using autocomplete
-        // Update map marker position accordingly
-        try {
-        // Use the Google Maps Geocoding API to convert location into coordinates
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8`);
-        const data = await response.json();
-        console.log(data);
-        const coordinates = data.results[0].geometry.location;
-        mapCenter.value = { lat: coordinates.lat, lng: coordinates.lng };
-      } catch (error) {
-        console.error('Error searching location:', error.message);
-      }
-      };
+      // const searchLocation = async () => {
+      //   // Implement location search using autocomplete
+      //   // Update map marker position accordingly
+      //   try {
+      //   // Use the Google Maps Geocoding API to convert location into coordinates
+      //   const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8`);
+      //   const data = await response.json();
+      //   console.log(data);
+      //   const coordinates = data.results[0].geometry.location;
+      //   mapCenter.value = { lat: coordinates.lat, lng: coordinates.lng };
+      // } catch (error) {
+      //   console.error('Error searching location:', error.message);
+      // }
+      // };
   
       return {
         propertyName,
@@ -251,9 +322,10 @@ import GMapItem from '@/components/GMapItem.vue';
         addAmenity,
         removeAmenity,
         saveProperty,
-        searchLocation,
+        // searchLocation,
         errorMessage,
-        mapCenter
+        // mapCenter,
+        // initAutocomplete
       };
     }
   }
