@@ -35,7 +35,7 @@
   <div class="row">
   <div class="column">
     <div class="score">
-    <h1>Cumulative Scores</h1>
+    <h1>Property Cumulative Score</h1>
     
       <h2 v-if="loadPack.totalReviews > 0">{{ parseFloat(loadPack.totalScore/loadPack.totalReviews+'').toFixed(2) }}</h2>
       <h2 v-else>No Reviews Yet</h2>
@@ -69,7 +69,7 @@
 </div>
 <div class="column">
   <div class="score">
-    <h1>Cumulative Scores</h1>
+    <h1>Owner Cumulative Score</h1>
     
       <h2 v-if="cloadPack.totalReviews > 0">{{ parseFloat(cloadPack.totalScore/cloadPack.totalReviews+'').toFixed(2) }}</h2>
       <h2 v-else>No Reviews Yet</h2>
@@ -865,9 +865,10 @@ div[property] > p {
   }
   h1 {
     color:black;
+    font-weight: 600;
   }
   h2 {
-    color:red;
+    color:black;
   }
   input[type='text'],input[type='number'],textarea{
     color: black;
@@ -912,7 +913,7 @@ div[property] > p {
     padding: 10px;
     min-width: 400px;
     background-color: bisque;
-    color:red;
+    color:black;
   }
   .reviews li {
     color: blueviolet;
@@ -926,8 +927,9 @@ div[property] > p {
     padding: 10px;
   }
   .row {
-  display: flex;
-}
+    display: flex;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
 
 .column {
   flex: 50%;
@@ -944,7 +946,7 @@ div[property] > p {
     padding: 10px;
     min-width: 400px;
     background-color: bisque;
-    color:red;
+    color:black;
   }
 
 </style> 
