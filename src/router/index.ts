@@ -101,6 +101,11 @@ const router = createRouter({
       component: () => import('../views/profile-page.vue')
     },
     {
+      path: '/listings',
+      name: 'listings',
+      component: () => import('../views/Listings.vue')
+    },
+    {
       path: '/compare',
       name: 'compare',
       component: () => import('../views/compare-page.vue')
@@ -110,7 +115,12 @@ const router = createRouter({
       path: '/revprop',
       name: 'revprop',
       component: () => import('../views/PropRev.vue')
-    }
+    },
+    {
+      path: '/moderator/hotspots',
+      name: 'hotspots',
+      component: () => import('../views/ModAddHotspots.vue')
+    },
   ]
 })
 

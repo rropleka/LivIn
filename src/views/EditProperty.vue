@@ -26,8 +26,8 @@
         </div>
   
         <div class="form-group">
-          <label for="property-size">Property Size:</label>
-          <input type="text" id="property-size" v-model="propertySize">
+          <label for="property-size">Property Size: (in acres)</label>
+          <input type="text" id="property-size" v-model="propertySize" pattern="[0-9]*">
         </div>
   
         <div class="form-group">
@@ -54,7 +54,7 @@
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   import {ref} from 'vue';
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDoc, setDoc, query, where, updateDoc } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, updateDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
   
   export default {
@@ -74,6 +74,7 @@ import { firebaseapp } from '../main'
       const location = ref('');
       const propertyId = ref('');
       const errorMessage = ref('');
+      const ownerUsername = ref('');
       const db = getFirestore(firebaseapp);
   
       const addAmenity = () => {
@@ -101,6 +102,7 @@ import { firebaseapp } from '../main'
           propertySize.value = data.propertySize;
           structureDetails.value = data.structureDetails;
           location.value = data.location;
+          ownerUsername.value = data.owner;
         } else {
           console.error('Property document does not exist.');
         }
@@ -142,6 +144,18 @@ import { firebaseapp } from '../main'
                     return;
                 }
           console.log("id val :", propertyId.value);
+
+          // Check if the property with the same name and owner already exists
+        const propertyExistsQuerySnapshot = await getDocs(query(collection(db, 'properties'), 
+            where("propertyName", "==", propertyName.value),
+            where("owner", "==", ownerUsername.value)));
+
+        if (!propertyExistsQuerySnapshot.empty) {
+            errorMessage.value = "A property with the same name already exists for this owner.";
+            return;
+        }
+
+
           const propertyDocRef = doc(db, 'properties', propertyId.value);
           if (typeof rent.value !== 'undefined' && rent.value !== null) {
             console.log("within");
@@ -155,6 +169,9 @@ import { firebaseapp } from '../main'
             });
           }
           console.log('Property updated successfully.');
+          const updatedName = propertyName.value;
+          const redirectUrl = `/${ownerUsername.value}/${updatedName}`;
+          router.push(redirectUrl);
           // TODO: Redirect to property details page or other appropriate page
         } catch (error) {
           console.error('Error updating property:', error.message);
@@ -180,7 +197,8 @@ import { firebaseapp } from '../main'
         searchLocation,
         fetchPropertyData,
         propertyId,
-        errorMessage
+        errorMessage,
+        ownerUsername
       };
     }
   }

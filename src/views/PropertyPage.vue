@@ -110,7 +110,7 @@
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   import {ref} from 'vue';
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where, addDoc, updateDoc, Firestore, DocumentReference } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where, deleteDoc, addDoc, updateDoc, Firestore, DocumentReference } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
   
   export default {
@@ -326,10 +326,10 @@ import { firebaseapp } from '../main'
               }
         }
         } else {
-          console.error('Property document does not exist.');
+          console.error('User data does not exist.');
         }
       } catch (error) {
-        console.error('Error fetching property data:', error.message);
+        console.error('Error fetching user data:', error.message);
       }
 
     this.isSiteModerator = isSiteModerator;
@@ -356,6 +356,9 @@ import { firebaseapp } from '../main'
   }
     },
     async removeProperty() {
+      const confirmDelete = confirm("Are you sure you want to delete this property?");
+
+      if (confirmDelete) {
       const db = getFirestore(firebaseapp);
       const propertiesCollectionRef = collection(db, 'properties');
       const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, 
@@ -372,10 +375,22 @@ import { firebaseapp } from '../main'
         // Retrieve the UID assigned to the property
         const propertyUID = propertyDoc.id;
         console.log("Property UID to remove:", propertyUID);
+
+        const propertyDocRef = doc(db, 'properties', propertyUID);
+        deleteDoc(propertyDocRef).then(() => {
+          console.log("Property removed successfully!");
+          router.push('/');
+        }).catch(error => {
+          console.error("Error removing property:", error);
+        });
     });
   }
 
   // delete using property id
+
+} else {
+  console.log("Deletion canceled.");
+}
     },
     async propertyExists(leasingCompany, propertyName) {
       console.log("inside property page");

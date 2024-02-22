@@ -11,33 +11,33 @@ const store = useStore();
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
 const logout = computed(() => store.dispatch('logoutUser'));
 
-const isLeasingCompany = ref(false);
+const isLeasingCompany = ref(true);
 
 onMounted(async () => {
   const auth = getAuth();
-  
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      try {
-        const db = getFirestore(firebaseapp);
-        const userDocRef = doc(db, 'users', user.uid);
-        const userDocSnap = await getDoc(userDocRef);
+  // console.log(auth.currentUser);
+  // auth.onAuthStateChanged(async (user) => {
+  //   if (user) {
+  //     try {
+  //       const db = getFirestore(firebaseapp);
+  //       const userDocRef = doc(db, 'users', user.uid);
+  //       const userDocSnap = await getDoc(userDocRef);
 
-        if (userDocSnap.exists()) {
-          const userData = userDocSnap.data();
-          if (userData.userType === "leasingCompany") {
-            isLeasingCompany.value = true;
-          }
-        } else {
-          console.error('User document does not exist.');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    } else {
-      console.error('User not authenticated!');
-    }
-  });
+  //       if (userDocSnap.exists()) {
+  //         const userData = userDocSnap.data();
+  //         if (userData.userType === "leasingCompany") {
+  //           isLeasingCompany.value = true;
+  //         }
+  //       } else {
+  //         console.error('User document does not exist.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     }
+  //   } else {
+  //     console.error('User not authenticated!');
+  //   }
+  // });
 });
 </script>
 
@@ -53,6 +53,9 @@ onMounted(async () => {
           <li>
               <router-link to="/compare" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Compare</router-link>
             </li>
+            <li>
+              <router-link to="/listings" class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Properties</router-link>
+            </li>
           <div v-if="isLoggedIn" class="flex flex-row">
             <li>
               <router-link to="/Profile" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
@@ -63,8 +66,8 @@ onMounted(async () => {
             <li v-if="isLeasingCompany">
               <router-link to="/add-property" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
             </li>
-            <li>
-              <button @click.prevent="logout" class="block ml-4 py-1 px-2 rounded hover:bg-orange-200 md:bg-light-orange md:text-white text-lg font-default-font">Logout</button>
+            <li @click.prevent="logout">
+              <router-link to="/"  class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">Logout</router-link>
             </li>
           </div>
           <div v-else>
