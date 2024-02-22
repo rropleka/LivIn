@@ -213,6 +213,9 @@ import { firebaseapp } from '../main'
               this.loadPack.totalScore=data.totalScore
               this.loadPack.usersReviewed=data.usersReviewed
               this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
+              if(this.loadPack.hasReviewed===undefined) {
+                this.loadPack.hasReviewed=false
+              }
               this.loadPack.docRef=doc.ref.path
             })
             console.log("qsempty" + querySnapshot.empty)
@@ -284,6 +287,7 @@ import { firebaseapp } from '../main'
                 const errorMessage = error;
                 alert(errorMessage);
             }
+            console.log("***bm " + this.loadPack.hasReviewed + this.loadPack.isEdit)
           return {
             //set data
           }
