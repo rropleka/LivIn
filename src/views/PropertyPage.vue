@@ -255,7 +255,13 @@ import { firebaseapp } from '../main'
             querySnapshot3.forEach((docs) => {
               const data = docs.data()
               this.cloadPack.totalReviews=data.totalReviews
+              if(!(this.cloadPack.totalReviews>=0)) {
+                this.cloadPack.totalReviews=0
+              }
               this.cloadPack.totalScore=data.totalScore
+              if(!(this.cloadPack.totalScore>=0)) {
+                this.cloadPack.totalScore=0
+              }
               this.cloadPack.usersReviewed=data.usersReviewed
               this.cloadPack.hasReviewed=this.cloadPack.usersReviewed&&this.cloadPack.usersReviewed.length>0&&this.cloadPack.usersReviewed.includes(username)
               this.cloadPack.docRef=docs.ref.path
