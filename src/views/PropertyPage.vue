@@ -36,10 +36,8 @@
   <div class="column">
     <div class="score">
     <h1>Property Cumulative Score</h1>
-    
       <h2 v-if="loadPack.totalReviews > 0">{{ parseFloat(loadPack.totalScore/loadPack.totalReviews+'').toFixed(2) }}</h2>
       <h2 v-else>No Reviews Yet</h2>
-    
   </div>
   <div class="reviews">
       <div class="myRev">
@@ -210,7 +208,13 @@ import { firebaseapp } from '../main'
             querySnapshot.forEach((doc) => {
               const data = doc.data()
               this.loadPack.totalReviews=data.totalReviews
+              if(!(this.loadPack.totalReviews>=0)) {
+                this.loadPack.totalReviews=0
+              }
               this.loadPack.totalScore=data.totalScore
+              if(!(this.loadPack.totalScore>=0)) {
+                this.loadPack.totalScore=0
+              }
               this.loadPack.usersReviewed=data.usersReviewed
               this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
               if(this.loadPack.hasReviewed===undefined) {
@@ -220,7 +224,7 @@ import { firebaseapp } from '../main'
             })
             console.log("qsempty" + querySnapshot.empty)
             this.loadPack.hasLoaded=!querySnapshot.empty
-
+            console.log("dump: " + this.loadPack.totalReviews + " " + this.loadPack.totalScore)
             const userList = document.querySelector('.users');
             const myList = document.querySelector('.mine')
             const querySnapshot2 = await getDocs(query(collection(db, 'propertyReviews'), where('propertyName', '==', propname), where('owner', '==', ownername)));
@@ -256,7 +260,7 @@ import { firebaseapp } from '../main'
               this.cloadPack.hasReviewed=this.cloadPack.usersReviewed&&this.cloadPack.usersReviewed.length>0&&this.cloadPack.usersReviewed.includes(username)
               this.cloadPack.docRef=docs.ref.path
             })
-            console.log("dump: " + this.cloadPack.usersReviewed + " " + this.cloadPack.hasReviewed)
+            console.log("dump: " + this.cloadPack.totalReviews + " " + this.cloadPack.totalScore)
 
             const cuserList = document.querySelector('.cusers');
             const cmyList = document.querySelector('.cmine')
@@ -500,7 +504,7 @@ import { firebaseapp } from '../main'
           }, 
           async updateProperty (userDocRef) {
             try {
-              console.log("***in update" + userDocRef)
+              console.log("***in update" + this.loadPack.totalReviews + " " + this.loadPack.totalScore)
               await updateDoc(userDocRef, {
                   totalReviews: this.loadPack.totalReviews+1,
                   totalScore: Number(this.loadPack.totalScore)+Number(this.form.stars),
