@@ -72,7 +72,7 @@ import type { FirebaseApp } from 'firebase/app';
           const db = getFirestore(firebaseapp)
           try {
             const propname="pname123"//replace with current property
-            const username="user123"
+            const username="firstuser"
             const ownername="owner123"
                 
             const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname), where('owner', '==', ownername)));

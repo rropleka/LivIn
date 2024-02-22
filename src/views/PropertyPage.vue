@@ -60,8 +60,8 @@
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
           <textarea id="ta" v-model="form.text" rows="7"></textarea>
           <br>
-          <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
-          <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
+          <button v-if="loadPack.isEdit==false" v-on:click="sub" type="button">Submit review</button>
+          <button v-if="loadPack.isEdit==true" v-on:click="upd" type="button">Update review</button>
       </div>
   </form>
 </div>
@@ -94,8 +94,8 @@
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
           <textarea id="ta" v-model="cform.text" rows="7"></textarea>
           <br>
-          <button v-if="cloadPack.isEdit==false" v-on:click="csub" type="submit">Submit review</button>
-          <button v-if="cloadPack.isEdit==true" v-on:click="cupd" type="submit">Update review</button>
+          <button v-if="cloadPack.isEdit==false" v-on:click="csub" type="button">Submit review</button>
+          <button v-if="cloadPack.isEdit==true" v-on:click="cupd" type="button">Update review</button>
       </div>
   </form>
 </div>
@@ -476,20 +476,21 @@ import { firebaseapp } from '../main'
                 console.log("andrew here 1")
                 const x = doc(db, this.loadPack.docRef)
                 console.log("andrew here 2")
-                const sr = this.submitReview(db, propname, ownername, username) //push to reviews
+                const sr = await this.submitReview(db, propname, ownername, username) //push to reviews
                 //console.log("andrew here 3: " + sr)
-                this.updateProperty(x) //update property info
+                await this.updateProperty(x) //update property info
                 console.log("andrew here 4")
               } catch(error) {
                 // Handle any errors
                 const errorMessage = error;
                 alert(errorMessage);
             }
-              //good submission, continue
+              location.reload()
             } else {
               alert("Please enter a numerical rating")
               //throw error
             }
+            
           }, 
           async submitReview (db, propname, ownername, username){
             const c = collection(db, "propertyReviews");
@@ -538,8 +539,9 @@ import { firebaseapp } from '../main'
                   totalScore: this.loadPack.totalScore-this.loadPack.myRating+this.form.stars-100,
                   usersReviewed: this.loadPack.usersReviewed
               });*/
-            this.updateReview()
-            this.updatePropScore()
+            await this.updateReview()
+            await this.updatePropScore()
+            location.reload()
             //this.rel()
           } else {
             alert("Please enter a numerical rating")
@@ -596,15 +598,16 @@ import { firebaseapp } from '../main'
                 console.log("andrew here 1")
                 const x = doc(db, this.cloadPack.docRef)
                 console.log("andrew here 2" + this.cloadPack.docRef)
-                const sr = this.csubmitReview(db, propname, ownername, username) //push to reviews
+                const sr = await this.csubmitReview(db, propname, ownername, username) //push to reviews
                 //console.log("andrew here 3: " + sr)
-                this.cupdateProperty(x) //update property info
+                await this.cupdateProperty(x) //update property info
                 console.log("andrew here 4 c")
               } catch(error) {
                 // Handle any errors
                 const errorMessage = error;
                 alert(errorMessage);
             }
+              location.reload()
               //good submission, continue
             } else {
               alert("Please enter a numerical rating")
@@ -659,8 +662,9 @@ import { firebaseapp } from '../main'
                   totalScore: this.cloadPack.totalScore-this.cloadPack.myRating+this.cform.stars-100,
                   usersReviewed: this.cloadPack.usersReviewed
               });*/
-            this.cupdateReview()
-            this.cupdatePropScore()
+            await this.cupdateReview()
+            await this.cupdatePropScore()
+            location.reload()
             //this.rel()
           } else {
             alert("Please enter a numerical rating")
@@ -683,14 +687,21 @@ import { firebaseapp } from '../main'
               if(typeof this.cform.stars!='undefined' && this.cform.stars) {
               const db = getFirestore(firebaseapp)
               const docRef=doc(db,this.cloadPack.revRef)
-              console.log("total: " + typeof this.cloadPack.totalScore + " mine: " + typeof this.cloadPack.myRating + " stars: " + typeof this.cform.stars)
+              console.log("total: " + this.cloadPack.totalScore + " mine: " + this.cloadPack.myRating + " stars: " + typeof this.cform.stars)
               await updateDoc(x, {
                     totalReviews: this.cloadPack.totalReviews,
                     totalScore: Number(this.cloadPack.totalScore)-Number(this.cloadPack.myRating)+Number(this.cform.stars),
                     usersReviewed: this.cloadPack.usersReviewed
                 });
             }
-          }
+          }, sleep(milliseconds) {
+              var start = new Date().getTime();
+              for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds){
+                  break;
+                }
+              }
+            }
   }
 };
   </script>
