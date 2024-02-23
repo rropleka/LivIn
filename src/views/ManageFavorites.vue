@@ -7,7 +7,10 @@ import {useStore} from "vuex";
 export default defineComponent ({
     async setup() {
         const store = useStore();
-        let currentUser = store.getters.currentUser;
+        let currentUser = ""
+        if (store.getters.currentUser) {
+            currentUser = store.getters.currentUser.email;
+        }
 
         const db = getFirestore(firebaseapp);
 
