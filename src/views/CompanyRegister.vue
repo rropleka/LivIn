@@ -79,7 +79,9 @@ export default {
             router.push('/login');
             console.log("success with company regiseration");
         } catch(error) {
+            errorMessage.value = error.message;
             console.error("Error registering user:", error.message);
+            return;
         }
                 // return db.collection('users').doc(userCredential.user.uid).set({
                 //     username: username.value,
