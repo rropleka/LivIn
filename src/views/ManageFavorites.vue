@@ -1,9 +1,8 @@
 <script lang="ts">
-import { getFirestore, collection, doc, getDocs, setDoc, addDoc, query, where } from 'firebase/firestore/lite'
+import { getFirestore, collection, doc, getDocs, setDoc, addDoc, query, where, deleteDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
 import {defineComponent} from "vue";
 import {useStore} from "vuex";
-import { deleteDoc } from 'firebase/firestore';
 
 export default defineComponent ({
     async setup() {
