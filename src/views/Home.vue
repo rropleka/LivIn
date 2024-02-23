@@ -18,6 +18,7 @@ const currentUser = computed(() => store.getters.currentUser);
         <div class="content">
           <router-link to="/login">Back to Login Screeeeeen</router-link>
           <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
+          <router-link to="/favorites">Manage Favorites</router-link>
         </div>
         <div class="map">
           <Suspense>

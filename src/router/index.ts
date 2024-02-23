@@ -121,6 +121,11 @@ const router = createRouter({
       name: 'hotspots',
       component: () => import('../views/ModAddHotspots.vue')
     },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('../views/ManageFavorites.vue')
+    }
   ]
 })
 
