@@ -21,7 +21,9 @@ app.mount('#app');
 <template>
   <div class="page">
     <Navbar />
-    <router-view/>
+    <Suspense>
+      <router-view/>
+    </Suspense>
 
   </div>
 </template>
