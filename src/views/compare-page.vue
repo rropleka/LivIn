@@ -1,42 +1,23 @@
 <script>
 import { ref } from 'vue'
 import { initDropdowns } from 'flowbite'
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore/lite'
+import { firebaseapp } from '../main'
 
 export default {
-  setup() {
-    const properties = ref([
-      {
-        name: "property1",
-        address: "address1",
-        owner: "owner1",
-        reviews: 5,
-        details: "details1"
-      },
-      {
-        name: "property2",
-        address: "address2",
-        owner: "owner2",
-        reviews: 4,
-        details: "details2"
-      },
-      {
-        name: "property3",
-        address: "address3",
-        owner: "owner3",
-        reviews: 3,
-        details: "details3"
-      },
-      {
-        name: "property4",
-        address: "address4",
-        owner: "owner4",
-        reviews: 2,
-        details: "details4"
-      }
-    ])
+  async setup() {
+    const db = getFirestore(firebaseapp)
+    const properties = ref([])
 
-    const propList1 = ref(properties.value)
-    const propList2 = ref(properties.value)
+    try {
+      properties.value = collection(db, "properties")
+      console.log(properties.value)
+    } catch (error) {
+      console.error('Error fetching properties:', error.message)
+    }
+
+    const propList1 = ref([])
+    const propList2 = ref([])
 
     const emptyProp = {
       name: "",
@@ -45,6 +26,8 @@ export default {
       reviews: 0,
       details: ""
     }
+    
+
     const property1 = ref(emptyProp)
     const property2 = ref(emptyProp)
 
@@ -58,17 +41,40 @@ export default {
       property2.value = property
     }
 
-    function setPropList1(search) {
-      propList1.value = properties.value.filter(property => property.name.includes(search))
-      console.log(propList1.value)
+    async function setPropList1(search) {
+      const q = query(properties.value, where("propertyName", ">=", search), where("propertyName", "<=", search + "\uf8ff"))
+      const qSnapshot = await getDocs(q)
+      propList1.value = []
+      qSnapshot.forEach((doc) => {
+        let property = doc.data()
+        propList1.value.push({
+          name: property.propertyName,
+          address: property.location,
+          owner: property.owner,
+          reviews: property.rating,
+          details: property.amenities[0]
+        })
+      })
     }
-    function setPropList2(search) {
-      propList2.value = properties.value.filter(property => property.name.includes(search))
+
+    async function setPropList2(search) {
+      const q = query(properties.value, where("propertyName", ">=", search), where("propertyName", "<=", search + "\uf8ff"))
+      const qSnapshot = await getDocs(q)
+      propList2.value = []
+      qSnapshot.forEach((doc) => {
+        let property = doc.data()
+        propList2.value.push({
+          name: property.propertyName,
+          address: property.location,
+          owner: property.owner,
+          reviews: property.rating,
+          details: property.amenities[0]
+        })
+      })
     }
 
     return {
       emptyProp,
-      properties,
       property1,
       property2,
       search1,
@@ -140,6 +146,11 @@ export default {
           </div>
         </div>
         <button @click.prevent="setProperty1(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
+        <button>
+          <router-link :to="{ name: 'property-page', params: { leasingCompany: property1.owner, PropertyName: property1.name } }" class=" ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">
+            Go to property
+          </router-link>
+        </button>
       </div>
 
       <!-- Second half -->
@@ -192,6 +203,12 @@ export default {
           </div>
         </div>
         <button @click.prevent="setProperty2(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
+        <button>
+          <router-link :to="{ name: 'property-page', params: { leasingCompany: property2.owner, PropertyName: property2.name } }" class=" ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">
+            Go to property
+          </router-link>
+        </button>
+        
       </div>
       
     </div>
