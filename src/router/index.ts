@@ -60,7 +60,7 @@ const router = createRouter({
     //   component: PropertyPage
     // },
     {
-      path: '/:leasingCompany/:PropertyName',
+      path: '/:leasingCompany?/:PropertyName?',
       name: 'property-page',
       component: PropertyPage,
       props: (route) => ({
