@@ -52,7 +52,7 @@ export default {
           address: property.location,
           owner: property.owner,
           reviews: property.rating,
-          details: property.amenities[0]
+          details: getDetails(property)
         })
       })
     }
@@ -68,9 +68,19 @@ export default {
           address: property.location,
           owner: property.owner,
           reviews: property.rating,
-          details: property.amenities[0]
+          details: getDetails(property)
         })
       })
+    }
+
+    function getDetails(property) {
+      let details = ""
+      details += property.description + "\n"
+      details += "Amenities: \n"
+      for (let i = 0; i < property.amenities.length; i++) {
+        details += property.amenities[i] + "\n"
+      }
+      return details
     }
 
     return {
