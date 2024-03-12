@@ -8,6 +8,10 @@
       <p class="property-price"> {{ property.rent }}</p>
       <!-- <p class="property-bed-bath">{{ propertyInfo.bedBath }}</p> -->
       <p class="property-location">{{ property.location }}</p>
+      <div class="into">
+        <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
+        <label for="interest">I'm interested</label>
+      </div>
       <hr>
       <p class="property-about">About property:</p>
       <p class="property-description">{{ property.structureDetails }}</p>
@@ -143,7 +147,9 @@ import { firebaseapp } from '../main'
         revRef: '',
         isEdit:false,
         hasLoaded:false,
-        username:''
+        username:'',
+        interest:false,
+        interestedUsers: ["t1"]
       },
       cform: {
         stars:'',
@@ -701,7 +707,13 @@ import { firebaseapp } from '../main'
                   break;
                 }
               }
-            }
+            },
+          updateInterest() {
+            //value=!value
+            //push to backend
+            //data will be stored with property in an array
+            //hide/show other users
+          }
   }
 };
   </script>
@@ -972,6 +984,13 @@ div[property] > p {
     min-width: 400px;
     background-color: bisque;
     color:black;
+  }
+
+  .into label{
+    margin: 10px;
+    padding: 10px;
+    color: #000;
+    font-weight: 600;
   }
 
 </style> 
