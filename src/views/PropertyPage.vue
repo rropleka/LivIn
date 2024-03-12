@@ -11,6 +11,7 @@
       <div class="into">
         <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
         <label for="interest">I'm interested</label>
+        <h3>Hover to see who else is!</h3>
       </div>
       <hr>
       <p class="property-about">About property:</p>
