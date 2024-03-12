@@ -52,7 +52,7 @@
 <script>
 import { mapState } from 'vuex'
 import { ref } from 'vue'
-import { getAuth, updateEmail, updatePassword, sendEmailVerification, verifyBeforeUpdateEmail } from "firebase/auth"
+import { getAuth, updatePassword, verifyBeforeUpdateEmail } from "firebase/auth"
 import router from '../router/index'
 
 const isEditable = ref(false)

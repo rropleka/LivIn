@@ -20,6 +20,7 @@ import { useStore } from "vuex";
 // IMPORT getFirestore and firebaseapp everywhere you want to access the database
 import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
+import registerView from "@/components/register-view.vue";
 
 export default {
     /* The setup() function is part of the Composition API in Vue 3 and initializes
@@ -32,6 +33,8 @@ export default {
         const store = useStore();
         // !!! Add this line to get the instance of firestore in each location of the app its needed !!!
         const db = getFirestore(firebaseapp)
+
+        const page = ref(1)
 
         // Executed on form submission 
         const register = async () => {
@@ -82,6 +85,7 @@ export default {
 
         // Return the necessary attributes needed for authentication
         return {
+            page,
             register,
             email,
             username,
