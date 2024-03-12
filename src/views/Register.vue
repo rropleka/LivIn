@@ -103,7 +103,18 @@ export default {
                     contactinfo: contactinfo.value
                 });
 
-                const user = userCredential.user;
+                const user ={
+                    uid: userCredential.user.uid,
+                    email: userCredential.user.email,
+                    password: userCredential.user.password,
+                    username: username.value,
+                    name: name.value,
+                    age: age.value,
+                    gender: gender.value,
+                    class: year.value,
+                    aboutme: aboutme.value,
+                    contactinfo: contactinfo.value
+                };
                 store.dispatch('loginUser', user);
 
                 // Redirect to the home page after successful registration

@@ -50,18 +50,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { ref, computed } from 'vue'
 import { getAuth, updatePassword, verifyBeforeUpdateEmail } from "firebase/auth"
 import router from '../router/index'
 
-const isEditable = ref(false)
-const originalEmail = getAuth().currentUser.email;
+
 
 export default {
-    data() {
+    setup() {
+        const isEditable = ref(false)
+        const store = useStore();
+
+        const user = computed(() => store.getters.currentUser);
+        const originalEmail = user.value.email;
         return {
-            isEditable: isEditable
+            isEditable,
+            originalEmail,
+            user
         }
     },
     methods: {
@@ -71,30 +77,27 @@ export default {
         /* Function to update email and password on firebase upon modification */
         async saveChanges() {
             const auth = getAuth();
-            const user = auth.currentUser;
+            const currUser = auth.currentUser;
             
             try {
                 /* If user enters a new email, send verification link and send them to login to relogin */
-                if (this.user.email !== originalEmail) {
-                    verifyBeforeUpdateEmail(user, this.user.email)
+                if (this.user.email !== this.originalEmail) {
+                    verifyBeforeUpdateEmail(currUser, this.user.email)
                     alert(`A verification email has been sent to ${this.user.email}. Please verify then sign in with your new credentials.`);
                     router.push('/login')
                 }
 
                 if (this.user.password) {
-                    await updatePassword(user, this.user.password);
+                    await updatePassword(currUser, this.user.password);
                     alert("Your account password has been updated please login again with your new credentials.")
                     router.push('/login')
                 }
             } catch (error) {
-                    alert(error.message);
+                alert(error.message);
             }
         }
     },
     computed: {
-        ...mapState({
-            user: state => state.user
-        }),
         // Check if the user's email ends with '@purdue.edu'
         isPurdueEmail() {
             return this.user.email.endsWith('@purdue.edu');

@@ -17,6 +17,7 @@ const store = createStore({
         loginUser({ commit }, user) {
           // Call the setUser mutation to update the user state
           commit('setUser', user);
+          
         },
         logoutUser({ commit }) {
           // Call the setUser mutation with null to log the user out

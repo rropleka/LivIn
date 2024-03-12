@@ -18,6 +18,8 @@
     import router from '../router/index'
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
     import { useStore } from "vuex";
+    import { getFirestore, collection, doc, getDoc } from 'firebase/firestore/lite'
+    import { firebaseapp } from '../firebaseInit'
 
     export default {
         setup() {
@@ -28,16 +30,30 @@
             const login = () => {
                 const auth = getAuth();
                 signInWithEmailAndPassword(auth, email.value, password.value)
-                    .then((userCredential) => {
-                        // Signed in 
-                        const user = userCredential.user;
+                    .then(async (userCredential) => {
+                        // Get the user info from the database
+                        const db = getFirestore(firebaseapp)
+                        const userDocRef = doc(collection(db, 'users'), userCredential.user.uid);
+                        const userDoc = await getDoc(userDocRef);
+                        // Signed in, update the user info in the store
+                        const user ={
+                            uid: userCredential.user.uid,
+                            email: userCredential.user.email,
+                            password: userCredential.user.password,
+                            username: userDoc.data().username,
+                            name: userDoc.data().name,
+                            age: userDoc.data().age,
+                            gender: userDoc.data().gender,
+                            class: userDoc.data().class,
+                            aboutme: userDoc.data().aboutme,
+                            contactinfo: userDoc.data().contactinfo
+                        };
                         // Dispatch the loginUser action to update the store
                         store.dispatch('loginUser', user);
                         // ...
                         router.push('/');
                     })
                     .catch((error) => {
-                        const errorCode = error.code;
                         const errorMessage = error.message;
                         alert(errorMessage);
                     });
