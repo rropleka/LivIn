@@ -12,12 +12,12 @@
         </div>
         <div v-else-if="page === 2" class="register">
             <form @submit.prevent="register">
-                <input type="text" placeholder="Name" v-model="name" class="black-text"/>
-                <input type="text" placeholder="Age" v-model="age" class="black-text"/>
-                <input type="text" placeholder="Gender" v-model="gender" class="black-text"/>
-                <input type="text" placeholder="Year" v-model="year" class="black-text"/>
-                <input type="text" placeholder="About Me" v-model="aboutme" class="black-text"/>
-                <input type="text" placeholder="Contact Info" v-model="contactinfo" class="black-text"/>
+                <input type="text" placeholder="Name" v-model="name" class="black-text" required/>
+                <input type="number" placeholder="Age" v-model="age" class="black-text" required/>
+                <input type="text" placeholder="Gender" v-model="gender" class="black-text" required/>
+                <input type="number" placeholder="Year" v-model="year" class="black-text" required/>
+                <textarea type="text" placeholder="About Me" v-model="aboutme" class="black-text" required></textarea>
+                <textarea type="text" placeholder="Contact Info" v-model="contactinfo" class="black-text" required></textarea>
                 <button type="submit">Register</button>
             </form>
         </div>
