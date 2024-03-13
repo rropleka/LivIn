@@ -27,6 +27,7 @@ const store = createStore({
     getters: {
         isLoggedIn: (state) => state.isLoggedIn,
         currentUser: (state) => state.user,
+        currUserCopy: (state) => {return JSON.parse(JSON.stringify(state.user))}
     },
 });
 
