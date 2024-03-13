@@ -1,27 +1,58 @@
 <template>
-    <div>
-        <h1 style="color: black;">Register</h1>
-        <div v-if="page === 1" class="register">
+    <div class="max-w-md mx-auto center-top flex flex-col rounded-3xl bg-orange-300">
+        <h1 class="max-w-sm mx-auto py-6 text-white font-default-font text-4xl">Register</h1>
+        <div v-if="page === 1">
             <!-- Create our Register form and prevent submission without necessary data -->
-            <form @submit.prevent="next">
-                <input type="text" placeholder="Email" v-model="email" class="black-text"/>
-                <input type="password" placeholder="Password" v-model="password" class="black-text"/>
-                <input type="text" placeholder="Username" v-model="username" class="black-text"/>
-                <button type="submit">Next</button>
+            <form @submit.prevent="next" class="max-w-sm mx-auto max-h-md">
+                <div class="mb-6">
+                    <label for="email" class="block mb-2 text-sm font-medium text-white">Email</label>
+                    <input type="text" placeholder="Email" v-model="email" id="email" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg"/>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-white">Password</label>
+                    <input type="password" placeholder="Password" v-model="password" id="password" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg"/>
+                </div>
+                <div class="mb-6">
+                    <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
+                    <input type="text" placeholder="Username" v-model="username" id="username" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg"/>
+                </div>
+                <div class="grid justify-items-center pt-3">
+                    <button type="submit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Next</button>
+                </div>
             </form>
         </div>
-        <div v-else-if="page === 2" class="register">
-            <form @submit.prevent="register">
-                <input type="text" placeholder="Name" v-model="name" class="black-text" required/>
-                <input type="number" placeholder="Age" v-model="age" class="black-text" required/>
-                <input type="text" placeholder="Gender" v-model="gender" class="black-text" required/>
-                <input type="number" placeholder="Year" v-model="year" class="black-text" required/>
-                <textarea type="text" placeholder="About Me" v-model="aboutme" class="black-text" required></textarea>
-                <textarea type="text" placeholder="Contact Info" v-model="contactinfo" class="black-text" required></textarea>
-                <button type="submit">Register</button>
+        <div v-else-if="page === 2" >
+            <form @submit.prevent="register" class="max-w-sm mx-auto max-h-96 overflow-auto">
+                <div class="mb-6">
+                    <label for="name" class="block mb-2 text-sm font-medium text-white">Name</label>
+                    <input type="text" placeholder="Name" v-model="name" id="name" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" required/>
+                </div>
+                <div class="mb-6">
+                    <label for="age" class="block mb-2 text-sm font-medium text-white">Age</label>
+                    <input type="number" placeholder="Age" v-model="age" id="age" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" required/>
+                </div>
+                <div class="mb-6"> 
+                    <label for="gender" class="block mb-2 text-sm font-medium text-white">Name</label>
+                    <input type="text" placeholder="Gender" v-model="gender" id="gender" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" required/>
+                </div>
+                <div class="mb-6">
+                    <label for="year" class="block mb-2 text-sm font-medium text-white">Year</label>
+                    <input type="number" placeholder="Year" v-model="year" id="year" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" required/>
+                </div>
+                <div class="mb-6">
+                    <label for="aboutme" class="block mb-2 text-sm font-medium text-white">About Me</label>
+                    <textarea type="text" placeholder="About Me" v-model="aboutme" id="aboutme" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" required></textarea>
+                </div>
+                <div class="mb-6">
+                    <label for="contactinfo" class="block mb-2 text-sm font-medium text-white">Contact Info</label>
+                    <textarea type="text" placeholder="Contact Info" v-model="contactinfo" id="contactinfo" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" required></textarea>
+                </div>
+                <div class="grid justify-items-center pt-3">
+                    <button type="submit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Register</button>
+                </div>
             </form>
         </div>
-        <p style="color: black;">Have an account? <router-link to="/login">Login Here</router-link></p>
+        <p class="max-w-sm mx-auto py-5 text-white">Have an account? <router-link to="/login">Login Here</router-link></p>
     </div>
 </template>
 
@@ -144,19 +175,10 @@ export default {
         }
     }
 }
-
 </script>
 
-  <style>
-  @media (min-width: 1024px) {
-    .register {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-    }
-  }
-  .black-text {
-      color: black;
-  }
-
-  </style>
+<style>
+.center-top {
+    margin-top: 8%;
+}
+</style>
