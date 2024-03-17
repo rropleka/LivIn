@@ -993,5 +993,9 @@ div[property] > p {
     color: #000;
     font-weight: 600;
   }
+  .into h3 {
+    color: #000;
+    font-weight: 600;
+  }
 
 </style> 
