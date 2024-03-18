@@ -11,7 +11,7 @@
       <div class="into">
         <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
         <label for="interest">I'm interested</label>
-        <h3>Hover to see who else is!</h3>
+        <h3 v-if="loadPack.interest==true" id="interestHover">Hover to see who else is!</h3>
       </div>
       <hr>
       <p class="property-about">About property:</p>
@@ -710,6 +710,13 @@ import { firebaseapp } from '../main'
               }
             },
           updateInterest() {
+            this.loadPack.interest=!this.loadPack.interest
+            const hoverDisplay = document.getElementById("interestHover");
+            if (hoverDisplay.style.display === "none") {
+              hoverDisplay.style.display = "block";
+            } else {
+              hoverDisplay.style.display = "none";
+            }
             //value=!value
             //push to backend
             //data will be stored with property in an array
