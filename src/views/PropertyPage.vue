@@ -11,9 +11,10 @@
       <div class="into">
         <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
         <label for="interest">I'm interested</label>
-        <h3 v-if="loadPack.interest==true" id="interestHover">Click to see who else is!</h3>
-        <div class="hoverbox">
-          <button type="button">Close</button>
+        <button v-if="loadPack.interest==true" id="interestHover" @click="changePopUp">Click to see who else is!</button>
+        <div class="hoverbox" id="hoverbox">
+          <d><h1>Interested Users</h1></d>
+          <button type="button" @click="changePopUp">Close</button>
         </div>
       </div>
       <hr>
@@ -715,10 +716,26 @@ import { firebaseapp } from '../main'
           updateInterest() {
             this.loadPack.interest=!this.loadPack.interest
             const hoverDisplay = document.getElementById("interestHover");
-            if (hoverDisplay.style.display === "none") {
-              hoverDisplay.style.display = "block";
-            } else {
+            if (hoverDisplay.style.display != "none") {
               hoverDisplay.style.display = "none";
+            } else {
+              hoverDisplay.style.display = "block";
+            }
+            const hoverbox = document.getElementById("hoverbox");
+            if (hoverbox.style.display != "none") {
+              hoverbox.style.display = "none";
+            }
+            //value=!value
+            //push to backend
+            //data will be stored with property in an array
+            //hide/show other users
+          },
+          changePopUp() {
+            const hoverbox = document.getElementById("hoverbox");
+            if (hoverbox.style.display != "none") {
+              hoverbox.style.display = "none";
+            } else {
+              hoverbox.style.display = "block";
             }
             //value=!value
             //push to backend
@@ -1003,13 +1020,14 @@ div[property] > p {
     color: #000;
     font-weight: 600;
   }
-  .into h3 {
+  .into button {
     color: #000;
     font-weight: 600;
     cursor: pointer;
   }
 
   .hoverbox {
+    display: none;
     position:absolute;
     width: 25%;
     height: fit-content;
@@ -1030,6 +1048,10 @@ div[property] > p {
     color: white;
     border-radius: 10px;
     float: right;
+  }
+  .hoverbox h1 {
+    display: inline;
+    font-size: 26px;
   }
 
 </style> 
