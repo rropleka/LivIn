@@ -1,9 +1,9 @@
 <template>
-        <form class="container mx-auto overscroll-auto">
+        <form @submit.prevent="saveChanges" class="container mx-auto overscroll-auto">
             <div class="mb-6">
                 <img v-if="isPurdueEmail" src="@/assets/purdue-logo.png" alt="Purdue Icon" class="icon">
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-                <div v-if="isEditable === true">
+                <div v-if="isLoginEditable === true">
                     <input v-model="user.email" type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div v-else>
@@ -12,89 +12,159 @@
             </div>
             <div class="mb-6">
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <div v-if="isEditable === true">
+                <div v-if="isLoginEditable === true">
                     <input v-model="user.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
                 <div v-else>
                     <input v-model="user.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
                 </div>
-
             </div> 
+            <hr class="border-2 mb-4 border-orange-200 rounded-sm">
             <div class="mb-6">
                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                <input v-model="user.username" type="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <div v-if="isInfoEditable === true">
+                    <input v-model="user.username" type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                </div>
+                <div v-else>
+                    <input v-model="user.username" type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                </div>
             </div> 
             <div class="mb-6">
                 <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
-                <input v-model="user.age" type="age" id="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <div v-if="isInfoEditable === true">
+                    <input v-model="user.age" type="number" id="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                </div>
+                <div v-else>
+                    <input v-model="user.age" type="number" id="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                </div>
             </div> 
             <div class="mb-6">
                 <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
-                <input v-model="user.gender" type="gender" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <div v-if="isInfoEditable === true">
+                    <input v-model="user.gender" type="text" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                </div>
+                <div v-else>
+                    <input v-model="user.gender" type="text" id="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                </div>
             </div>  
             <div class="mb-6">
                 <label for="class" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Class</label>
-                <input v-model="user.class" type="class" id="class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <div v-if="isInfoEditable === true">
+                    <input v-model="user.class" type="number" id="class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                </div>
+                <div v-else>
+                    <input v-model="user.class" type="number" id="class" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                </div>
             </div> 
             <div class="mb-6">
                 <label for="aboutme" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About me</label>
-                <textarea v-model="user.aboutme" type="aboutme" id="aboutme" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly></textarea>
+                <div v-if="isInfoEditable === true">
+                    <textarea v-model="user.aboutme" type="text" id="aboutme" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
+                </div>
+                <div v-else>
+                    <textarea v-model="user.aboutme" type="text" id="aboutme" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly></textarea>
+                </div>
             </div>
             <div class="mb-6">
                 <label for="contactinfo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact info</label>
-                <input v-model="user.contactinfo" type="contactinfo" id="contactinfo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                <div v-if="isInfoEditable">
+                    <textarea v-model="user.contactinfo" type="text" id="contactinfo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
+                </div>
+                <div v-else>
+                    <textarea v-model="user.contactinfo" type="text" id="contactinfo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly></textarea>
+                </div>
             </div>
-            <button @click.prevent="toggleEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ isEditable ? 'Cancel' : 'Edit login' }}</button>
-            <button v-if="isEditable" @click.prevent="saveChanges" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
+            <button v-if="!isInfoEditable" @click.prevent="toggleLoginEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ isLoginEditable ? 'Cancel' : 'Edit login' }}</button>
+            <button type="submit" v-if="isLoginEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
+            <button v-if="!isLoginEditable" @click.prevent="toggleInfoEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ isInfoEditable ? 'Cancel' : 'Edit info' }}</button>
+            <button type="submit" v-if="isInfoEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
         </form>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { ref } from 'vue'
-import { getAuth, updateEmail, updatePassword, sendEmailVerification, verifyBeforeUpdateEmail } from "firebase/auth"
+import { useStore } from 'vuex'
+import { ref, computed } from 'vue'
+import { getAuth, updatePassword, verifyBeforeUpdateEmail } from "firebase/auth"
+import { getFirestore, collection, doc, setDoc } from 'firebase/firestore/lite'
+import { firebaseapp } from '../firebaseInit'
 import router from '../router/index'
-
-const isEditable = ref(false)
-const originalEmail = getAuth().currentUser.email;
+import store from '@/stores/auth/store'
 
 export default {
-    data() {
+    setup() {
+        const isLoginEditable = ref(false)
+        const isInfoEditable = ref(false)
+        const store = useStore();
+
+        const user = computed(() => store.getters.currentUser);
+        const origUser = store.getters.currUserCopy;
         return {
-            isEditable: isEditable
+            isLoginEditable,
+            isInfoEditable,
+            origUser,
+            user
         }
     },
     methods: {
-        toggleEditable() {
-            this.isEditable = !this.isEditable
+        toggleLoginEditable() {
+            this.isLoginEditable = !this.isLoginEditable
+        },
+        toggleInfoEditable() {
+            this.isInfoEditable = !this.isInfoEditable
+            // crude way to reset the user's info if they cancel the changes
+            this.user.username = this.origUser.username;
+            this.user.age = this.origUser.age;
+            this.user.gender = this.origUser.gender;
+            this.user.class = this.origUser.class;
+            this.user.aboutme = this.origUser.aboutme;
+            this.user.contactinfo = this.origUser.contactinfo;
         },
         /* Function to update email and password on firebase upon modification */
-        async saveChanges() {
+        async saveLoginChanges() {
             const auth = getAuth();
-            const user = auth.currentUser;
+            const currUser = auth.currentUser;
             
             try {
                 /* If user enters a new email, send verification link and send them to login to relogin */
-                if (this.user.email !== originalEmail) {
-                    verifyBeforeUpdateEmail(user, this.user.email)
+                if (this.user.email !== this.origUser.email) {
+                    verifyBeforeUpdateEmail(currUser, this.user.email)
                     alert(`A verification email has been sent to ${this.user.email}. Please verify then sign in with your new credentials.`);
                     router.push('/login')
                 }
 
                 if (this.user.password) {
-                    await updatePassword(user, this.user.password);
+                    await updatePassword(currUser, this.user.password);
                     alert("Your account password has been updated please login again with your new credentials.")
                     router.push('/login')
                 }
             } catch (error) {
-                    alert(error.message);
+                alert(error.message);
+            }
+        },
+        async saveInfoChanges() {
+            // Save the user's info to the database
+            this.isInfoEditable = !this.isInfoEditable;
+            store.dispatch('loginUser', this.user);
+            const db = getFirestore(firebaseapp)
+            const userDocRef = doc(collection(db, 'users'), this.user.uid);
+            await setDoc(userDocRef, {
+                username: this.user.username,
+                age: this.user.age,
+                gender: this.user.gender,
+                class: this.user.class,
+                aboutme: this.user.aboutme,
+                contactinfo: this.user.contactinfo
+            });
+        },
+        async saveChanges() {
+            if (this.isLoginEditable) {
+                this.saveLoginChanges();
+            } else if (this.isInfoEditable) {
+                this.saveInfoChanges();
             }
         }
     },
     computed: {
-        ...mapState({
-            user: state => state.user
-        }),
         // Check if the user's email ends with '@purdue.edu'
         isPurdueEmail() {
             return this.user.email.endsWith('@purdue.edu');

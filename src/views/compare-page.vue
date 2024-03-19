@@ -83,8 +83,17 @@ export default {
       return details
     }
 
+    function isEmptyProperty(property) {
+      return (property.name === emptyProp.name &&
+       property.address === emptyProp.address &&
+        property.owner === emptyProp.owner &&
+         property.reviews === emptyProp.reviews &&
+          property.details === emptyProp.details)
+    }
+
     return {
       emptyProp,
+      isEmptyProperty,
       property1,
       property2,
       search1,
@@ -156,7 +165,7 @@ export default {
           </div>
         </div>
         <button @click.prevent="setProperty1(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
-        <button>
+        <button v-if="!isEmptyProperty(property1)">
           <router-link :to="{ name: 'property-page', params: { leasingCompany: property1.owner, PropertyName: property1.name } }" class=" ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">
             Go to property
           </router-link>
@@ -213,7 +222,7 @@ export default {
           </div>
         </div>
         <button @click.prevent="setProperty2(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
-        <button>
+        <button v-if="!isEmptyProperty(property2)">
           <router-link :to="{ name: 'property-page', params: { leasingCompany: property2.owner, PropertyName: property2.name } }" class=" ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">
             Go to property
           </router-link>
