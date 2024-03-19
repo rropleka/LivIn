@@ -133,6 +133,8 @@ export default {
             <li v-for="property in propList1" :key="property.name" class="px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" @click="setProperty1(property)">{{ property.name }}</li>
           </ul>
         </div>
+
+        <!-- Property details -->
         <div class="my-2">
           <div class="mb-6">
             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property name</label>
@@ -190,6 +192,8 @@ export default {
             <li v-for="property in propList2" :key="property.name" class="px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" @click="setProperty2(property)">{{ property.name }}</li>
           </ul>
         </div>
+
+        <!-- Property details -->
         <div class="my-2">
           <div class="mb-6">
             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property name</label>
