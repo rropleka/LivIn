@@ -11,7 +11,10 @@
       <div class="into">
         <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
         <label for="interest">I'm interested</label>
-        <h3 v-if="loadPack.interest==true" id="interestHover">Hover to see who else is!</h3>
+        <h3 v-if="loadPack.interest==true" id="interestHover">Click to see who else is!</h3>
+        <div class="hoverbox">
+          <button type="button">Close</button>
+        </div>
       </div>
       <hr>
       <p class="property-about">About property:</p>
@@ -1003,6 +1006,30 @@ div[property] > p {
   .into h3 {
     color: #000;
     font-weight: 600;
+    cursor: pointer;
+  }
+
+  .hoverbox {
+    position:absolute;
+    width: 25%;
+    height: fit-content;
+    left: 65%;
+    top: 70px;
+    justify-self: right;
+    background-color: bisque;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+  }
+  .hoverbox button {
+    background-color: red;
+    margin: 5px;
+    margin-left: 0px;
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
+    float: right;
   }
 
 </style> 
