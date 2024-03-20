@@ -13,7 +13,7 @@
         <label for="interest">I'm interested</label>
         <button v-if="loadPack.interest==true" id="interestHover" @click="changePopUp">Click to see who else is!</button>
         <div class="hoverbox" id="hoverbox">
-          <d><h1>Interested Users</h1></d>
+          <h1>Interested Users</h1>
           <button type="button" @click="changePopUp">Close</button>
         </div>
       </div>
@@ -714,6 +714,8 @@ import { firebaseapp } from '../main'
               }
             },
           updateInterest() {
+            const hoverbox = document.getElementById("hoverbox");
+            hoverbox.style.display="none";
             this.loadPack.interest=!this.loadPack.interest
             const hoverDisplay = document.getElementById("interestHover");
             if (hoverDisplay.style.display != "none") {
@@ -721,7 +723,7 @@ import { firebaseapp } from '../main'
             } else {
               hoverDisplay.style.display = "block";
             }
-            const hoverbox = document.getElementById("hoverbox");
+            //const hoverbox = document.getElementById("hoverbox");
             if (hoverbox.style.display != "none") {
               hoverbox.style.display = "none";
             }
@@ -732,10 +734,11 @@ import { firebaseapp } from '../main'
           },
           changePopUp() {
             const hoverbox = document.getElementById("hoverbox");
-            if (hoverbox.style.display != "none") {
-              hoverbox.style.display = "none";
-            } else {
+            console.log(hoverbox.style.display)
+            if (hoverbox.style.display === "none") {
               hoverbox.style.display = "block";
+            } else {
+              hoverbox.style.display = "none";
             }
             //value=!value
             //push to backend
