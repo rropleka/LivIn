@@ -125,6 +125,19 @@ const router = createRouter({
       path: '/favorites',
       name: 'favorites',
       component: () => import('../views/ManageFavorites.vue')
+    },
+    {
+      path: '/search-users',
+      name: 'search-users',
+      component: () => import('../views/search-users.vue')
+    },
+    {
+      path:'/user/:username',
+      name: 'user-page',
+      component: () => import('../views/user-page.vue'),
+      props: (route) => ({
+        username: route.params.username
+      })
     }
   ]
 })

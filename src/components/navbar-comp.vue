@@ -83,7 +83,9 @@
 							<li @click.prevent="logout">
 								<router-link to="/"  class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Logout</router-link>
 							</li>
-							
+							<li>
+								<router-link to="/search-users"  class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Search Users</router-link>
+							</li>
 						</ul>
 					</div>
 				</li>

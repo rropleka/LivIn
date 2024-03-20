@@ -11,7 +11,6 @@ export default {
 
     try {
       properties.value = collection(db, "properties")
-      console.log(properties.value)
     } catch (error) {
       console.error('Error fetching properties:', error.message)
     }
