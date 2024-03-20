@@ -20,8 +20,6 @@
             }
         },
         data: function(){
-            
-            
             return{
             listings: [],
             property: [],

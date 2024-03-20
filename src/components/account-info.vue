@@ -78,17 +78,21 @@
             <button type="submit" v-if="isLoginEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
             <button v-if="!isLoginEditable" @click.prevent="toggleInfoEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ isInfoEditable ? 'Cancel' : 'Edit info' }}</button>
             <button type="submit" v-if="isInfoEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
+            <button style="color: red;" @click="showConfirmation">Delete Account</button>
+            <confirmation-dialog v-if="confirmVisible" :message="confirmationMessage" @cancel="hideConfirmation" @confirm="deleteAccount" />
+
         </form>
 </template>
 
 <script>
 import { useStore } from 'vuex'
 import { ref, computed } from 'vue'
-import { getAuth, updatePassword, verifyBeforeUpdateEmail } from "firebase/auth"
-import { getFirestore, collection, doc, setDoc } from 'firebase/firestore/lite'
+import { getAuth, updatePassword, verifyBeforeUpdateEmail, deleteUser } from "firebase/auth"
+import { getFirestore, collection, doc, setDoc, deleteDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
 import router from '../router/index'
 import store from '@/stores/auth/store'
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
 
 export default {
     setup() {
@@ -104,6 +108,15 @@ export default {
             origUser,
             user
         }
+    },
+    components: {
+        ConfirmationDialog
+    },
+    data() {
+        return {
+            confirmVisible: false,
+            confirmationMessage: "Are you sure you want to delete your account? This action cannot be undone."
+        };
     },
     methods: {
         toggleLoginEditable() {
@@ -162,6 +175,45 @@ export default {
             } else if (this.isInfoEditable) {
                 this.saveInfoChanges();
             }
+        },
+        confirmDelete() {
+            if (confirm("Are you sure you want to delete your account? This action cannot be undone.", "Confirm Delete")) {
+                this.deleteAccount();
+            }
+        },
+        showConfirmation() {
+            this.confirmVisible = true;
+        },
+        hideConfirmation() {
+            this.confirmVisible = false;
+        },
+        async deleteAccount() {
+            const auth = getAuth();
+            const user = auth.currentUser;
+
+            if (user) {
+                const db = getFirestore();
+                const userDocRef = doc(db, "users", user.uid);
+
+                try {
+                    // Delete user data from Firestore
+                    await deleteDoc(userDocRef);
+
+                    // Delete user account from Firebase Authentication
+                    await deleteUser(user);
+
+                    // Redirect to the login page or any other desired destination
+                    router.push('/login');
+                } catch (error) {
+                    console.error("Error deleting user account:", error.message);
+                    // Handle error appropriately, e.g., show error message to the user
+                    alert("An error occurred while deleting your account. Please try again later.");
+                }
+            } else {
+                // User is not signed in, handle this case accordingly
+                console.error("No user signed in to delete.");
+                alert("You are not signed in.");
+            }
         }
     },
     computed: {
@@ -178,4 +230,5 @@ export default {
     width: 50px;
     height: 50px;
 }
+
 </style>
