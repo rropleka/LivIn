@@ -22,10 +22,13 @@ export default {
             const q = query(userdb, where("username", ">=", search), where("username", "<=", search + "\uf8ff"))
             const qSnapshot = await getDocs(q)
             qSnapshot.forEach((doc) => {
-                users.value.push({
-                    username: doc.data().username,
-                    name: doc.data().name
-                })
+                if (!doc.data().isPrivate) // for when implemented, works even if field is not present
+                {
+                    users.value.push({
+                        username: doc.data().username,
+                        name: doc.data().name
+                    })
+                }
             })
         }
 
