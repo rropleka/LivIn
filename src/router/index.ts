@@ -138,6 +138,11 @@ const router = createRouter({
       props: (route) => ({
         username: route.params.username
       })
+    },
+    {
+      path:'/lists',
+      name: 'lists',
+      component: () => import('../views/ListsPage.vue')
     }
   ]
 })
