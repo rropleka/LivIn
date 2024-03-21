@@ -15,6 +15,7 @@
         <div class="hoverbox" id="hoverbox">
           <h1>Interested Users</h1>
           <button type="button" @click="changePopUp">Close</button>
+          <ul class="interestedOthers"></ul>
         </div>
       </div>
       <hr>
@@ -154,7 +155,7 @@ import { firebaseapp } from '../main'
         hasLoaded:false,
         username:'',
         interest:false,
-        interestedUsers: ["t1"]
+        interestedUsers: ["user1", "user2", "user3"]
       },
       cform: {
         stars:'',
@@ -303,6 +304,7 @@ import { firebaseapp } from '../main'
                 cuserList?.appendChild(userItem)
               }
             })
+            this.updateUsersList()
             } catch(error) {
                 // Handle any errors
                 const errorMessage = error;
@@ -714,9 +716,21 @@ import { firebaseapp } from '../main'
               }
             },
           updateInterest() {
+            console.log("before: " + this.loadPack.interestedUsers)
             const hoverbox = document.getElementById("hoverbox");
             hoverbox.style.display="none";
-            this.loadPack.interest=!this.loadPack.interest
+            if(!this.loadPack.interest) {
+              this.loadPack.interest=true
+              if(!this.loadPack.interestedUsers.includes(this.loadPack.username)) {
+                this.loadPack.interestedUsers.push(this.loadPack.username)
+              }
+            } else {
+              this.loadPack.interest=false;
+              let newarr = this.loadPack.interestedUsers.filter(val => val !== this.loadPack.username);
+              this.loadPack.interestedUsers=newarr;
+            }
+            console.log("after: " + this.loadPack.interestedUsers)
+            this.updateUsersList()
             const hoverDisplay = document.getElementById("interestHover");
             if (hoverDisplay.style.display != "none") {
               hoverDisplay.style.display = "none";
@@ -744,6 +758,26 @@ import { firebaseapp } from '../main'
             //push to backend
             //data will be stored with property in an array
             //hide/show other users
+          },
+          updateUsersList() {
+            this.clearUsersList()
+            const interestList = document.querySelector('.interestedOthers');
+            //add from querysnapsho other users
+            this.loadPack.interestedUsers.forEach((interestedUser)=>{
+              const profItem = document.createElement('li')
+              if(interestedUser!=this.loadPack.username) {
+              profItem.innerHTML = `
+                <a href="https://www.google.com">${interestedUser}
+              `
+              }
+              interestList?.appendChild(profItem)
+            })
+          }, 
+          clearUsersList() {
+            const interestList = document.querySelector('.interestedOthers');
+            while (interestList && interestList.firstChild) {
+              interestList.removeChild(interestList.lastChild);
+            }
           }
   }
 };
@@ -1055,6 +1089,10 @@ div[property] > p {
   .hoverbox h1 {
     display: inline;
     font-size: 26px;
+  }
+
+  .hoverbox ul {
+    color: purple;
   }
 
 </style> 
