@@ -176,11 +176,6 @@ export default {
                 this.saveInfoChanges();
             }
         },
-        confirmDelete() {
-            if (confirm("Are you sure you want to delete your account? This action cannot be undone.", "Confirm Delete")) {
-                this.deleteAccount();
-            }
-        },
         showConfirmation() {
             this.confirmVisible = true;
         },
@@ -190,6 +185,7 @@ export default {
         async deleteAccount() {
             const auth = getAuth();
             const user = auth.currentUser;
+            console.log(user);
 
             if (user) {
                 const db = getFirestore();
