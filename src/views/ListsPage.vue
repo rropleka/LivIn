@@ -1,24 +1,26 @@
 <template>
-    <div class="pageHeader">
-        <h1> {{currentUser}}'s Lists </h1>
-        <div class="newListForm">
-            <input :value="newListName" />
-            <button>Create New List</button>
-        </div>
-    </div>
-
-
-    <div class="listSection" v-if="Object.keys(lists) == 0">
-        No lists
-    </div>
-    <div v-else>
-        <div class="listSection" v-for="list in lists" :key="list.listName">
-            <div class="listName">
-                {{list.listName}}
+    <div v-if="render">
+        <div class="pageHeader">
+            <h1> {{currentUser}}'s Lists </h1>
+            <div class="newListForm">
+                <input v-model="newListName" />
+                <button @click="createNewList()">Create New List</button>
             </div>
-            <div class="listEntry" v-for="entry in list.entries" :key="entry.entryName">
-                <span>{{ entry.entryName }}:</span>
-                <span>{{ entry.entryLocation.lat }} {{ entry.entryLocation.lng }}</span>
+        </div>
+
+
+        <div class="listSection" v-if="Object.keys(lists) == 0">
+            No lists
+        </div>
+        <div class="mainSection" v-else>
+            <div class="listSection" v-for="(list, id) in lists" :key="list.listName">
+                <div class="listName">
+                    {{list.listName}}
+                </div>
+                <div class="listEntry" v-for="entry in list.entries" :key="entry.entryName">
+                    <span>{{ entry.entryName }}:</span>
+                    <span>{{ entry.entryLocation.lat }} {{ entry.entryLocation.lng }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -42,15 +44,18 @@
             let lists = {};
             listsSnapshot.forEach((doc) => {
                 try {
-                    lists[doc.id] = JSON.parse(doc.data());
+                    lists[doc.id] = doc.data();
+                    console.log(doc.data());
                 } catch (error) {
-                    console.log("Misformatted favorite, skipping");
+                    console.log(error);
+                    console.log(doc.data());
                 }
             });
             console.log(lists);
 
             lists["DEBUG"] = {
                 listName: "DEBUG",
+                user: "moderator@gmail.com",
                 entries: [
                     {
                         entryName: "TEST ENTRY",
@@ -71,17 +76,62 @@
                 lists,
                 db,
                 store,
-                currentUser
+                currentUser,
+
             }
 
         },
 
         data() {
             return {
-                renderLists: true,
-                selectedFavorite: "",
+                render: true,
+                newListName: "",
             }
         },
+
+        methods: {
+            async createNewList() {
+                if (this.newListName.trim() === "") {
+                    console.log("Empty name");
+                    return;
+                }
+                
+                const newList = {
+                    listName: this.newListName,
+                    user: this.currentUser,
+                    entries: []
+                }
+                try {
+                    const listsRef = collection(this.db, "lists");
+                    await addDoc(listsRef, newList)
+                } catch (error) {
+                    console.log(error);
+                }
+
+                this.newListName = "";
+
+                await this.reload();
+            },
+            async reload() {
+                this.render = false;
+
+                const listsSnapshot = await getDocs(query(collection(this.db, "lists"), where("user", "==", this.currentUser)));
+                let lists = {};
+                listsSnapshot.forEach((doc) => {
+                    try {
+                        lists[doc.id] = doc.data();
+                        console.log(doc.data());
+                    } catch (error) {
+                        console.log(error);
+                        console.log(doc.data());
+                    }
+                });
+                this.lists = lists;
+                console.log(this.lists);
+
+                this.render = true;
+            }
+        }
     }
 </script>
 
@@ -92,7 +142,7 @@
     }
 
     .listSection{
-        width: 33%;
+        width: calc(33% - 10px);
         display: flex;
         border-radius: 4px;
         background-color: #e8871b;
@@ -101,6 +151,7 @@
         margin-top: 10px;
         flex-direction: column;
         font-size: 20px;
+        margin-inline: 5px;
     }
 
     .listEntry {
@@ -143,5 +194,11 @@
         color: white;
         border-radius: 2px;
         padding-inline: 8px;
+    }
+
+    .mainSection {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 </style>
