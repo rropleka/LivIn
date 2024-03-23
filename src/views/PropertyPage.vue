@@ -99,6 +99,11 @@
       </div>
   </form>
 </div>
+<div class="notes-section">
+      <h2>Notes Section</h2>
+      <textarea id="user-notes" rows="4" cols="50" placeholder="Write your notes here..." v-model="notesText"></textarea>
+      <button @click="saveNotes">Save</button>
+    </div>
 </div>
 
   
@@ -127,6 +132,7 @@ import { firebaseapp } from '../main'
       property: null,
       isCurrentUserOwner1: false,
       isSiteModerator: false,
+      notesText: '',
       form: {
         stars:'',
         text:''
@@ -183,6 +189,7 @@ import { firebaseapp } from '../main'
       } else {
         router.push({ name: 'not-found' });
       }
+      await this.fetchNotes();
     } catch (error) {
       console.error("Error fetching property data:", error);
       router.push({ name: 'not-found' });
@@ -303,6 +310,77 @@ import { firebaseapp } from '../main'
           }
         },
   methods: {
+    async fetchNotes() {
+      const db = getFirestore(firebaseapp);
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+      const propertyName = this.propertyName;
+      const ownerName = this.leasingCompany;
+
+      try {
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        const username = userDocSnap.data().username;
+        console.log("fetching notes for", propertyName, ownerName, username);
+        const querySnapshot = await getDocs(query(collection(db, 'notes'),
+          where('propertyName', '==', propertyName),
+          where('owner', '==', ownerName),
+          where('username', '==', username)
+        ));
+
+        if (!querySnapshot.empty) {
+          const note = querySnapshot.docs[0].data();
+          this.notesText = note.text;
+          console.log(this.notesText);
+        } else {
+          this.notesText = ''; // Clear notes text if no notes exist
+        }
+      } catch (error) {
+        console.error('Error fetching notes:', error);
+      }
+    },
+
+    async saveNotes() {
+  const db = getFirestore(firebaseapp);
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const propertyName = this.propertyName;
+  const ownerName = this.leasingCompany;
+  const notesText = this.notesText;
+
+  try {
+    const userDocRef = doc(db, 'users', currentUser.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    const username = userDocSnap.data().username;
+    console.log("saving notes for", propertyName, ownerName, username);
+
+    // Check if the note already exists
+    const querySnapshot = await getDocs(query(collection(db, 'notes'),
+      where('propertyName', '==', propertyName),
+      where('owner', '==', ownerName),
+      where('username', '==', username)
+    ));
+
+    if (!querySnapshot.empty) {
+      // Note already exists, update it
+      const noteDoc = querySnapshot.docs[0].ref;
+      await updateDoc(noteDoc, { text: notesText });
+      console.log('Note updated successfully.');
+    } else {
+      // Note does not exist, add a new note
+      await addDoc(collection(db, 'notes'), {
+        propertyName: propertyName,
+        owner: ownerName,
+        username: username,
+        text: notesText
+      });
+      console.log('New note added successfully.');
+    }
+  } catch (error) {
+    console.error('Error saving notes:', error);
+  }
+},
+
     async validateCurrentUserOwner() {
       console.log("inside currentUserOwner");
       const db = getFirestore(firebaseapp);
@@ -972,6 +1050,49 @@ div[property] > p {
     min-width: 400px;
     background-color: bisque;
     color:black;
+  }
+
+  .notes-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notes-section h2 {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  #user-notes {
+    color: black;
+    border: 2px solid teal;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    resize: vertical; /* Allow vertical resizing of the textarea */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in the width calculation */
+  }
+
+  #user-notes::placeholder {
+    color: darkgray;
+    font-style: italic;
+  }
+
+  button {
+    background-color: teal;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background-color: darkcyan;
   }
 
 </style> 
