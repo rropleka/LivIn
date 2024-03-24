@@ -4,6 +4,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import { RouterLink } from "vue-router"
 import GMapItem from '@/components/GMapItem.vue';
+import listings from '@/views/Listings.vue';
 
 const store = useStore();
 
@@ -19,6 +20,9 @@ const currentUser = computed(() => store.getters.currentUser);
           <router-link to="/login">Back to Login Screeeeeen</router-link>
           <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
           <router-link to="/favorites">Manage Favorites</router-link>
+          <div class="propertiesTable">
+            <listings></listings>
+          </div>
         </div>
         <div class="map">
           <Suspense>
@@ -44,6 +48,12 @@ const currentUser = computed(() => store.getters.currentUser);
   }
   .map {
     width: 66%;
+    height: 100%;
+  }
+  .propertiesTable {
+    border: black 1px solid;
+    margin-left: 0px;
+    width: 100%;
     height: 100%;
   }
   .page {
