@@ -69,11 +69,35 @@
         }
       })
 
+      const propertiesSnapshot = await getDocs(query(collection(db, 'properties')));
+      let properties: Array<object> = [];
+      propertiesSnapshot.forEach((doc) => {
+        try {
+          const data = doc.data();
+          const coords = JSON.parse(data.location);
+          properties.push({
+            position: coords,
+            icon: {
+              strokeColor: "green",
+              strokeWeight: 2.5,
+              anchor: { x: 1, y: 1 },
+              scale: .15,
+              fill: "green",
+              path: "M41.733 160.134v-59.2H21.999L96 31.865l74 69.067h-19.733v59.201H110.8v-44.4H81.2v44.4z" 
+              //source: https://www.svgrepo.com/svg/504469/house
+            }
+          });
+        } catch (error) {
+          console.log("Misformatted property, skipping");
+        }
+      })
+
       return { 
         center: { lat: 40.420781, lng: -86.918061 },
         campus,
         hotspots,
         favorites,
+        properties,
        };
     },
     computed: {
@@ -250,6 +274,7 @@
 
     <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
     <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position"/>
+    <Marker v-for="property in properties" :options="property" :key="property.position"/>
 
     
     <Marker :options="marker1options" />
