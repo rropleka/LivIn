@@ -17,6 +17,7 @@
       <button class="contact-owner-button">Contact Owner</button>
       <button v-if="isCurrentUserOwner1 || isSiteModerator" class="remove-property-button" @click="removeProperty">Remove Property</button>
       <button v-if="isCurrentUserOwner1" class="edit-property-button" @click="editProperty">Edit Property</button>
+      <button class="post-sublease-button" @click="postSublease">Post Sublease</button>
       <hr>
       <p class="amenities-title">Amenities:</p>
       <div class="amenities-list">
@@ -310,6 +311,24 @@ import { firebaseapp } from '../main'
           }
         },
   methods: {
+    async postSublease() {
+    const db = getFirestore(firebaseapp);
+    const propertiesCollectionRef = collection(db, 'properties');
+    const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef,
+        where("propertyName", "==", this.propertyName),
+        where("owner", "==", this.leasingCompany)));
+
+    if (!propertyQuerySnapshot.empty) {
+        propertyQuerySnapshot.forEach(propertyDoc => {
+            const propertyData = propertyDoc.data();
+            const propertyUID = propertyDoc.id;
+            console.log("Property UID to post sublease:", propertyUID);
+
+            // Redirect to the "post-sublease" route and pass the propertyUID as a parameter
+            router.push({ name: 'post-sublease', params: { id: propertyUID } } );
+        });
+    }
+},
     async fetchNotes() {
       const db = getFirestore(firebaseapp);
       const auth = getAuth();

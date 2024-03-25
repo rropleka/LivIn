@@ -54,6 +54,11 @@ const router = createRouter({
       name: 'edit-property',
       component: () => import('../views/EditProperty.vue')
     },
+    {
+      path: '/post-sublease/:id',
+      name: 'post-sublease',
+      component: () => import('../views/PostSublease.vue')
+    },
     // {
     //   path: '/:leasingCompany/:PropertyName',
     //   name: 'property-page',
