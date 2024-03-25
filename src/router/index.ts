@@ -125,6 +125,11 @@ const router = createRouter({
       path: '/favorites',
       name: 'favorites',
       component: () => import('../views/ManageFavorites.vue')
+    },
+    {
+      path: '/lenderlist',
+      name: 'lenderlist',
+      component: () => import('../views/LenderList.vue')
     }
   ]
 })

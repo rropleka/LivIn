@@ -767,7 +767,7 @@ import { firebaseapp } from '../main'
               const profItem = document.createElement('li')
               if(interestedUser!=this.loadPack.username) {
               profItem.innerHTML = `
-                <a href="https://www.google.com">${interestedUser}
+                <a href="https://www.google.com">${interestedUser} //change link to actual link
               `
               }
               interestList?.appendChild(profItem)
