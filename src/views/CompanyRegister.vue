@@ -74,7 +74,8 @@ export default {
                 username: username.value,
                 phoneNumber: phoneNumber.value,
                 permanentAddress: permanentAddress.value,
-                userType: "leasingCompany"
+                userType: "leasingCompany",
+                accountPrivacy: "public"
             });
             router.push('/login');
             console.log("success with company regiseration");

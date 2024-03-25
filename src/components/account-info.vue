@@ -21,6 +21,18 @@
             </div> 
             <hr class="border-2 mb-4 border-orange-200 rounded-sm">
             <div class="mb-6">
+                <label for="accountPrivacy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Account Privacy</label>
+                <select v-model="user.accountPrivacy" id="accountPrivacy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+                <button @click.prevent="saveAccountPrivacy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Account Privacy</button>
+            </div>
+            <hr class="border-2 mb-4 border-orange-200 rounded-sm">
+            <div class="mb-6">
                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                 <div v-if="isInfoEditable === true">
                     <input v-model="user.username" type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
@@ -88,7 +100,7 @@
 import { useStore } from 'vuex'
 import { ref, computed } from 'vue'
 import { getAuth, updatePassword, verifyBeforeUpdateEmail, deleteUser } from "firebase/auth"
-import { getFirestore, collection, doc, setDoc, deleteDoc } from 'firebase/firestore/lite'
+import { getFirestore, collection, doc, getDoc, setDoc, deleteDoc, updateDoc, where, getDocs, query } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
 import router from '../router/index'
 import store from '@/stores/auth/store'
@@ -106,18 +118,14 @@ export default {
             isLoginEditable,
             isInfoEditable,
             origUser,
-            user
+            user,
+            errorMessage: '',
         }
     },
     components: {
         ConfirmationDialog
     },
-    data() {
-        return {
-            confirmVisible: false,
-            confirmationMessage: "Are you sure you want to delete your account? This action cannot be undone."
-        };
-    },
+
     methods: {
         toggleLoginEditable() {
             this.isLoginEditable = !this.isLoginEditable
@@ -132,6 +140,41 @@ export default {
             this.user.aboutme = this.origUser.aboutme;
             this.user.contactinfo = this.origUser.contactinfo;
         },
+        async saveAccountPrivacy() {
+    // Save the user's account privacy to the database
+    const db = getFirestore(firebaseapp);
+    const userDocRef = doc(db, 'users', this.user.uid);
+
+    // Check if the accountPrivacy field is already present in the document
+    const userDocSnapshot = await getDoc(userDocRef); // Use getDoc to get the document snapshot
+
+    // Check if the user is a sublease user with a private account
+    if (this.user.accountPrivacy === 'private') {
+      const subleasesCollectionRef = collection(db, 'subleases');
+      const subleaseQuerySnapshot = await getDocs(
+        query(subleasesCollectionRef, where('leaseOwner', '==', this.user.username))
+      );
+
+      if (!subleaseQuerySnapshot.empty) {
+        // Sublease user with private account found
+        const confirmPrompt = confirm("You are subletting and users would not be able to search you.");
+        if (!confirmPrompt) {
+            return;
+        }
+      } else {
+        this.errorMessage = '';
+      }
+    }
+
+    if (userDocSnapshot.exists()) {
+        // Update the document with accountPrivacy field
+        await updateDoc(userDocRef, { accountPrivacy: this.user.accountPrivacy });
+    } else {
+        // Add the document with accountPrivacy field
+        await setDoc(userDocRef, { accountPrivacy: this.user.accountPrivacy });
+    }
+    alert("Account privacy saved successfully!");
+},
         /* Function to update email and password on firebase upon modification */
         async saveLoginChanges() {
             const auth = getAuth();
@@ -225,6 +268,15 @@ export default {
 .icon {
     width: 50px;
     height: 50px;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 </style>

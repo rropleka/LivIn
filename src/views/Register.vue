@@ -131,7 +131,8 @@ export default {
                     gender: gender.value,
                     class: year.value,
                     aboutme: aboutme.value,
-                    contactinfo: contactinfo.value
+                    contactinfo: contactinfo.value,
+                    accountPrivacy: "public"
                 });
 
                 const user ={
@@ -144,7 +145,8 @@ export default {
                     gender: gender.value,
                     class: year.value,
                     aboutme: aboutme.value,
-                    contactinfo: contactinfo.value
+                    contactinfo: contactinfo.value,
+                    accountPrivacy: "public"
                 };
                 store.dispatch('loginUser', user);
 
