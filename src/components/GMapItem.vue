@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {GoogleMap, Marker, Polyline} from "vue3-google-map";
+  import {GoogleMap, Marker, Polyline, InfoWindow} from "vue3-google-map";
   import {defineComponent, normalizeProps} from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
@@ -10,7 +10,7 @@
 
   export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
-    components: { GoogleMap, Marker, Polyline },
+    components: { GoogleMap, Marker, Polyline, InfoWindow},
     data() {
       return {
         point1: null,
@@ -77,6 +77,7 @@
           const coords = JSON.parse(data.location);
           properties.push({
             position: coords,
+            propertyName: data.propertyName, 
             icon: {
               strokeColor: "green",
               strokeWeight: 2.5,
@@ -274,7 +275,13 @@
 
     <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
     <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position"/>
-    <Marker v-for="property in properties" :options="property" :key="property.position"/>
+    <Marker v-for="property in properties" :options="property" :key="property.position">
+      <InfoWindow>
+        <div class="infoWindow">
+          Property Name: {{ property.propertyName }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
 
     
     <Marker :options="marker1options" />
@@ -300,5 +307,8 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+  }
+  .infoWindow {
+    color: black;
   }
 </style>
