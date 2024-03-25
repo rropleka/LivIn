@@ -137,6 +137,11 @@ const router = createRouter({
       component: () => import('../views/search-users.vue')
     },
     {
+      path: '/check-reports',
+      name: 'check-reports',
+      component: () => import('../views/CheckReports.vue')
+    },
+    {
       path:'/user/:username',
       name: 'user-page',
       component: () => import('../views/user-page.vue'),
