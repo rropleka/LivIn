@@ -52,7 +52,7 @@ export default {
                         </button>
                     </li>
                     <li>
-                        <button @click="setPage(4)"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
+                        <button @click="this.$router.push('/lists')"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>
