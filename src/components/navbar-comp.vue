@@ -7,11 +7,9 @@
     export default {
         setup() {
             const store = useStore();
-
-
-            const isLoggedIn = computed(() => store.getters.isLoggedIn);
+			const isLoggedIn = computed(() => store.getters.isLoggedIn);
 			const currentUser = computed(() => store.getters.currUserCopy).value; 
-			console.log("currUserCopy", currentUser)
+			// console.log("currUserCopy", currentUser)
 			
 			const isModerator = ref(false)
             const isLeasingCompany = ref(true);
@@ -56,8 +54,14 @@
 			}
 
 			// Call fetchModeratorStatus when the component is mounted
-			fetchModeratorStatus();
-			console.log("isModerator",isModerator)
+			// onMounted(fetchModeratorStatus());
+			// Call fetchModeratorStatus when the component is mounted
+		onMounted(async () => {
+			await fetchModeratorStatus();
+			console.log("isModerator", isModerator)
+			console.log("isLoggedIn", isLoggedIn)
+		});
+			// console.log("isModerator",isModerator)
 
             return {
                 isLoggedIn,
