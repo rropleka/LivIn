@@ -7,6 +7,7 @@
   import {decode} from "@googlemaps/polyline-codec";
   import { useStore } from "vuex";
   import axios from "axios";
+  
 
   export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
@@ -148,6 +149,9 @@
       onMapRightClick(event: MapMouseEvent) {
         this.point2 = event.latLng;
         this.findRoute();
+      },
+      filterByCurrentLocation() {
+        console.log("hi");
       },
       async findRoute() {
 

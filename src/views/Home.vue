@@ -6,11 +6,22 @@ import { RouterLink } from "vue-router"
 import GMapItem from '@/components/GMapItem.vue';
 import listings from '@/views/Listings.vue';
 
+
 const store = useStore();
 
 // Computed properties to access the authentication state
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
 const currentUser = computed(() => store.getters.currentUser);
+</script>
+
+<script>
+   export default {
+      methods: {
+         filterByCurrentLocationButton() {
+          this.$refs.GMapItem.filterByCurrentLocation();
+         }
+      }
+   }
 </script>
 
 <template>
@@ -20,13 +31,14 @@ const currentUser = computed(() => store.getters.currentUser);
           <router-link to="/login">Back to Login Screeeeeen</router-link>
           <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
           <router-link to="/favorites">Manage Favorites</router-link>
+          <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="filterByCurrentLocationButton()">Filter by Current Location</button>
           <div class="propertiesTable">
             <listings></listings>
           </div>
         </div>
         <div class="map">
           <Suspense>
-            <GMapItem />
+            <GMapItem ref="GMapItem" />
           </Suspense>
         </div>
       </div>
