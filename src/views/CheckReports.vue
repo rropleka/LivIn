@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { getFirestore, collection, query, where, getDocs, doc, deleteDoc, getDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
 
 export default {
     async setup() {
@@ -9,6 +10,7 @@ export default {
         const db = getFirestore(firebaseapp)
         let reviews = ref([])
         const reportIDs = ref([])
+        reportIDs.value.push("dummydata")
         let reviewdb1 = []
         let reviewdb2 = []
         let reportdb = []
@@ -101,45 +103,113 @@ export default {
             } catch (error) {
                 console.error("Error deleting review:", error.message);
             }
+            this.deleteReport(reviewId)
+
+        }, 
+        async deleteReport(reviewID) {
+            try {
+                const db = getFirestore();
+                // Construct a query to find the document in the reportedReviews collection
+                const q = query(collection(db, 'reportedReviews'), where('reviewID', '==', reviewID));
+
+                // Get the matching documents
+                const querySnapshot = await getDocs(q);
+
+                // Get the first document in the querySnapshot (there should be only one)
+                const doc = querySnapshot.docs[0];
+
+                // Check if a document was found
+                if (doc) {
+                    // Delete the document from the reportedReviews collection
+                    await deleteDoc(doc.ref);
+
+                    console.log(`Reported review with reviewID ${reviewID} deleted successfully.`);
+                } else {
+                    console.log(`No reported review found with reviewID ${reviewID}.`);
+                }
+            } catch (error) {
+                console.error('Error deleting reported review:', error.message);
+            }
 
             // Update the reviews array to remove the deleted review
-            this.reviews = this.reviews.filter(review => review.id !== reviewId);
+            this.reviews = this.reviews.filter(review => review.id !== reviewID);
+        },
+        showConfirmation(message, action, itemId) {
+            this.confirmationMessage = message;
+            this.confirmVisible = true;
+            this.confirmationAction = action; // removeReview or removeReport
+            this.itemId = itemId;
+        },
+        hideConfirmation() {
+            this.confirmVisible = false;
+        },
+        handleConfirm() {
+            // Check which action to perform based on confirmationAction
+            if (this.confirmationAction === 'removeReview') {
+                this.deleteReview(this.itemId);
+            } else if (this.confirmationAction === 'removeReport') {
+                this.deleteReport(this.itemId);
+            }
+            // Reset confirmationAction and confirmationItemId
+            this.confirmationAction = null;
+            this.itemId = null;
+            // Hide confirmation dialog
+            this.hideConfirmation();
+        }
+    }, components: {
+        ConfirmationDialog
+    }, data() {
+        return {
+            confirmVisible: false,
+            confirmationMessage: "Are you sure you want to remove this? This action can't be undone."
         }
     }
+    
+
 }
 </script>
 
 <template>
-
     <div class="grid grid-cols-4 p-6 result-cont-height">
         <div class="h-0"></div>
-        <div class="col-span-2 result-cont-height">
+        <div class="col-span-3 result-cont-height">
             <p class="text-lg font-medium text-gray-900 mb-2">All Reported Reviews</p>
             <div class="overflow-hidden overflow-y-auto border-2 p-4 border-dark-orange rounded-lg max-result-height">
-                <div v-for="review in reviews" :key="review.id"
-                    class="flex flex-row justify-between px-4 py-2 my-2 border-2 border-orange-200 shadow-md rounded-md">
-                    <div class="flex flex-col">
-                        <p class="text-lg font-medium text-gray-900">{{ "Username: " + review.username }}</p>
-                        <p class="text-lg font-medium text-gray-900"> {{ "Owner: " + review.owner }} </p>
-                        <p class="text-lg font-medium text-gray-900"> {{ "Property: " + review.propertyName }} </p>
-                        <p class="text-lg font-medium text-gray-900"> {{ "Review: " + review.reviewText }} </p>
-                        <p class="text-lg font-medium text-gray-900"> {{ "Stars: " + review.stars }} </p>
-                    </div>
-                    <div class="flex flex-col"> <!-- Wrap buttons in a flex column container -->
-                        <button @click="deleteReview(review.id)"
-                            class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2 mb-2"> <!-- Add mb-2 for margin between buttons -->
-                            Remove Review
-                        </button>
-                        <button
-                            class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
-                            Remove Report
-                        </button>
+                <!-- Check if reviews array is empty -->
+                <div v-if="reviews.length === 0" class="text-center text-gray-500 mt-4">
+                    No reported reviews found.
+                </div>
+                <!-- If reviews array is not empty, render reviews -->
+                <div v-else>
+                    <div v-for="review in reviews" :key="review.id"
+                        class="flex flex-row justify-between px-4 py-2 my-2 border-2 border-orange-200 shadow-md rounded-md">
+                        <div class="flex flex-col">
+                            <p class="text-lg font-medium text-gray-900">{{ "Username: " + review.username }}</p>
+                            <p class="text-lg font-medium text-gray-900"> {{ "Owner: " + review.owner }} </p>
+                            <p class="text-lg font-medium text-gray-900"> {{ "Property: " + review.propertyName }} </p>
+                            <p class="text-lg font-medium text-gray-900"> {{ "Review: " + review.reviewText }} </p>
+                            <p class="text-lg font-medium text-gray-900"> {{ "Stars: " + review.stars }} </p>
+                        </div>
+                        <div class="flex flex-col"> <!-- Wrap buttons in a flex column container -->
+                            <button
+                                @click="showConfirmation('Are you sure you want to remove this review. This action cannot be undone and all data will be lost.', 'removeReview', review.id)"
+                                class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2 mb-2">
+                                <!-- Add mb-2 for margin between buttons -->
+                                Remove Review
+                            </button>
+                            <button
+                                @click="showConfirmation('Are you sure you want to remove this report. This action cannot be undone.', 'removeReport', review.id)"
+                                class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+                                Remove Report
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</template>
+<confirmation-dialog v-if="confirmVisible" :message="confirmationMessage" @cancel="hideConfirmation"
+    @confirm="handleConfirm" /></template>
 
 <style>
 .max-result-height {
