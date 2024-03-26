@@ -11,7 +11,10 @@
       <div class="into">
         <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
         <label for="interest">I'm interested</label>
-        <button v-if="loadPack.interest==true" id="interestHover" @click="changePopUp">Click to see who else is!</button>
+        <button v-if="loadPack.interest==true" id="interestHover" @click="changePopUp">->    Click to see who else is!</button>
+        <br>
+        <input v-if="loadPack.interest==true" type="checkbox" id="publicity" name="publicity" @click="updatePublicity"/>
+        <label v-if="loadPack.interest==true" for="publicity">I want my choice to be public</label>
         <div class="hoverbox" id="hoverbox">
           <h1>Interested Users</h1>
           <button type="button" @click="changePopUp">Close</button>
@@ -155,7 +158,8 @@ import { firebaseapp } from '../main'
         hasLoaded:false,
         username:'',
         interest:false,
-        interestedUsers: ["user1", "user2", "user3"]
+        interestedUsers: ["user1", "user2", "user3"],
+        publicUsers: ["pu1"]
       },
       cform: {
         stars:'',
@@ -715,7 +719,8 @@ import { firebaseapp } from '../main'
                 }
               }
             },
-          updateInterest() {
+          async updateInterest() {
+            const db = getFirestore(firebaseapp);
             console.log("before: " + this.loadPack.interestedUsers)
             const hoverbox = document.getElementById("hoverbox");
             hoverbox.style.display="none";
@@ -730,6 +735,8 @@ import { firebaseapp } from '../main'
               this.loadPack.interestedUsers=newarr;
             }
             console.log("after: " + this.loadPack.interestedUsers)
+            const x = doc(db, this.loadPack.docRef)
+            console.log("docref: " + this.loadPack.docRef)
             this.updateUsersList()
             const hoverDisplay = document.getElementById("interestHover");
             if (hoverDisplay.style.display != "none") {
@@ -741,6 +748,9 @@ import { firebaseapp } from '../main'
             if (hoverbox.style.display != "none") {
               hoverbox.style.display = "none";
             }
+            await updateDoc(x, {
+              interestedUsers: this.loadPack.interestedUsers
+            });
             //value=!value
             //push to backend
             //data will be stored with property in an array
@@ -766,9 +776,12 @@ import { firebaseapp } from '../main'
             this.loadPack.interestedUsers.forEach((interestedUser)=>{
               const profItem = document.createElement('li')
               if(interestedUser!=this.loadPack.username) {
-              profItem.innerHTML = `
-                <a href="https://www.google.com">${interestedUser} //change link to actual link
-              `
+              profItem.innerHTML = //`<a href="https://www.google.com">${interestedUser} //change link to actual link`
+                `<button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+                        <router-link :to="{ name: 'user-page', params: { username: ${interestedUser} } }">
+                          ${interestedUser}`
+              } else { 
+                profItem.innerHTML = `(myself)`
               }
               interestList?.appendChild(profItem)
             })

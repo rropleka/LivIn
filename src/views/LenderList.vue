@@ -4,19 +4,23 @@
         <table class="sortable" id="table">
             <tr>
                 <th class="sorttable_nosort">Name</th>
-                <th>Rating</th>
+                <th class="sorttable_numeric">Rating</th>
+                <th class="sorttable_nosort">Number of Reviews</th>
             </tr>
             <tr>
                 <td>filleruser1</td>
                 <td>3.65</td>
+                <td>34</td>
             </tr>
             <tr>
                 <td>filleruser2</td>
                 <td>4.62</td>
+                <td>12</td>
             </tr>
             <tr>
                 <td>filleruser3</td>
                 <td>1.98</td>
+                <td>7</td>
             </tr>
         </table>
     </div>
@@ -53,11 +57,11 @@ export default {
                 var row = table.insertRow(-1);
                 var name = row.insertCell(0);
                 var rating = row.insertCell(1);
+                var num = row.insertCell(2);
                 name.innerHTML=data.username;
-                const ratingScore = data.totalScore/data.totalReviews;
-                var textRating = rating.toString()
                 //rating.innerHTML='2.6'
                 rating.innerHTML=`${(data.totalScore/data.totalReviews).toFixed(2)}`;
+                num.innerHTML=`${data.totalReviews}`;
               }
             })
             querySnapshot.forEach((doc) => {
@@ -67,9 +71,11 @@ export default {
                 var row = footer.insertRow(-1);
                 var name = row.insertCell(0);
                 var rating = row.insertCell(1);
+                var num = row.insertCell(2);
                 name.innerHTML=data.username;
                 //const ratingScore = data.totalScore/data.totalReviews;
                 rating.innerHTML='No Reviews Yet'
+                num.innerHTML=`0`;
                 //rating.innerHTML=`${rating}`;
               }
             })
