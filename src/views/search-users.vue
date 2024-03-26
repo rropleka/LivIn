@@ -12,7 +12,6 @@ export default {
 
         try {
             userdb = collection(db, "users")
-            console.log('Properties fetched:', userdb)
         } catch (error) {
             console.error('Error fetching properties:', error.message)
         }
