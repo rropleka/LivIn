@@ -1,9 +1,9 @@
 <template>
     <div v-if="render">
         <div class="pageHeader">
-            <h1> {{currentUser}}'s Lists </h1>
+            <h1> My Lists </h1>
             <div class="newListForm">
-                <input v-model="newListName" />
+                <input class="biginput" v-model="newListName" />
                 <button @click="createNewList()">Create New List</button>
             </div>
         </div>
@@ -24,7 +24,7 @@
                         </svg>
                     </div>
                     <div class="headingButtons" v-else>
-                        <input v-model="list.listName" />
+                        <input class="biginput" v-model="list.listName" />
                         <!-- checkmark -->
                         <!-- https://www.svgrepo.com/svg/532154/check -->
                         <svg class="check" @click="renameList()" width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,8 +35,14 @@
                     <div class="headingButtons">
                         <!-- plus -->
                         <!-- https://www.svgrepo.com/svg/532997/plus-large -->
-                        <svg @click="(addNewEntry == '') ? addNewEntry = id : addNewEntry = ''" width="20px" height="20px" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
+                        <svg @click="(addNewEntry == '') ? addNewEntry = id : addNewEntry = ''" width="25px" height="25px" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 12H20M12 4V20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+                        <!-- share -->
+                        <!-- https://www.svgrepo.com/svg/523018/share -->
+                        <svg @click="(share == '') ? share = id : share = ''" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 2.25C14.7051 2.25 13.25 3.70507 13.25 5.5C13.25 5.69591 13.2673 5.88776 13.3006 6.07412L8.56991 9.38558C8.54587 9.4024 8.52312 9.42038 8.50168 9.43939C7.94993 9.00747 7.25503 8.75 6.5 8.75C4.70507 8.75 3.25 10.2051 3.25 12C3.25 13.7949 4.70507 15.25 6.5 15.25C7.25503 15.25 7.94993 14.9925 8.50168 14.5606C8.52312 14.5796 8.54587 14.5976 8.56991 14.6144L13.3006 17.9259C13.2673 18.1122 13.25 18.3041 13.25 18.5C13.25 20.2949 14.7051 21.75 16.5 21.75C18.2949 21.75 19.75 20.2949 19.75 18.5C19.75 16.7051 18.2949 15.25 16.5 15.25C15.4472 15.25 14.5113 15.7506 13.9174 16.5267L9.43806 13.3911C9.63809 12.9694 9.75 12.4978 9.75 12C9.75 11.5022 9.63809 11.0306 9.43806 10.6089L13.9174 7.4733C14.5113 8.24942 15.4472 8.75 16.5 8.75C18.2949 8.75 19.75 7.29493 19.75 5.5C19.75 3.70507 18.2949 2.25 16.5 2.25ZM14.75 5.5C14.75 4.5335 15.5335 3.75 16.5 3.75C17.4665 3.75 18.25 4.5335 18.25 5.5C18.25 6.4665 17.4665 7.25 16.5 7.25C15.5335 7.25 14.75 6.4665 14.75 5.5ZM6.5 10.25C5.5335 10.25 4.75 11.0335 4.75 12C4.75 12.9665 5.5335 13.75 6.5 13.75C7.4665 13.75 8.25 12.9665 8.25 12C8.25 11.0335 7.4665 10.25 6.5 10.25ZM16.5 16.75C15.5335 16.75 14.75 17.5335 14.75 18.5C14.75 19.4665 15.5335 20.25 16.5 20.25C17.4665 20.25 18.25 19.4665 18.25 18.5C18.25 17.5335 17.4665 16.75 16.5 16.75Z" fill="#FFFFFF"/>
                         </svg>
 
                         <!-- trashcan -->
@@ -45,6 +51,19 @@
                         </svg>
                     </div>
                 </div>
+
+                <div class="listHeading" v-if="share == id" style="margin-block: 4px;">
+                    <div>
+                        <span style="margin-right: 8px; font-size: 16px;">Share with:</span>
+                        <input v-model="userToShareWith" />
+                        <!-- checkmark -->
+                        <!-- https://www.svgrepo.com/svg/532154/check -->
+                        <svg class="check" @click="shareList()" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+
                 <div class="listEntry" v-for="entry in list.entries" :key="entry.entryName">
                     <div class="listHeading">
                         <span>{{ entry.entryName }}:</span>
@@ -83,7 +102,7 @@
 
             let currentUser = ""
             if (store.getters.currentUser) {
-                currentUser = store.getters.currentUser.email;
+                currentUser = store.getters.currentUser.username;
             }
 
             const listsSnapshot = await getDocs(query(collection(db, "lists"), where("user", "==", currentUser)));
@@ -97,29 +116,26 @@
                     console.log(doc.data());
                 }
             });
-            console.log(lists);
 
-            lists["DEBUG"] = {
-                listName: "DEBUG",
-                user: "moderator@gmail.com",
-                entries: [
-                    {
-                        entryName: "TEST ENTRY",
-                        entryLocation: { lat: 40.420781, lng: -86.918061 }
-                    },
-                    {
-                        entryName: "TEST ENTRY",
-                        entryLocation: { lat: 40.420781, lng: -86.918061 }
-                    },
-                    {
-                        entryName: "TEST ENTRY",
-                        entryLocation: { lat: 40.420781, lng: -86.918061 }
-                    },
-                ]
-            }
+            const sharedListsSnapshot = await getDocs(query(collection(db, "lists"), where("sharedWith", "array-contains", store.getters.currentUser.username)))
+            let sharedLists: {[key: string]: {[key: string]: Object}} = {};
+            sharedListsSnapshot.forEach((currentdoc) => {
+                try {
+                    if (!sharedLists[currentdoc.data().user]) {
+                        sharedLists[currentdoc.data().user] = {}
+                    }
+                    sharedLists[currentdoc.data().user][currentdoc.id] = currentdoc.data();
+                } catch (error) {
+                    console.log(error);
+                    console.log(currentdoc.data());
+                }
+            });
+
+            console.log(sharedLists);
 
             return {
                 lists,
+                sharedLists,
                 db,
                 store,
                 currentUser,
@@ -134,21 +150,23 @@
                 addNewEntry: "",
                 newName: "",
                 newLocation: "",
-                listToRename: ""
+                listToRename: "",
+                share: "",
+                userToShareWith: ""
             }
         },
 
         methods: {
             async createNewList() {
                 if (this.newListName.trim() === "") {
-                    console.log("Empty name");
                     return;
                 }
                 
                 const newList = {
                     listName: this.newListName,
                     user: this.currentUser,
-                    entries: []
+                    entries: [],
+                    sharedWith: [],
                 }
                 try {
                     const listsRef = collection(this.db, "lists");
@@ -169,27 +187,20 @@
                 listsSnapshot.forEach((doc) => {
                     try {
                         lists[doc.id] = doc.data();
-                        console.log(doc.data());
                     } catch (error) {
                         console.log(error);
                         console.log(doc.data());
                     }
                 });
                 this.lists = lists;
-                console.log(this.lists);
-
                 this.render = true;
             },
             async removeList(id: string) {
-                console.log(id);
-
                 const docToDelete = doc(this.db, "lists", id)
-                console.log(`${docToDelete}`);
                 await deleteDoc(docToDelete)
                 .catch((error: any) => {
                     console.log(error);
                 })
-
                 await this.reload();
             },
             async createEntry() {
@@ -202,7 +213,6 @@
                 coords.lat = parseFloat(splitString[0]);
                 coords.lng = parseFloat(splitString[1]);
                 if (isNaN(coords.lat) || isNaN(coords.lng)) {
-                    console.log("Improperly formatted coordinates");
                     return;
                 }
 
@@ -217,12 +227,8 @@
                 await this.reload();
             },
             async removeEntry(id: string, entry: Object) {
-                console.log(id);
-                console.log(entry);
                 let listToUpdate = this.lists[id];
-                console.log(listToUpdate);
                 listToUpdate.entries.splice(listToUpdate.entries.indexOf(entry), 1);
-                console.log(listToUpdate);
                 await setDoc(doc(this.db, "lists", id), listToUpdate);
                 await this.reload();
             },
@@ -233,6 +239,23 @@
                 await setDoc(doc(this.db, "lists", this.listToRename), this.lists[this.listToRename]);
                 this.listToRename = "";
                 await this.reload();
+            },
+            async shareList() {
+                if (this.userToShareWith === this.currentUser) {
+                    this.userToShareWith = "";
+                    return;
+                }
+
+                const usersSnapshot = await getDocs(query(collection(this.db, "users")));
+                usersSnapshot.forEach(async (currentdoc) => {
+                    if (currentdoc.data().username == this.userToShareWith) {
+                        let list = this.lists[this.share];
+                        list.sharedWith.push(this.userToShareWith);
+                        await setDoc(doc(this.db, "lists", this.share), list);
+                        this.share = this.userToShareWith = "";
+                        await this.reload();
+                    }
+                });
             }
         }
     }
@@ -291,6 +314,11 @@
         border: lightgray solid 1px;
         border-radius: 2px;
         margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .biginput {
+        font-size: 20px;
     }
 
     button {
@@ -312,6 +340,7 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
+        flex-wrap: wrap;
     }
 
     svg {
@@ -332,6 +361,16 @@
 
     .check {
         margin-left: 0px;
+    }
+
+    .share {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    input {
+
     }
 
 </style>
