@@ -188,11 +188,16 @@
         };
         navigator.geolocation.getCurrentPosition(success, error);
       },
-      filterByFavoriteLocation:function(proximity) {
+      filterByFavoriteLocation:function(proximity, favoritePosition) {
         let latitude;
         let longitude;
-        latitude  = position.coords.latitude;
-        longitude = position.coords.longitude;
+        console.log(favoritePosition);
+        let commaIndex;
+        let longIndex;
+        commaIndex = favoritePosition.indexOf(",");
+        longIndex = favoritePosition.indexOf("lng");
+        latitude  = parseFloat(favoritePosition.substring(9, commaIndex));
+        longitude = parseFloat(favoritePosition.substring(longIndex + 5, favoritePosition.length - 1));
         console.log("Lat: " + latitude);
         console.log("Long: " + longitude);
         let propertyLat;

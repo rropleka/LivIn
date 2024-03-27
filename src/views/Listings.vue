@@ -171,7 +171,7 @@
             </span> <br>
             Owner: {{ this.property.owner }} <br>
             Property Size: {{ this.property.propertySize }} <br>
-            location: {{ this.property.location }} <br>
+            Location: {{ this.property.location }} <br>
         </div>
     </div>
 </template>

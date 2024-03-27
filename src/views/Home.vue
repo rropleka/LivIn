@@ -41,10 +41,12 @@ favoritesSnapshot.forEach((doc) => {
 
       methods: {
          filterByCurrentLocationButton() {
-          this.$refs.GMapItem.filterByCurrentLocation(document.getElementById("currentFilter").value);
+          this.$refs.GMapItem.filterByCurrentLocation(document.getElementById("proximityFilter").value);
          },
          filterByFavoriteLocationButton() {
-          this.$refs.GMapItem.filterByFavoriteLocation(document.getElementById("favoriteFilter").value);
+          var dropdown = document.getElementById("favoriteFilter");
+          var favoritePosition = dropdown.options[dropdown.selectedIndex].text;
+          this.$refs.GMapItem.filterByFavoriteLocation(document.getElementById("proximityFilter").value, favoritePosition);
          },
       },
     })
@@ -59,7 +61,7 @@ favoritesSnapshot.forEach((doc) => {
           <router-link to="/favorites">Manage Favorites</router-link>
           <div>
             <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByCurrentLocationButton()">Filter by Current Location</button>
-            <input type="number" id="currentFilter" style="color: black; width: 250px; float: top;" placeholder="Enter distance in km">
+            <input type="number" id="proximityFilter" style="color: black; width: 250px; float: top;" placeholder="Enter distance in km">
           </div>
           <div>
             <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByFavoriteLocationButton()">Filter by Favorite Location</button>
