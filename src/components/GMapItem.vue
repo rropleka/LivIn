@@ -7,6 +7,7 @@
   import {decode} from "@googlemaps/polyline-codec";
   import { useStore } from "vuex";
   import axios from "axios";
+import { getLineAndCharacterOfPosition } from "typescript";
   
 
   export default defineComponent({
@@ -162,15 +163,44 @@
             longitude = position.coords.longitude;
             console.log("Lat: " + latitude);
             console.log("Long: " + longitude);
-            /*for (var property in this.properties) {
-              console.log(this.properties[property].position);
-            }*/
+            let propertyLat;
+            let propertyLong;
+            let distance;
+            
+            for (let index = this.properties.length - 1; index >= 0; index--) {
+              if(this.properties[index].position != null) {
+                console.log(this.properties[index].position);
+                propertyLat = this.properties[index].position.lat;
+                propertyLong = this.properties[index].position.lng;
+
+                distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+                console.log("Distance: " + distance);
+                if (distance >= .1) {
+                  this.properties.splice(index, 1);
+                }
+
+              }
+              
+            }
+            
         };
         const error = (err) => {
             console.log("Current Location Error");
         };
         navigator.geolocation.getCurrentPosition(success, error);
-        this.properties.splice(0,1000);
+        //this.properties.splice(0,1000);
+      },
+      //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
+       haversineDistanceBetweenPoints: function(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const p1 = lat1 * Math.PI/180;
+        const p2 = lat2 * Math.PI/180;
+        const deltaLon = lon2 - lon1;
+        const deltaLambda = (deltaLon * Math.PI) / 180;
+        const d = Math.acos(
+          Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda),
+        ) * R;
+        return d;
       },
       async findRoute() {
 
