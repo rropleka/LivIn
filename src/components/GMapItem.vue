@@ -327,7 +327,13 @@ import { getLineAndCharacterOfPosition } from "typescript";
     :zoom="15">
 
     <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
-    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position"/>
+    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position">
+      <InfoWindow>
+        <div class="infoWindow">
+          {{ favorite.position }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
     <Marker v-for="property in properties" :options="property" :key="property.position">
       <InfoWindow>
         <div class="infoWindow">
