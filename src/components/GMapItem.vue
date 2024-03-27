@@ -7,7 +7,6 @@
   import {decode} from "@googlemaps/polyline-codec";
   import { useStore } from "vuex";
   import axios from "axios";
-import { getLineAndCharacterOfPosition } from "typescript";
   
 
   export default defineComponent({
@@ -188,7 +187,36 @@ import { getLineAndCharacterOfPosition } from "typescript";
             console.log("Current Location Error");
         };
         navigator.geolocation.getCurrentPosition(success, error);
-        //this.properties.splice(0,1000);
+      },
+      filterByFavoriteLocation:function(proximity) {
+        let latitude;
+        let longitude;
+        latitude  = position.coords.latitude;
+        longitude = position.coords.longitude;
+        console.log("Lat: " + latitude);
+        console.log("Long: " + longitude);
+        let propertyLat;
+        let propertyLong;
+        let distance;
+        
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            console.log(this.properties[index].position);
+            propertyLat = this.properties[index].position.lat;
+            propertyLong = this.properties[index].position.lng;
+
+            distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+            console.log("Distance: " + distance);
+            if (distance >= proximity) {
+              this.properties.splice(index, 1);
+            }
+
+          }
+          
+        }
+            
+
+
       },
       //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
        haversineDistanceBetweenPoints: function(lat1, lon1, lat2, lon2) {
