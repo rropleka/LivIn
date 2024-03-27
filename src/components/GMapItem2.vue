@@ -196,6 +196,8 @@
 
 <template>
 
+  <input type="text" v-model="location" placeholder="Click on the map to set location" style="color: black;">
+
   <GoogleMap 
     api-key="AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8" 
     :style=style 
@@ -209,8 +211,6 @@
     <Polyline v-if="renderPolyline" :options="polylineOptions"/>
 
   </GoogleMap>
-
-  <input type="text" v-model="location" placeholder="Click on the map to set location" style="color: black;">
 
 </template>
 
