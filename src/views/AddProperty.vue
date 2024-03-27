@@ -35,11 +35,36 @@
           <textarea id="structure-details" v-model="structureDetails"></textarea>
         </div>
   
-        <div class="form-group">
-          <label for="location">Location:</label>
+        <!-- <div class="form-group"> -->
+          <!-- <label for="location">Location:</label> -->
           <!-- <input type="text" id="location" placeholder="Search Location" v-model="location" @keyup.enter="searchLocation"> -->
-          <input type="text" id="location" placeholder="Store Location" v-model="location" @focus="initAutocomplete">
-        </div>
+          <!-- <input type="text" id="location" placeholder="Store Location" v-model="location" @focus="initAutocomplete"> -->
+        <!-- </div> -->
+
+        <div>
+    <label for="autocomplete-input">Location:</label>
+    <input type="text" id="autocomplete-input" v-model="location" @input="onInputChange">
+  </div>
+
+  <div>
+  <label for="autocomplete-input">Location:</label>
+  <Autocomplete
+    id="autocomplete-input"
+    v-model="location"
+    :options="autocompleteOptions"
+    @place_changed="onPlaceChanged"
+  />
+</div>
+
+<vue-google-autocomplete
+      ref="address"
+      id="map"
+      classname="form-control"
+      placeholder="Please type your address"
+      v-on:placechanged="getAddressData"
+      country="sg"
+    >
+    </vue-google-autocomplete>
   
         <!-- <div class="map-container"> -->
           <!-- Map display area -->
@@ -71,6 +96,7 @@
   
         <button type="submit">Save Property</button>
         <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8&libraries=places"></script> -->
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8&libraries=places"></script> -->
       </form>
     </div>
   </template>
@@ -88,12 +114,19 @@
 import { firebaseapp } from '../main'
 import { GoogleMap, Marker } from "vue3-google-map";
 import GMapItem from '@/components/GMapItem2.vue';
+// import { GMapAutocomplete } from 'vue3-google-autocomplete';
+import VueGoogleAutocomplete from "vue-google-autocomplete";
+
+
 
 
 
   
   export default {
     async mounted() {
+      this.$refs.address.focus()
+      this.initAutocomplete();
+  
     const auth = getAuth();
   const currentUser = auth.currentUser;
 
@@ -130,12 +163,18 @@ import GMapItem from '@/components/GMapItem2.vue';
       }
 },
 components: {
-      GMapItem // Register GMapItem as a component
+      GMapItem, // Register GMapItem as a component
+      // Autocomplete,
+      VueGoogleAutocomplete
     },
     data() {
       return {
         center: { lat: 40.420781, lng: -86.918061 },
         location: '',
+        autocompleteOptions: {
+      types: ['geocode'], // specify the type of results (optional)
+    },
+    address: "",
         point1: null,
         point2: null,
         polylineString: '',
@@ -147,9 +186,61 @@ components: {
         newAmenity: '',
         rent: 0,
         propertySize: '',
-        structureDetails: ''
+        structureDetails: '',
+        autocomplete: null,
       };
     },
+    methods: {
+      getAddressData: function (addressData, placeResultData, id) {
+        this.address = addressData;
+      },
+      onPlaceChanged(place) {
+    // Handle the selected place from the Autocomplete input
+    console.log('Selected Place:', place);
+    // You can access place.geometry.location for coordinates
+  },
+      onInputChange() {
+      // Handle input change if needed
+    },
+    // onPlaceChanged() {
+    //   const place = this.autocomplete.getPlace();
+    //   if (!place.geometry) {
+    //     console.error('Place details not found for the input.');
+    //     return;
+    //   }
+    //   // Handle selected place, e.g., update location data
+    //   this.location = place.formatted_address;
+    //   // You can also access other place properties like place.geometry.location
+    // },
+    initAutocomplete() {
+      // Initialize autocomplete and bind it to the input field
+      const inputElement = document.getElementById('autocomplete-input');
+      this.autocomplete = new google.maps.places.Autocomplete(inputElement, {
+        types: ['geocode'], // Specify the type of place data to return
+      });
+
+      // Listen for the 'place_changed' event to handle selected place
+      this.autocomplete.addListener('place_changed', this.onPlaceChanged);
+    },
+    // initAutocomplete() {
+    //   const inputElement = document.getElementById('location');
+    //   this.autocomplete = new google.maps.places.Autocomplete(inputElement, {
+    //     types: ['geocode'],
+    //   });
+
+    //   // Listen for the 'place_changed' event to retrieve the selected place
+    //   this.autocomplete.addListener('place_changed', this.placeChanged);
+    // },
+    placeChanged() {
+      const place = this.autocomplete.getPlace();
+      if (!place.geometry) {
+        console.error('Place details not found for the input.');
+        return;
+      }
+      this.location = place.formatted_address;
+      // You can also access other properties like place.geometry.location to get the coordinates
+    },
+  },
     setup() {
       const propertyName = ref('');
       const amenities = ref([]);
