@@ -3,7 +3,7 @@
   import {defineComponent, normalizeProps} from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
-  import {MapMouseEvent} from "google.maps";
+  import {MapMouseEvent, LatLng} from "google.maps";
   import {decode} from "@googlemaps/polyline-codec";
   import { useStore } from "vuex";
   import axios from "axios";
@@ -18,6 +18,8 @@
         point2: null,
         showMarker1: false,
         showMarker2: false,
+        currentPoint: {lat: 100, lng: 100},
+        showCurrentMarker: false,
         polylineString: "",
         renderPolyline: false,
         formattedTravelTimes: [0, 0, 0], //driving, walking, biking
@@ -124,6 +126,13 @@
           title: "Destination"
         }
       },
+      currentMarkerOptions() {
+        return {
+          position: this.currentPoint,
+          label: 'C',
+          title: "Current Location"
+        }
+      },
       polylineOptions() {
         let coordArrays = decode(this.polylineString);
         let coordLatlngs: Array<any> = [];
@@ -154,18 +163,22 @@
         
       },
       filterByCurrentLocation:function(proximity) {
-        console.log("hi");
         let latitude;
         let longitude;
         const success = (position) => {
             latitude  = position.coords.latitude;
             longitude = position.coords.longitude;
+            //create current location marker
+            this.currentPoint = { lat: latitude, lng: longitude };
+
+            console.log(this.currentPoint);
             console.log("Lat: " + latitude);
             console.log("Long: " + longitude);
             let propertyLat;
             let propertyLong;
             let distance;
             
+            //for each property compute distance bewteen property and current location and filter out if not in proximity
             for (let index = this.properties.length - 1; index >= 0; index--) {
               if(this.properties[index].position != null) {
                 console.log(this.properties[index].position);
@@ -186,6 +199,7 @@
         const error = (err) => {
             console.log("Current Location Error");
         };
+        //get current location coordiantes run code in success if user allows current location access
         navigator.geolocation.getCurrentPosition(success, error);
       },
       filterByFavoriteLocation:function(proximity, favoritePosition) {
@@ -219,11 +233,10 @@
           }
           
         }
-            
-
 
       },
       //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
+      //calculates distance in km between two coordinates
        haversineDistanceBetweenPoints: function(lat1, lon1, lat2, lon2) {
         const R = 6371;
         const p1 = lat1 * Math.PI/180;
@@ -378,6 +391,7 @@
     
     <Marker :options="marker1options" />
     <Marker :options="marker2options" />
+    <Marker :options="currentMarkerOptions" />
     <Polyline v-if="renderPolyline" :options="polylineOptions"/>
 
   </GoogleMap>
