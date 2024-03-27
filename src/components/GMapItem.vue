@@ -150,8 +150,27 @@
         this.point2 = event.latLng;
         this.findRoute();
       },
-      filterByCurrentLocation() {
+      getPosition:function() {
+        
+      },
+      filterByCurrentLocation:function() {
         console.log("hi");
+        let latitude;
+        let longitude;
+        const success = (position) => {
+            latitude  = position.coords.latitude;
+            longitude = position.coords.longitude;
+            console.log("Lat: " + latitude);
+            console.log("Long: " + longitude);
+            /*for (var property in this.properties) {
+              console.log(this.properties[property].position);
+            }*/
+        };
+        const error = (err) => {
+            console.log("Current Location Error");
+        };
+        navigator.geolocation.getCurrentPosition(success, error);
+        this.properties.splice(0,1000);
       },
       async findRoute() {
 
