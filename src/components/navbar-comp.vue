@@ -1,21 +1,73 @@
 <script lang="ts">
-    import { computed, ref } from 'vue'
+    import { computed, ref, onMounted } from 'vue'
     import { useStore } from 'vuex'; 
 	import { initDropdowns } from 'flowbite';
+	import { getDoc, doc, getFirestore } from 'firebase/firestore/lite';
 
     export default {
         setup() {
             const store = useStore();
-
-            const isLoggedIn = computed(() => store.getters.isLoggedIn);
-            const logout = computed(() => store.dispatch('logoutUser'));
-
+			const isLoggedIn = computed(() => store.getters.isLoggedIn);
+			const currentUser = computed(() => store.getters.currUserCopy).value; 
+			// console.log("currUserCopy", currentUser)
+			
+			const isModerator = ref(false)
             const isLeasingCompany = ref(true);
+			
+            const logout = () => {
+				store.dispatch('logoutUser')
+				isModerator.value = false
+			};
+
+			// function to check if moderator is logged in
+			const fetchModeratorStatus = async () => {
+				/* Setup for logged user query */
+				const db = getFirestore()
+				// const currentUser = auth.currentUser;
+				if (currentUser === null) {
+					isModerator.value = false
+					return
+				}
+				const currentUserID = currentUser.uid;
+	
+				try {
+					const userDocRef = doc(db, 'users', currentUserID);
+					const userDocSnap = await getDoc(userDocRef);
+	
+					/* Set moderator flag to allow delete button to appear */
+					if (userDocSnap.exists()) {
+						const userData = userDocSnap.data();
+						console.log(userData);
+						if (userData.userType) {
+							if (userData.userType == "sitemoderator") {
+								isModerator.value = true
+							} else {
+								isModerator.value = false
+							}
+						}
+					} else {
+						console.error('User data does not exist.');
+					}
+				} catch (error: any) {
+					console.error('Error fetching user data:', error.message);
+				}
+			}
+
+			// Call fetchModeratorStatus when the component is mounted
+			// onMounted(fetchModeratorStatus());
+			// Call fetchModeratorStatus when the component is mounted
+		onMounted(async () => {
+			await fetchModeratorStatus();
+			console.log("isModerator", isModerator)
+			console.log("isLoggedIn", isLoggedIn)
+		});
+			// console.log("isModerator",isModerator)
 
             return {
                 isLoggedIn,
                 logout,
-                isLeasingCompany
+                isLeasingCompany,
+				isModerator
             }
         },
         mounted() {
@@ -23,7 +75,8 @@
         },
 		updated() {
 			initDropdowns()
-		}
+		},
+
     }
 </script>
 
@@ -57,9 +110,13 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/revprop" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
 					</li>
+          <li v-if="isLoggedIn">
+              <router-link to="/lenderlist" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">List of Lenders</router-link>
+            </li>
 					<li v-if="isLoggedIn && isLeasingCompany">
 						<router-link to="/add-property" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
 					</li>
+
 				</ul>
 				</div>
 			</li>
@@ -80,11 +137,17 @@
 							<li>
 								<router-link to="/Profile" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Profile</router-link>
 							</li>
+							<li>
+								<router-link to="/lists" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Lists</router-link>
+							</li>
 							<li @click.prevent="logout">
 								<router-link to="/"  class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Logout</router-link>
 							</li>
 							<li>
 								<router-link to="/search-users"  class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Search Users</router-link>
+							</li>
+							<li v-if="isLoggedIn && isModerator">
+								<router-link to="/check-reports" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Reports</router-link>
 							</li>
 						</ul>
 					</div>

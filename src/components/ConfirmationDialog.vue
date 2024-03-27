@@ -4,7 +4,7 @@
             <p style="color: black;">{{ message }}</p>
             <div class="buttons">
                 <button class="cancel-btn" @click="cancel">Cancel</button>
-                <button class="confirm-btn" @click="confirm">Delete</button>
+                <button class="confirm-btn" @click="confirm">Confirm</button>
             </div>
         </div>
     </div>

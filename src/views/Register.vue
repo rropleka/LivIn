@@ -32,7 +32,7 @@
                     <input type="number" placeholder="Age" v-model="age" id="age" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" required/>
                 </div>
                 <div class="mb-6"> 
-                    <label for="gender" class="block mb-2 text-sm font-medium text-white">Name</label>
+                    <label for="gender" class="block mb-2 text-sm font-medium text-white">Gender</label>
                     <input type="text" placeholder="Gender" v-model="gender" id="gender" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg" required/>
                 </div>
                 <div class="mb-6">
@@ -131,7 +131,8 @@ export default {
                     gender: gender.value,
                     class: year.value,
                     aboutme: aboutme.value,
-                    contactinfo: contactinfo.value
+                    contactinfo: contactinfo.value,
+                    accountPrivacy: "public"
                 });
 
                 const user ={
@@ -144,7 +145,8 @@ export default {
                     gender: gender.value,
                     class: year.value,
                     aboutme: aboutme.value,
-                    contactinfo: contactinfo.value
+                    contactinfo: contactinfo.value,
+                    accountPrivacy: "public"
                 };
                 store.dispatch('loginUser', user);
 
