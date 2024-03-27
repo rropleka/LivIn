@@ -40,31 +40,6 @@
           <!-- <input type="text" id="location" placeholder="Search Location" v-model="location" @keyup.enter="searchLocation"> -->
           <!-- <input type="text" id="location" placeholder="Store Location" v-model="location" @focus="initAutocomplete"> -->
         <!-- </div> -->
-
-        <div>
-    <label for="autocomplete-input">Location:</label>
-    <input type="text" id="autocomplete-input" v-model="location" @input="onInputChange">
-  </div>
-
-  <div>
-  <label for="autocomplete-input">Location:</label>
-  <Autocomplete
-    id="autocomplete-input"
-    v-model="location"
-    :options="autocompleteOptions"
-    @place_changed="onPlaceChanged"
-  />
-</div>
-
-<vue-google-autocomplete
-      ref="address"
-      id="map"
-      classname="form-control"
-      placeholder="Please type your address"
-      v-on:placechanged="getAddressData"
-      country="sg"
-    >
-    </vue-google-autocomplete>
   
         <!-- <div class="map-container"> -->
           <!-- Map display area -->
@@ -72,9 +47,52 @@
           <!-- <Marker :position="mapCenter"></Marker> -->
         <!-- </GoogleMap> -->
           <!-- <div id="map"></div> -->
-          <div class="map">
+
+
+          <div class="form-group">
+            <label for="map-type">Select Map Type:</label>
+  <div class="radio-buttons">
+    <label>
+      <input type="radio" v-model="selectedMapType" value="gmap">
+      Google Maps
+    </label>
+    <label>
+      <input type="radio" v-model="selectedMapType" value="leaflet">
+      Leaflet Maps
+    </label>
+  </div>
+    </div>
+
+
+          <div v-if="selectedMapType === 'gmap'" class="map">
             <GMapItem />
           </div>
+          <div v-else>
+            <!-- <div>
+    <label for="autocomplete-input">Location:</label>
+    <input type="text" id="autocomplete-input" v-model="location" @input="onInputChange">
+  </div> -->
+
+  <!-- <div> -->
+  <!-- <label for="autocomplete-input">Location:</label> -->
+  <!-- <Autocomplete
+    id="autocomplete-input"
+    v-model="location"
+    :options="autocompleteOptions"
+    @place_changed="onPlaceChanged"
+  /> -->
+<!-- </div> -->
+
+<vue-google-autocomplete
+      ref="address"
+      id="map"
+      classname="form-control"
+      placeholder="Please type your address"
+      v-on:placechanged="onPlaceChanged"
+      country="sg"
+    >
+    </vue-google-autocomplete>
+    </div>
           <!-- <GoogleMap 
     api-key="AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8" 
     :style=style 
@@ -96,7 +114,7 @@
   
         <button type="submit">Save Property</button>
         <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8&libraries=places"></script> -->
-        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8&libraries=places"></script> -->
+        <!-- <head><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuAji5VLjhvBMxeLE5SMjVJA4soq1JZK8&libraries=places"></script></head> -->
       </form>
     </div>
   </template>
@@ -124,8 +142,8 @@ import VueGoogleAutocomplete from "vue-google-autocomplete";
   
   export default {
     async mounted() {
-      this.$refs.address.focus()
-      this.initAutocomplete();
+      // this.$refs.address.focus()
+      // this.initAutocomplete();
   
     const auth = getAuth();
   const currentUser = auth.currentUser;
@@ -171,6 +189,8 @@ components: {
       return {
         center: { lat: 40.420781, lng: -86.918061 },
         location: '',
+        selectedMapType: 'gmap',
+        // locationCoordinates: '',
         autocompleteOptions: {
       types: ['geocode'], // specify the type of results (optional)
     },
@@ -195,9 +215,21 @@ components: {
         this.address = addressData;
       },
       onPlaceChanged(place) {
-    // Handle the selected place from the Autocomplete input
-    console.log('Selected Place:', place);
-    // You can access place.geometry.location for coordinates
+        console.log('Selected Place:', place);
+
+// Check if place.geometry exists and has location information
+if (place.latitude && place.longitude) {
+  const lat = place.latitude;
+  const lng = place.longitude
+  // const formattedLocation = place.formatted_address;
+  console.log('Coordinates:', { lat, lng });
+  this.locationCoordinates = `(${lat}, ${lng})`;
+  // console.log('Formatted Location:', formattedLocation);
+
+  // You can now use the lat, lng, and formattedLocation variables as needed
+} else {
+  console.error('Error retrieving place details.');
+}
   },
       onInputChange() {
       // Handle input change if needed
@@ -242,6 +274,8 @@ components: {
     },
   },
     setup() {
+      const locationCoordinates = ref('');
+      const selectedMapType = ref('gmap');
       const propertyName = ref('');
       const amenities = ref([]);
       const newAmenity = ref('');
@@ -314,7 +348,7 @@ components: {
                     return;
                 }
 
-                if (!location.value.trim()) {
+                if (!location.value.trim() && selectedMapType.value === 'gmap' ) {
                     errorMessage.value = 'Location cannot be empty';
                     return;
                 }
@@ -371,6 +405,20 @@ components: {
               }
 
                 const propertyDocRef = doc(collection(db, 'properties'));
+                console.log("sdaasdasd");
+                console.log("locationCoordinates:", locationCoordinates.value);
+                if (selectedMapType.value !== 'gmap') {
+            // Assign locationCoordinates if selectedType is not equal to 'gmap'
+            await setDoc(propertyDocRef, {
+                propertyName: propertyName.value,
+                amenities: amenities.value.map(amenity => amenity.trim()),
+                rent: rent.value,
+                propertySize: propertySize.value,
+                structureDetails: structureDetails.value,
+                location: locationCoordinates.value,
+                owner: username,
+            });
+        } else {
                 await setDoc(propertyDocRef, {
                 propertyName: propertyName.value,
                 amenities: amenities.value.map(amenity => amenity.trim()),
@@ -380,6 +428,7 @@ components: {
                 location: location.value,
                 owner: username,
             });
+          }
             router.push('/');
             console.log("Property saved successfully.");
         } catch(error) {
@@ -403,6 +452,7 @@ components: {
       // };
   
       return {
+        selectedMapType,
         propertyName,
         amenities,
         newAmenity,
@@ -415,6 +465,7 @@ components: {
         saveProperty,
         // searchLocation,
         errorMessage,
+        locationCoordinates,
         // mapCenter,
         // initAutocomplete
       };
@@ -541,5 +592,36 @@ body {
     cursor: pointer;
     font-size: 1rem;
     padding: 0;
+}
+
+.radio-buttons {
+  display: flex;
+  gap: 10px; /* Adjust the spacing between radio buttons */
+}
+
+.radio-buttons label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-buttons input[type="radio"] {
+  appearance: none; /* Remove default radio button appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px; /* Adjust the size of the custom radio button */
+  height: 20px;
+  border: 2px solid #007bff; /* Define border color */
+  border-radius: 50%; /* Create a circular shape */
+  margin-right: 5px; /* Adjust spacing between radio button and label */
+  outline: none; /* Remove focus outline */
+}
+
+.radio-buttons input[type="radio"]:checked {
+  background-color: #007bff; /* Change background color when checked */
+}
+
+.radio-buttons label span {
+  color: #333; /* Define label text color */
 }
 </style> 
