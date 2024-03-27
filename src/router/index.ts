@@ -114,8 +114,7 @@ const router = createRouter({
       path: '/compare',
       name: 'compare',
       component: () => import('../views/compare-page.vue')
-    }
-    ,
+    },
     {
       path: '/revprop',
       name: 'revprop',
@@ -135,6 +134,8 @@ const router = createRouter({
       path: '/lenderlist',
       name: 'lenderlist',
       component: () => import('../views/LenderList.vue')
+    },
+    {
       path: '/search-users',
       name: 'search-users',
       component: () => import('../views/search-users.vue')

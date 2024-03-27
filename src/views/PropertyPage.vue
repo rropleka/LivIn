@@ -168,6 +168,7 @@
                 hasLoaded: false,
                 username: '',
                 interest:false,
+                pubInterest:false,
                 interestedUsers: ["user1", "user2", "user3"],
                 publicUsers: ["pu1"]
             },
@@ -215,6 +216,10 @@
             console.error("Error fetching property data:", error);
             router.push({ name: 'not-found' });
         }
+        if(this.loadPack.interest){document.getElementById('interest').checked=true;}
+        if(this.loadPack.pubInterest){document.getElementById('publicity').checked=true;}
+        this.updateUsersList();
+        document.getElementById("hoverbox").style.display="none";
     },
     async beforeMount() {
         const db = getFirestore(firebaseapp);
@@ -247,6 +252,20 @@
                 if (this.loadPack.hasReviewed === undefined) {
                     this.loadPack.hasReviewed = false;
                 }
+                if(!(data.interestedUsers===undefined)) {
+                  this.loadPack.interestedUsers=data.interestedUsers;
+                  this.loadPack.interest=this.loadPack.interestedUsers.includes(this.loadPack.username);
+                } else {
+                  this.loadPack.interestedUsers=[];
+                }
+                if(!(data.publicUsers===undefined)) {
+                  this.loadPack.publicUsers=data.publicUsers;
+                  this.loadPack.pubInterest=this.loadPack.publicUsers.includes(this.loadPack.username);
+                  console.log("pub: " + this.loadPack.pubInterest)
+                } else {
+                  this.loadPack.publicUsers=[];
+                }
+                console.log("int: " + this.loadPack.interestedUsers + " pub: " + this.loadPack.publicUsers)
                 this.loadPack.docRef = doc.ref.path;
             });
             console.log("qsempty" + querySnapshot.empty);
@@ -877,36 +896,50 @@
               this.loadPack.interest=false;
               let newarr = this.loadPack.interestedUsers.filter(val => val !== this.loadPack.username);
               this.loadPack.interestedUsers=newarr;
+              let newarr2 = this.loadPack.publicUsers.filter(val => val !== this.loadPack.username);
+              this.loadPack.publicUsers=newarr2;
             }
             console.log("after: " + this.loadPack.interestedUsers)
             const x = doc(db, this.loadPack.docRef)
             console.log("docref: " + this.loadPack.docRef)
             this.updateUsersList()
             const hoverDisplay = document.getElementById("interestHover");
-            if (hoverDisplay.style.display != "none") {
+            if (hoverDisplay && hoverDisplay.style.display != "none") {
               hoverDisplay.style.display = "none";
             } else {
-              hoverDisplay.style.display = "block";
+              if(hoverDisplay) {hoverDisplay.style.display = "block";}
             }
             //const hoverbox = document.getElementById("hoverbox");
             if (hoverbox.style.display != "none") {
               hoverbox.style.display = "none";
             }
+            console.log("before push: " + this.loadPack.interestedUsers)
             await updateDoc(x, {
-              interestedUsers: this.loadPack.interestedUsers
+              interestedUsers: this.loadPack.interestedUsers,
+              publicUsers: this.loadPack.publicUsers
             });
-            //value=!value
-            //push to backend
-            //data will be stored with property in an array
-            //hide/show other users
+          },
+          async updatePublicity(){
+            const db = getFirestore(firebaseapp);
+            if(!this.loadPack.publicUsers.includes(this.loadPack.username)) {
+              this.loadPack.publicUsers.push(this.loadPack.username)
+            } else {
+              let newarr = this.loadPack.publicUsers.filter(val => val !== this.loadPack.username);
+              this.loadPack.publicUsers=newarr;
+            }
+            const x = doc(db, this.loadPack.docRef)
+            this.updateUsersList()
+            await updateDoc(x, {
+              publicUsers: this.loadPack.publicUsers
+            });
           },
           changePopUp() {
             const hoverbox = document.getElementById("hoverbox");
             console.log(hoverbox.style.display)
-            if (hoverbox.style.display === "none") {
-              hoverbox.style.display = "block";
-            } else {
+            if (hoverbox.style.display != "none") {
               hoverbox.style.display = "none";
+            } else {
+              hoverbox.style.display = "block";
             }
             //value=!value
             //push to backend
@@ -917,13 +950,13 @@
             this.clearUsersList()
             const interestList = document.querySelector('.interestedOthers');
             //add from querysnapsho other users
-            this.loadPack.interestedUsers.forEach((interestedUser)=>{
+            this.loadPack.publicUsers.forEach((interestedUser)=>{
               const profItem = document.createElement('li')
               if(interestedUser!=this.loadPack.username) {
-              profItem.innerHTML = //`<a href="https://www.google.com">${interestedUser} //change link to actual link`
-                `<button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+              profItem.innerHTML = `<a href="/user/${interestedUser}">${interestedUser}`
+                /*`<button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
                         <router-link :to="{ name: 'user-page', params: { username: ${interestedUser} } }">
-                          ${interestedUser}`
+                          ${interestedUser}`*/
               } else { 
                 profItem.innerHTML = `(myself)`
               }
@@ -936,11 +969,7 @@
               interestList.removeChild(interestList.lastChild);
             }
           }
-  }
-
-            }
-        }
-    },
+  },
     components: { ConfirmationDialog }
 
 };
@@ -1218,12 +1247,18 @@ div[property] > p {
     margin: 10px;
     padding: 10px;
     color: #000;
-    font-weight: 600;
+    font-weight: 500;
   }
   .into button {
-    color: #000;
+    color: #fff;
     font-weight: 600;
     cursor: pointer;
+    max-height: fit-content;
+    background-color: teal;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
   }
 
   .hoverbox {
@@ -1256,6 +1291,7 @@ div[property] > p {
 
   .hoverbox ul {
     color: purple;
+  }
   .notes-section {
     margin-top: 20px;
     display: flex;
