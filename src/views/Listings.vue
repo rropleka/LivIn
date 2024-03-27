@@ -135,19 +135,12 @@
 <template>
     <div class="listings-page" v-if="listings">
     <div class="listingtext" style="width: 100%; display: flex;">
-        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')">Property Name</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')" style="width: 175px;">Property Name</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rating')">Rating</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
         <input type="number" v-model="maxPrice" placeholder="Enter max price">
     </div>
     <div class="listings" style="width: 100%; margin-top: 5px;">
-        <div v-show="propertyHover" class="propertydiv" style="float: right;">
-            Amenities: <span v-for="(amenity, index) in this.property.amenities">
-                {{ amenity }}{{ (index+1 < this.property.amenities.length) ? ', ' : '' }}
-            </span> <br>
-            Owner: {{ this.property.owner }} <br>
-            Property Size: {{ this.property.propertySize }} <br>
-        </div>
         <table style="margin-left: 0; width: 50%; border: 1px solid black; box-shadow: 6px 0 5px -2px #888;">
             <tbody>
             <tr v-for="listing in listings" :key="listing.propertyName">
@@ -161,7 +154,6 @@
             </tr>
             </tbody>
         </table>
-        
     </div>
     <div class="listingtext" style="width: 100%; display: flex;">
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="prevPage">Previous</button>
@@ -173,5 +165,13 @@
             <option selected="selected" value="3">3</option>
         </select>
     </div>
+    <div v-show="propertyHover" class="propertydiv" style="float: bottom;">
+            Amenities: <span v-for="(amenity, index) in this.property.amenities">
+                {{ amenity }}{{ (index+1 < this.property.amenities.length) ? ', ' : '' }}
+            </span> <br>
+            Owner: {{ this.property.owner }} <br>
+            Property Size: {{ this.property.propertySize }} <br>
+            Location: {{ this.property.location }} <br>
+        </div>
     </div>
 </template>

@@ -1,22 +1,25 @@
 <script lang="ts">
-  import {GoogleMap, Marker, Polyline} from "vue3-google-map";
+  import {GoogleMap, Marker, Polyline, InfoWindow} from "vue3-google-map";
   import {defineComponent, normalizeProps} from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
-  import {MapMouseEvent} from "google.maps";
+  import {MapMouseEvent, LatLng} from "google.maps";
   import {decode} from "@googlemaps/polyline-codec";
   import { useStore } from "vuex";
   import axios from "axios";
+  
 
   export default defineComponent({
     // eslint-disable-next-line vue/no-reserved-component-names
-    components: { GoogleMap, Marker, Polyline },
+    components: { GoogleMap, Marker, Polyline, InfoWindow},
     data() {
       return {
         point1: null,
         point2: null,
         showMarker1: false,
         showMarker2: false,
+        currentPoint: {lat: 100, lng: 100},
+        showCurrentMarker: false,
         polylineString: "",
         renderPolyline: false,
         formattedTravelTimes: [0, 0, 0], //driving, walking, biking
@@ -69,11 +72,36 @@
         }
       })
 
+      const propertiesSnapshot = await getDocs(query(collection(db, 'properties')));
+      let properties: Array<object> = [];
+      propertiesSnapshot.forEach((doc) => {
+        try {
+          const data = doc.data();
+          const coords = JSON.parse(data.location);
+          properties.push({
+            position: coords,
+            propertyName: data.propertyName, 
+            icon: {
+              strokeColor: "green",
+              strokeWeight: 2.5,
+              anchor: { x: 1, y: 1 },
+              scale: .15,
+              fill: "green",
+              path: "M41.733 160.134v-59.2H21.999L96 31.865l74 69.067h-19.733v59.201H110.8v-44.4H81.2v44.4z" 
+              //source: https://www.svgrepo.com/svg/504469/house
+            }
+          });
+        } catch (error) {
+          console.log("Misformatted property, skipping");
+        }
+      })
+
       return { 
         center: { lat: 40.420781, lng: -86.918061 },
         campus,
         hotspots,
         favorites,
+        properties,
        };
     },
     computed: {
@@ -96,6 +124,13 @@
           position: this.point2,
           label: '2',
           title: "Destination"
+        }
+      },
+      currentMarkerOptions() {
+        return {
+          position: this.currentPoint,
+          label: 'C',
+          title: "Current Location"
         }
       },
       polylineOptions() {
@@ -123,6 +158,95 @@
       onMapRightClick(event: MapMouseEvent) {
         this.point2 = event.latLng;
         this.findRoute();
+      },
+      getPosition:function() {
+        
+      },
+      filterByCurrentLocation:function(proximity) {
+        let latitude;
+        let longitude;
+        const success = (position) => {
+            latitude  = position.coords.latitude;
+            longitude = position.coords.longitude;
+            //create current location marker
+            this.currentPoint = { lat: latitude, lng: longitude };
+
+            console.log(this.currentPoint);
+            console.log("Lat: " + latitude);
+            console.log("Long: " + longitude);
+            let propertyLat;
+            let propertyLong;
+            let distance;
+            
+            //for each property compute distance bewteen property and current location and filter out if not in proximity
+            for (let index = this.properties.length - 1; index >= 0; index--) {
+              if(this.properties[index].position != null) {
+                console.log(this.properties[index].position);
+                propertyLat = this.properties[index].position.lat;
+                propertyLong = this.properties[index].position.lng;
+
+                distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+                console.log("Distance: " + distance);
+                if (distance >= proximity) {
+                  this.properties.splice(index, 1);
+                }
+
+              }
+              
+            }
+            
+        };
+        const error = (err) => {
+            console.log("Current Location Error");
+        };
+        //get current location coordiantes run code in success if user allows current location access
+        navigator.geolocation.getCurrentPosition(success, error);
+      },
+      filterByFavoriteLocation:function(proximity, favoritePosition) {
+        let latitude;
+        let longitude;
+        console.log(favoritePosition);
+        let commaIndex;
+        let longIndex;
+        commaIndex = favoritePosition.indexOf(",");
+        longIndex = favoritePosition.indexOf("lng");
+        latitude  = parseFloat(favoritePosition.substring(9, commaIndex));
+        longitude = parseFloat(favoritePosition.substring(longIndex + 5, favoritePosition.length - 1));
+        console.log("Lat: " + latitude);
+        console.log("Long: " + longitude);
+        let propertyLat;
+        let propertyLong;
+        let distance;
+        
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            console.log(this.properties[index].position);
+            propertyLat = this.properties[index].position.lat;
+            propertyLong = this.properties[index].position.lng;
+
+            distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+            console.log("Distance: " + distance);
+            if (distance >= proximity) {
+              this.properties.splice(index, 1);
+            }
+
+          }
+          
+        }
+
+      },
+      //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
+      //calculates distance in km between two coordinates
+       haversineDistanceBetweenPoints: function(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const p1 = lat1 * Math.PI/180;
+        const p2 = lat2 * Math.PI/180;
+        const deltaLon = lon2 - lon1;
+        const deltaLambda = (deltaLon * Math.PI) / 180;
+        const d = Math.acos(
+          Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda),
+        ) * R;
+        return d;
       },
       async findRoute() {
 
@@ -249,11 +373,25 @@
     :zoom="15">
 
     <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
-    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position"/>
+    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position">
+      <InfoWindow>
+        <div class="infoWindow">
+          {{ favorite.position }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
+    <Marker v-for="property in properties" :options="property" :key="property.position">
+      <InfoWindow>
+        <div class="infoWindow">
+          Property Name: {{ property.propertyName }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
 
     
     <Marker :options="marker1options" />
     <Marker :options="marker2options" />
+    <Marker :options="currentMarkerOptions" />
     <Polyline v-if="renderPolyline" :options="polylineOptions"/>
 
   </GoogleMap>
@@ -275,5 +413,8 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+  }
+  .infoWindow {
+    color: black;
   }
 </style>

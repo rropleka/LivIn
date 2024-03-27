@@ -1,15 +1,55 @@
-<script setup>
+<script setup lang="ts">
 
-import { computed } from "vue";
+
+import { computed, defineComponent } from "vue";
 import { useStore } from "vuex";
 import { RouterLink } from "vue-router"
 import GMapItem from '@/components/GMapItem.vue';
+import listings from '@/views/Listings.vue';
+import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+import { firebaseapp } from '../firebaseInit'
 
 const store = useStore();
 
 // Computed properties to access the authentication state
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
 const currentUser = computed(() => store.getters.currentUser);
+
+let currentUser1 = ""
+if (store.getters.currentUser) {
+    currentUser1 = store.getters.currentUser.email;
+}
+const db = getFirestore(firebaseapp);
+const favoritesSnapshot = await getDocs(query(collection(db, 'favorites'), where('user', '==', currentUser1)));
+let favorites: Array<object> = [];
+favoritesSnapshot.forEach((doc) => {
+  try {
+    const data = doc.data();
+    const coords = JSON.parse(data.coords);
+    favorites.push({
+      position: coords,
+    });
+  } catch (error) {
+    console.log("Misformatted favorite, skipping");
+  }
+})
+</script>
+
+<script lang="ts">
+
+   export default defineComponent({
+
+      methods: {
+         filterByCurrentLocationButton() {
+          this.$refs.GMapItem.filterByCurrentLocation(document.getElementById("proximityFilter").value);
+         },
+         filterByFavoriteLocationButton() {
+          var dropdown = document.getElementById("favoriteFilter");
+          var favoritePosition = dropdown.options[dropdown.selectedIndex].text;
+          this.$refs.GMapItem.filterByFavoriteLocation(document.getElementById("proximityFilter").value, favoritePosition);
+         },
+      },
+    })
 </script>
 
 <template>
@@ -19,10 +59,26 @@ const currentUser = computed(() => store.getters.currentUser);
           <router-link to="/login">Back to Login Screeeeeen</router-link>
           <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
           <router-link to="/favorites">Manage Favorites</router-link>
+          <div>
+            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByCurrentLocationButton()">Filter by Current Location</button>
+            <input type="number" id="proximityFilter" style="color: black; width: 250px; float: top;" placeholder="Enter distance in km">
+          </div>
+          <div>
+            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByFavoriteLocationButton()">Filter by Favorite Location</button>
+            <select id="favoriteFilter" style="color: black; width: 250px; float: top;">
+              <option value="" disabled selected hidden>Select a Favorite Location</option>
+              <option v-for="favorite in favorites" :value="favorite.position" :key="favorite.position">
+                {{ favorite.position }}
+              </option>
+            </select>
+          </div>
+          <div class="propertiesTable">
+            <listings></listings>
+          </div>
         </div>
         <div class="map">
           <Suspense>
-            <GMapItem />
+            <GMapItem ref="GMapItem" />
           </Suspense>
         </div>
       </div>
@@ -44,6 +100,12 @@ const currentUser = computed(() => store.getters.currentUser);
   }
   .map {
     width: 66%;
+    height: 100%;
+  }
+  .propertiesTable {
+    border: black 1px solid;
+    margin-left: 0px;
+    width: 100%;
     height: 100%;
   }
   .page {
