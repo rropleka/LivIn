@@ -124,8 +124,12 @@ export default {
     },
     components: {
         ConfirmationDialog
+    },data() {         
+        return {             
+            confirmVisible: false,             
+            confirmationMessage: "Are you sure you want to delete your account? This action cannot be undone."         
+        };     
     },
-
     methods: {
         toggleLoginEditable() {
             this.isLoginEditable = !this.isLoginEditable
