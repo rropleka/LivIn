@@ -24,7 +24,7 @@ export default {
 
 <template>
     <div class="flex flex-nowrap">
-        <aside id="default-sidebar" class="z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
+        <aside id="default-sidebar" class="z-40 w-64 h-inherit transition-transform -translate-x-full sm:translate-x-0">
             <div class="h-full px-3 py-4 overflow-y-auto bg-light-orange">
                 <ul class="space-y-2 font-medium">
                     <li>
@@ -52,7 +52,7 @@ export default {
                         </button>
                     </li>
                     <li>
-                        <button @click="setPage(4)"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
+                        <button @click="this.$router.push('/lists')"  class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-amber-200 group">
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>

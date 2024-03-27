@@ -54,6 +54,11 @@ const router = createRouter({
       name: 'edit-property',
       component: () => import('../views/EditProperty.vue')
     },
+    {
+      path: '/post-sublease/:id',
+      name: 'post-sublease',
+      component: () => import('../views/PostSublease.vue')
+    },
     // {
     //   path: '/:leasingCompany/:PropertyName',
     //   name: 'property-page',
@@ -130,6 +135,27 @@ const router = createRouter({
       path: '/lenderlist',
       name: 'lenderlist',
       component: () => import('../views/LenderList.vue')
+      path: '/search-users',
+      name: 'search-users',
+      component: () => import('../views/search-users.vue')
+    },
+    {
+      path: '/check-reports',
+      name: 'check-reports',
+      component: () => import('../views/CheckReports.vue')
+    },
+    {
+      path:'/user/:username',
+      name: 'user-page',
+      component: () => import('../views/user-page.vue'),
+      props: (route) => ({
+        username: route.params.username
+      })
+    },
+    {
+      path:'/lists',
+      name: 'lists',
+      component: () => import('../views/ListsPage.vue')
     }
   ]
 })

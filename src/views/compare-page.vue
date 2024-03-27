@@ -11,7 +11,6 @@ export default {
 
     try {
       properties.value = collection(db, "properties")
-      console.log(properties.value)
     } catch (error) {
       console.error('Error fetching properties:', error.message)
     }
@@ -83,8 +82,17 @@ export default {
       return details
     }
 
+    function isEmptyProperty(property) {
+      return (property.name === emptyProp.name &&
+       property.address === emptyProp.address &&
+        property.owner === emptyProp.owner &&
+         property.reviews === emptyProp.reviews &&
+          property.details === emptyProp.details)
+    }
+
     return {
       emptyProp,
+      isEmptyProperty,
       property1,
       property2,
       search1,
@@ -133,6 +141,8 @@ export default {
             <li v-for="property in propList1" :key="property.name" class="px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" @click="setProperty1(property)">{{ property.name }}</li>
           </ul>
         </div>
+
+        <!-- Property details -->
         <div class="my-2">
           <div class="mb-6">
             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property name</label>
@@ -156,7 +166,7 @@ export default {
           </div>
         </div>
         <button @click.prevent="setProperty1(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
-        <button>
+        <button v-if="!isEmptyProperty(property1)">
           <router-link :to="{ name: 'property-page', params: { leasingCompany: property1.owner, PropertyName: property1.name } }" class=" ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">
             Go to property
           </router-link>
@@ -190,6 +200,8 @@ export default {
             <li v-for="property in propList2" :key="property.name" class="px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" @click="setProperty2(property)">{{ property.name }}</li>
           </ul>
         </div>
+
+        <!-- Property details -->
         <div class="my-2">
           <div class="mb-6">
             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property name</label>
@@ -213,7 +225,7 @@ export default {
           </div>
         </div>
         <button @click.prevent="setProperty2(emptyProp)" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clear</button>
-        <button>
+        <button v-if="!isEmptyProperty(property2)">
           <router-link :to="{ name: 'property-page', params: { leasingCompany: property2.owner, PropertyName: property2.name } }" class=" ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">
             Go to property
           </router-link>

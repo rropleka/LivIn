@@ -1,8 +1,6 @@
 <script>
     import router from '../router/index'
-    import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-    import { ref } from 'vue';
-    import { getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
+    import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore/lite'
     import { firebaseapp } from '../firebaseInit'
 
     export default {
@@ -20,16 +18,15 @@
             }
         },
         data: function(){
-            
-            
             return{
-            listings: [],
-            property: [],
-            sortName: 'name',
-            sortDir: 'asc',
-            pageSize: 3,
-            currentPage: 1,
-            propertyHover: false
+                listings: [],
+                property: [],
+                sortName: 'name',
+                sortDir: 'asc',
+                pageSize: 3,
+                currentPage: 1,
+                propertyHover: false,
+                maxPrice: null
             };
         },
         methods:{
@@ -52,7 +49,6 @@
             async getListings() {
                 try {
                     const db = getFirestore(firebaseapp);
-                    const collectionRef = collection(db, 'properties');
                     const querySnapshot = await getDocs(collection(db, 'properties'));
 
                     if (querySnapshot.empty) {
@@ -91,18 +87,26 @@
         computed:{
             //performs sort and pagination
             listings:function() {
-                return this.listings.sort((a,b) => {
-                    let modifier = 1;
-                    if(this.sortDir === 'desc') modifier = -1;
-                    if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
-                    if(a[this.sortName] > b[this.sortName]) return 1 * modifier;
-                    return 0;
-                }).filter((row, index) => {
-                    let start = (this.currentPage-1)*this.pageSize;
-                    let end = this.currentPage*this.pageSize;
-                    if(index >= start && index < end) return true;
-                
-                });
+                return this.listings
+                    // .filter(listing => listing.rent <= this.maxPrice) // Filter by maxPrice
+                    .filter(listing => {
+                    if (this.maxPrice === null) {
+                        return true; // Show all properties when maxPrice is empty
+                    } else {
+                        return listing.rent <= this.maxPrice; // Filter by maxPrice
+                    }
+                    })
+                    .sort((a,b) => {
+                        let modifier = 1;
+                        if(this.sortDir === 'desc') modifier = -1;
+                        if(a[this.sortName] < b[this.sortName]) return -1 * modifier;
+                        if(a[this.sortName] > b[this.sortName]) return 1 * modifier;
+                        return 0;
+                    }).filter((row, index) => {
+                        let start = (this.currentPage-1)*this.pageSize;
+                        let end = this.currentPage*this.pageSize;
+                        if(index >= start && index < end) return true;
+                    });
             }
 
         }
@@ -134,6 +138,7 @@
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')">Property Name</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rating')">Rating</button>
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
+        <input type="number" v-model="maxPrice" placeholder="Enter max price">
     </div>
     <div class="listings" style="width: 100%; margin-top: 5px;">
         <div v-show="propertyHover" class="propertydiv" style="float: right;">

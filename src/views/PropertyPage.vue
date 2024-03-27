@@ -30,6 +30,7 @@
       <button class="contact-owner-button">Contact Owner</button>
       <button v-if="isCurrentUserOwner1 || isSiteModerator" class="remove-property-button" @click="removeProperty">Remove Property</button>
       <button v-if="isCurrentUserOwner1" class="edit-property-button" @click="editProperty">Edit Property</button>
+      <button class="post-sublease-button" @click="postSublease">Post Sublease</button>
       <hr>
       <p class="amenities-title">Amenities:</p>
       <div class="amenities-list">
@@ -82,641 +83,784 @@
   <div class="score">
     <h1>Owner Cumulative Score</h1>
     
-      <h2 v-if="cloadPack.totalReviews > 0">{{ parseFloat(cloadPack.totalScore/cloadPack.totalReviews+'').toFixed(2) }}</h2>
-      <h2 v-else>No Reviews Yet</h2>
+    <h2 v-if="cloadPack.totalReviews > 0">{{ parseFloat(cloadPack.totalScore/cloadPack.totalReviews+'').toFixed(2) }}</h2>
+    <h2 v-else>No Reviews Yet</h2>
     
   </div>
   <div class="creviews">
-      <div class="myRev">
-        <h1 v-if="cloadPack.hasReviewed==true">My Review</h1>
-        <ul class="cmine"></ul>
-        <button v-if="cloadPack.hasReviewed==true" v-on:click="cedit" type="button">Edit my Review</button>
-      </div>
-      <div class="otherRevs">
-        <h1>Reviews</h1>
-        <ul class="cusers"></ul>
-        <h2 v-if="cloadPack.totalReviews<=0">No Reviews Yet</h2>
-      </div>
+    <div class="myRev">
+      <h1 v-if="cloadPack.hasReviewed==true">My Review</h1>
+      <ul class="cmine"></ul>
+      <button v-if="cloadPack.hasReviewed==true" v-on:click="cedit" type="button">Edit my Review</button>
+    </div>
+    <div class="otherRevs">
+      <h1>Reviews</h1>
+      <ul class="cusers"></ul>
+      <h2 v-if="cloadPack.totalReviews<=0">No Reviews Yet</h2>
+    </div>
   </div>
   <form>
-      <div v-if="cloadPack.hasReviewed!=true||cloadPack.isEdit==true" class="leaveRev">
-          <h1>Leave a Review</h1>
-          <h2>Enter a rating</h2>
-          <input type="number" placeholder="Stars" v-model="cform.stars" min="1" max="5" value="5"><br/>
-          <h2>Enter a review</h2>
-          <!--<input type="text" placeholder="Review" v-model="form.text">-->
-          <textarea id="ta" v-model="cform.text" rows="7"></textarea>
-          <br>
-          <button v-if="cloadPack.isEdit==false" v-on:click="csub" type="button">Submit review</button>
-          <button v-if="cloadPack.isEdit==true" v-on:click="cupd" type="button">Update review</button>
-      </div>
+    <div v-if="cloadPack.hasReviewed!=true||cloadPack.isEdit==true" class="leaveRev">
+      <h1>Leave a Review</h1>
+      <h2>Enter a rating</h2>
+      <input type="number" placeholder="Stars" v-model="cform.stars" min="1" max="5" value="5"><br/>
+      <h2>Enter a review</h2>
+      <!--<input type="text" placeholder="Review" v-model="form.text">-->
+      <textarea id="ta" v-model="cform.text" rows="7"></textarea>
+      <br>
+      <button v-if="cloadPack.isEdit==false" v-on:click="csub" type="button">Submit review</button>
+      <button v-if="cloadPack.isEdit==true" v-on:click="cupd" type="button">Update review</button>
+    </div>
   </form>
 </div>
+<div class="notes-section">
+  <h2>Notes Section</h2>
+  <textarea id="user-notes" rows="4" cols="50" placeholder="Write your notes here..." v-model="notesText"></textarea>
+  <button @click="saveNotes">Save</button>
 </div>
-
+<ConfirmationDialog v-if="confirmVisible" :message="confirmationMessage" @cancel="hideConfirmation"
+    @confirm="reportReview(this.itemId)" />
+</div>
   
 </template>
   
   <script>
-  import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-  import {ref} from 'vue';
+  import { getAuth } from "firebase/auth";
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDocs, getDoc, setDoc, query, where, deleteDoc, addDoc, updateDoc, Firestore, DocumentReference } from 'firebase/firestore/lite'
-import { firebaseapp } from '../main'
+  import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc } from 'firebase/firestore/lite'
+  import { firebaseapp } from '../main'
+  import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
   
   export default {
-  props: {
-    leasingCompany: {
-      type: String,
-      required: true
+    props: {
+        leasingCompany: {
+            type: String,
+            required: true
+        },
+        propertyName: {
+            type: String,
+            required: true
+        }
     },
-    propertyName: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      property: null,
-      isCurrentUserOwner1: false,
-      isSiteModerator: false,
-      form: {
-        stars:'',
-        text:''
-      },
-      loadPack: {
-        hasReviewed:false,
-        totalReviews:0,
-        totalScore:0,
-        usersReviewed: ["t1", "t2"],
-        docRef: '',
-        reviewText: ["t1"],
-        myReview: '',
-        myRating:-1,
-        revRef: '',
-        isEdit:false,
-        hasLoaded:false,
-        username:'',
-        interest:false,
-        interestedUsers: ["user1", "user2", "user3"],
-        publicUsers: ["pu1"]
-      },
-      cform: {
-        stars:'',
-        text:''
-      },
-      cloadPack: {
-        hasReviewed:false,
-        totalReviews:0,
-        totalScore:0,
-        usersReviewed: ["t1", "t2"],
-        docRef: '',
-        reviewText: ["t1"],
-        myReview: '',
-        myRating:-1,
-        revRef: '',
-        isEdit:false,
-        hasLoaded:false,
-        username:''
-      }
-    };
-  },
-  async mounted() {
-    const auth = getAuth();
-  const currentUser = auth.currentUser;
-
-  // If the user is not logged in, redirect to the login page
-  if (!currentUser) {
-    router.push({ name: 'login' });
-    return;
-  }
-    try {
-      const propertyData = await this.propertyExists(this.leasingCompany, this.propertyName);
-      // call to validateCurrentUser if owner and display edit and remove button
-      await this.validateCurrentUserOwner();
-      if (propertyData) {
-        this.property = propertyData;
-      } else {
-        router.push({ name: 'not-found' });
-      }
-    } catch (error) {
-      console.error("Error fetching property data:", error);
-      router.push({ name: 'not-found' });
-    }
-  },
-  async beforeMount() {
-          const db = getFirestore(firebaseapp)
-          
-          try {
+    data() {
+        return {
+            property: null,
+            isCurrentUserOwner1: false,
+            isSiteModerator: false,
+            notesText: '',
+            form: {
+                stars: '',
+                text: ''
+            },
+            confirmVisible: false,
+            confirmationMessage: "Are you sure you want to report this review?",
+            loadPack: {
+                hasReviewed: false,
+                totalReviews: 0,
+                totalScore: 0,
+                usersReviewed: ["t1", "t2"],
+                docRef: '',
+                reviewText: ["t1"],
+                myReview: '',
+                myRating: -1,
+                revRef: '',
+                isEdit: false,
+                hasLoaded: false,
+                username: '',
+                interest:false,
+                interestedUsers: ["user1", "user2", "user3"],
+                publicUsers: ["pu1"]
+            },
+            cform: {
+                stars: '',
+                text: ''
+            },
+            cloadPack: {
+                hasReviewed: false,
+                totalReviews: 0,
+                totalScore: 0,
+                usersReviewed: ["t1", "t2"],
+                docRef: '',
+                reviewText: ["t1"],
+                myReview: '',
+                myRating: -1,
+                revRef: '',
+                isEdit: false,
+                hasLoaded: false,
+                username: ''
+            }
+        };
+    },
+    async mounted() {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        // If the user is not logged in, redirect to the login page
+        if (!currentUser) {
+            router.push({ name: 'login' });
+            return;
+        }
+        try {
+            const propertyData = await this.propertyExists(this.leasingCompany, this.propertyName);
+            // call to validateCurrentUser if owner and display edit and remove button
+            await this.validateCurrentUserOwner();
+            if (propertyData) {
+                this.property = propertyData;
+            }
+            else {
+                router.push({ name: 'not-found' });
+            }
+            await this.fetchNotes();
+        }
+        catch (error) {
+            console.error("Error fetching property data:", error);
+            router.push({ name: 'not-found' });
+        }
+    },
+    async beforeMount() {
+        const db = getFirestore(firebaseapp);
+        try {
             const auth = getAuth();
             const currentUser = auth.currentUser;
-            const propname=this.propertyName//replace with current property
-            const userDoc=currentUser.uid
+            const propname = this.propertyName; //replace with current property
+            const userDoc = currentUser.uid;
             const userDocRef = doc(db, 'users', userDoc);
             const userDocSnap = await getDoc(userDocRef);
-            const username=userDocSnap.data().username
-            this.loadPack.username=username
-            console.log("***username: " + username)
-            const ownername=this.leasingCompany
+            const username = userDocSnap.data().username;
+            this.loadPack.username = username;
+            console.log("***username: " + username);
+            const ownername = this.leasingCompany;
             //start old    
             const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname), where('owner', '==', ownername)));
             //console.log(querySnapshot.size)
             querySnapshot.forEach((doc) => {
-              const data = doc.data()
-              this.loadPack.totalReviews=data.totalReviews
-              if(!(this.loadPack.totalReviews>=0)) {
-                this.loadPack.totalReviews=0
-              }
-              this.loadPack.totalScore=data.totalScore
-              if(!(this.loadPack.totalScore>=0)) {
-                this.loadPack.totalScore=0
-              }
-              this.loadPack.usersReviewed=data.usersReviewed
-              this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
-              if(this.loadPack.hasReviewed===undefined) {
-                this.loadPack.hasReviewed=false
-              }
-              this.loadPack.docRef=doc.ref.path
-            })
-            console.log("qsempty" + querySnapshot.empty)
-            this.loadPack.hasLoaded=!querySnapshot.empty
-            console.log("dump: " + this.loadPack.totalReviews + " " + this.loadPack.totalScore)
+                const data = doc.data();
+                this.loadPack.totalReviews = data.totalReviews;
+                if (!(this.loadPack.totalReviews >= 0)) {
+                    this.loadPack.totalReviews = 0;
+                }
+                this.loadPack.totalScore = data.totalScore;
+                if (!(this.loadPack.totalScore >= 0)) {
+                    this.loadPack.totalScore = 0;
+                }
+                this.loadPack.usersReviewed = data.usersReviewed;
+                this.loadPack.hasReviewed = this.loadPack.usersReviewed && this.loadPack.usersReviewed.length > 0 && this.loadPack.usersReviewed.includes(username);
+                if (this.loadPack.hasReviewed === undefined) {
+                    this.loadPack.hasReviewed = false;
+                }
+                this.loadPack.docRef = doc.ref.path;
+            });
+            console.log("qsempty" + querySnapshot.empty);
+            this.loadPack.hasLoaded = !querySnapshot.empty;
+            console.log("dump: " + this.loadPack.totalReviews + " " + this.loadPack.totalScore);
             const userList = document.querySelector('.users');
-            const myList = document.querySelector('.mine')
+            const myList = document.querySelector('.mine');
             const querySnapshot2 = await getDocs(query(collection(db, 'propertyReviews'), where('propertyName', '==', propname), where('owner', '==', ownername)));
-            console.log("qsempty2" + querySnapshot2.empty)
-            this.loadPack.reviewText.pop()
+            console.log("qsempty2" + querySnapshot2.empty);
+            this.loadPack.reviewText.pop();
+            let i = 0;
             querySnapshot2.forEach((doc) => {
-              console.log("in qs2 loop")
-              const data = doc.data()
-              //this.loadPack.reviewText.push(data.reviewText)
-              const userItem = document.createElement('li')
-              userItem.innerHTML = `
-                ${data.username} says <br>
-                ${data.reviewText} <br><br>
-              `
-              if (data.username==username) {
-                this.loadPack.myReview=data.reviewText
-                this.loadPack.myRating=data.stars
-                this.loadPack.revRef=doc.ref.path
-                myList?.appendChild(userItem)
-              } else {
-                console.log("other appeand***")
-                userList?.appendChild(userItem)
-              }
-            })
+                console.log("in qs2 loop");
+                const reviewId = doc.id; // ID for reporting reviews
+                const data = doc.data();
+                //this.loadPack.reviewText.push(data.reviewText)
+                const userItem = document.createElement('li');
+                userItem.innerHTML = `
+              ${data.username} says <br>
+              ${data.reviewText} <br>
+              `;
+                // Create the report button element with inline styles
+                if (i > 0) {
+                    const reportButton = document.createElement('button');
+                    reportButton.textContent = 'Report';
+                    reportButton.style.backgroundColor = '#f44336';
+                    reportButton.style.color = 'white';
+                    reportButton.style.border = 'none';
+                    reportButton.style.padding = '10px 20px';
+                    reportButton.style.borderRadius = '5px';
+                    reportButton.addEventListener('click', () => this.showConfirmation(reviewId));
+                    userItem.appendChild(reportButton);
+                    userItem.appendChild(document.createElement('br'));
+                    userItem.appendChild(document.createElement('br'));
+                }
+                i++; // Only show report button for reviews no of the current user
+                if (data.username == username) {
+                    this.loadPack.myReview = data.reviewText;
+                    this.loadPack.myRating = data.stars;
+                    this.loadPack.revRef = doc.ref.path;
+                    myList?.appendChild(userItem);
+                }
+                else {
+                    console.log("other appeand***");
+                    userList?.appendChild(userItem);
+                }
+            });
             //end old
             const querySnapshot3 = await getDocs(query(collection(db, 'users'), where('username', '==', ownername)));
-            console.log("qs3size: " + querySnapshot3.size)
+            console.log("qs3size: " + querySnapshot3.size);
             querySnapshot3.forEach((docs) => {
-              const data = docs.data()
-              this.cloadPack.totalReviews=data.totalReviews
-              if(!(this.cloadPack.totalReviews>=0)) {
-                this.cloadPack.totalReviews=0
-              }
-              this.cloadPack.totalScore=data.totalScore
-              if(!(this.cloadPack.totalScore>=0)) {
-                this.cloadPack.totalScore=0
-              }
-              this.cloadPack.usersReviewed=data.usersReviewed
-              this.cloadPack.hasReviewed=this.cloadPack.usersReviewed&&this.cloadPack.usersReviewed.length>0&&this.cloadPack.usersReviewed.includes(username)
-              this.cloadPack.docRef=docs.ref.path
-            })
-            console.log("dump: " + this.cloadPack.totalReviews + " " + this.cloadPack.totalScore)
-
+                const data = docs.data();
+                this.cloadPack.totalReviews = data.totalReviews;
+                if (!(this.cloadPack.totalReviews >= 0)) {
+                    this.cloadPack.totalReviews = 0;
+                }
+                this.cloadPack.totalScore = data.totalScore;
+                if (!(this.cloadPack.totalScore >= 0)) {
+                    this.cloadPack.totalScore = 0;
+                }
+                this.cloadPack.usersReviewed = data.usersReviewed;
+                this.cloadPack.hasReviewed = this.cloadPack.usersReviewed && this.cloadPack.usersReviewed.length > 0 && this.cloadPack.usersReviewed.includes(username);
+                this.cloadPack.docRef = docs.ref.path;
+            });
+            console.log("dump: " + this.cloadPack.totalReviews + " " + this.cloadPack.totalScore);
             const cuserList = document.querySelector('.cusers');
-            const cmyList = document.querySelector('.cmine')
+            const cmyList = document.querySelector('.cmine');
             const querySnapshot4 = await getDocs(query(collection(db, 'lenderReviews'), where('owner', '==', ownername)));
-            console.log("qsempty2" + querySnapshot4.empty)
-            this.cloadPack.reviewText.pop()
+            console.log("qsempty2" + querySnapshot4.empty);
+            this.cloadPack.reviewText.pop();
             querySnapshot4.forEach((doc) => {
-              console.log("in qs2 loop")
-              const data = doc.data()
-              //this.loadPack.reviewText.push(data.reviewText)
-              const userItem = document.createElement('li')
-              userItem.innerHTML = `
+                console.log("in qs2 loop");
+                const reviewId = doc.id;
+                const data = doc.data();
+                //this.loadPack.reviewText.push(data.reviewText)
+                const userItem = document.createElement('li');
+                userItem.innerHTML = `
                 ${data.username} says <br>
-                ${data.reviewText} <br><br>
-              `
-              if (data.username==username) {
-                this.cloadPack.myReview=data.reviewText
-                this.cloadPack.myRating=data.stars
-                this.cloadPack.revRef=doc.ref.path
-                cmyList?.appendChild(userItem)
-              } else {
-                console.log("other appeand***")
-                cuserList?.appendChild(userItem)
-              }
-            })
-            this.updateUsersList()
-            } catch(error) {
-                // Handle any errors
-                const errorMessage = error;
-                alert(errorMessage);
-            }
-            console.log("***bm " + this.loadPack.hasReviewed + this.loadPack.isEdit)
-          return {
-            //set data
-          }
+                ${data.reviewText} <br>
+              `;
+                // Create the report button element with inline styles
+                if (i > 0) {
+                    const reportButton = document.createElement('button');
+                    reportButton.textContent = 'Report';
+                    reportButton.style.backgroundColor = '#f44336';
+                    reportButton.style.color = 'white';
+                    reportButton.style.border = 'none';
+                    reportButton.style.padding = '10px 20px';
+                    reportButton.style.borderRadius = '5px';
+                    reportButton.addEventListener('click', () => this.showConfirmation(reviewId));
+                    userItem.appendChild(reportButton);
+                    userItem.appendChild(document.createElement('br'));
+                    userItem.appendChild(document.createElement('br'));
+                }
+                i++; // Only show report button for reviews no of the current user
+                if (data.username == username) {
+                    this.cloadPack.myReview = data.reviewText;
+                    this.cloadPack.myRating = data.stars;
+                    this.cloadPack.revRef = doc.ref.path;
+                    cmyList?.appendChild(userItem);
+                }
+                else {
+                    console.log("other appeand***");
+                    cuserList?.appendChild(userItem);
+                }
+            });
+        }
+        catch (error) {
+            // Handle any errors
+            const errorMessage = error;
+            alert(errorMessage);
+        }
+        console.log("***bm " + this.loadPack.hasReviewed + this.loadPack.isEdit);
+        return {
+        //set data
+        };
+    },
+    methods: {
+        showConfirmation(itemId) {
+            // this.confirmationMessage = message;
+            this.confirmVisible = true;
+            this.itemId = itemId;
         },
-  methods: {
-    async validateCurrentUserOwner() {
-      console.log("inside currentUserOwner");
-      const db = getFirestore(firebaseapp);
-      const usersCollectionRef = collection(db, 'users');
-    const userQuerySnapshot = await getDocs(query(usersCollectionRef, where("username", "==", this.leasingCompany)));
-    let isCurrentUserOwner = false;
-    let isSiteModerator = false;
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
-    const currentUserID = currentUser.uid;
-    userQuerySnapshot.forEach(userDoc => {
-        // Retrieve the property data
-        const userData = userDoc.data();
-        // Retrieve the UID assigned to the property
-        const userUID = userDoc.id;
-        console.log("User UID:", userUID);
-        console.log("current user ID", currentUserID);
-        console.log("are equivalent", currentUserID == userUID);
-        if(userUID == currentUserID) {
-          isCurrentUserOwner = true;
-        }
-    });
-    this.isCurrentUserOwner1 = isCurrentUserOwner;
-
-    try {
-        const userDocRef = doc(db, 'users', currentUserID);
-        const userDocSnap = await getDoc(userDocRef);
-
-        if (userDocSnap.exists()) {
-          const userData = userDocSnap.data();
-          console.log(userData);
-          if (userData.userType) {
-              if(userData.userType == "sitemoderator") {
-                isSiteModerator = true;
-              }
-        }
-        } else {
-          console.error('User data does not exist.');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error.message);
-      }
-
-    this.isSiteModerator = isSiteModerator;
-
-    },
-    async editProperty() {
-      const db = getFirestore(firebaseapp);
-      const propertiesCollectionRef = collection(db, 'properties');
-      const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, 
-        where("propertyName", "==", this.propertyName),
-        where("owner", "==", this.leasingCompany)));
-
-        if (!propertyQuerySnapshot.empty) {
-    // If there are matching properties, loop through the snapshot
-    propertyQuerySnapshot.forEach(propertyDoc => {
-        // Retrieve the property data
-        const propertyData = propertyDoc.data();
-        
-        // Retrieve the UID assigned to the property
-        const propertyUID = propertyDoc.id;
-        console.log("Property UID to edit:", propertyUID);
-        router.push({ name: 'edit-property', params: { id: propertyUID } });
-    });  
-  }
-    },
-    async removeProperty() {
-      const confirmDelete = confirm("Are you sure you want to delete this property?");
-
-      if (confirmDelete) {
-      const db = getFirestore(firebaseapp);
-      const propertiesCollectionRef = collection(db, 'properties');
-      const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, 
-        where("propertyName", "==", this.propertyName),
-        where("owner", "==", this.leasingCompany)));
-        
-
-      if (!propertyQuerySnapshot.empty) {
-    // If there are matching properties, loop through the snapshot
-    propertyQuerySnapshot.forEach(propertyDoc => {
-        // Retrieve the property data
-        const propertyData = propertyDoc.data();
-        
-        // Retrieve the UID assigned to the property
-        const propertyUID = propertyDoc.id;
-        console.log("Property UID to remove:", propertyUID);
-
-        const propertyDocRef = doc(db, 'properties', propertyUID);
-        deleteDoc(propertyDocRef).then(() => {
-          console.log("Property removed successfully!");
-          router.push('/');
-        }).catch(error => {
-          console.error("Error removing property:", error);
-        });
-    });
-  }
-
-  // delete using property id
-
-} else {
-  console.log("Deletion canceled.");
-}
-    },
-    async propertyExists(leasingCompany, propertyName) {
-      console.log("inside property page");
-      console.log(leasingCompany, propertyName);
-      try {
-    const db = getFirestore(firebaseapp);
-
-    // Query the users collection to find the leasing company
-    const usersCollectionRef = collection(db, 'users');
-    const userQuerySnapshot = await getDocs(query(usersCollectionRef, where("username", "==", leasingCompany)));
-
-    // Check if the leasing company exists
-    if (userQuerySnapshot.empty) {
-        return false;
-    }
-    const leasingCompanyData = userQuerySnapshot.docs[0].data();
-
-    // Query the properties collection to find the property
-    const propertiesCollectionRef = collection(db, 'properties');
-    const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, 
-        where("propertyName", "==", propertyName),
-        where("owner", "==", leasingCompany)));
-
-    // Check if the property exists within the leasing company
-    if (propertyQuerySnapshot.empty) {
-        return false;
-    }
-    const propertyData = propertyQuerySnapshot.docs[0].data();
-    console.log("found property1");
-    // console.log(leasingCompanyData);
-    console.log(propertyData);
-    console.log(propertyData.propertyName);
-    console.log(propertyData.amenities);
-    return propertyData;
-} catch (error) {
-    console.error('Error checking property existence:', error);
-    const defdata = {propertyName: 'Sample Property',
-          rent: 2000,
-          location: 'Sample Location',
-          structureDetails: 'Sample Structure Details',
-          owner: 'Sample Owner',
-          amenities: ['Amenity 1', 'Amenity 2']};
-    return defdata;
-}
-    },
-    async sub() {
-            console.log("submethod")
+        hideConfirmation() {
+            this.confirmVisible = false;
+        },
+        async reportReview(reviewId) {
+            try {
+                const db = getFirestore(firebaseapp);
+                const reportedReviewsRef = collection(db, 'reportedReviews');
+                // Check if a document with the same reviewId exists
+                const q = query(reportedReviewsRef, where('reviewID', '==', reviewId));
+                const querySnapshot = await getDocs(q);
+                // Check if a document with the same reviewId exists
+                if (!querySnapshot.empty) {
+                    console.log("A report for this review already exists.");
+                    this.confirmVisible = false
+                    return;
+                }
+                // Add a new document with the reviewID field
+                await addDoc(reportedReviewsRef, {
+                    reviewID: reviewId
+                });
+                console.log("Reported review added successfully.");
+            }
+            catch (error) {
+                console.error("Error adding reported review:", error);
+            }
+            this.confirmVisible = false
+        },
+        async postSublease() {
+            const db = getFirestore(firebaseapp);
+            const propertiesCollectionRef = collection(db, 'properties');
+            const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, where("propertyName", "==", this.propertyName), where("owner", "==", this.leasingCompany)));
+            if (!propertyQuerySnapshot.empty) {
+                propertyQuerySnapshot.forEach(propertyDoc => {
+                    const propertyData = propertyDoc.data();
+                    const propertyUID = propertyDoc.id;
+                    console.log("Property UID to post sublease:", propertyUID);
+                    // Redirect to the "post-sublease" route and pass the propertyUID as a parameter
+                    router.push({ name: 'post-sublease', params: { id: propertyUID } });
+                });
+            }
+        },
+        async fetchNotes() {
+            const db = getFirestore(firebaseapp);
             const auth = getAuth();
             const currentUser = auth.currentUser;
-            const propname=this.propertyName//replace with current property
-            const userDoc=currentUser.uid
-            const db = getFirestore(firebaseapp)
+            const propertyName = this.propertyName;
+            const ownerName = this.leasingCompany;
+            try {
+                const userDocRef = doc(db, 'users', currentUser.uid);
+                const userDocSnap = await getDoc(userDocRef);
+                const username = userDocSnap.data().username;
+                console.log("fetching notes for", propertyName, ownerName, username);
+                const querySnapshot = await getDocs(query(collection(db, 'notes'), where('propertyName', '==', propertyName), where('owner', '==', ownerName), where('username', '==', username)));
+                if (!querySnapshot.empty) {
+                    const note = querySnapshot.docs[0].data();
+                    this.notesText = note.text;
+                    console.log(this.notesText);
+                }
+                else {
+                    this.notesText = ''; // Clear notes text if no notes exist
+                }
+            }
+            catch (error) {
+                console.error('Error fetching notes:', error);
+            }
+        },
+        async saveNotes() {
+            const db = getFirestore(firebaseapp);
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const propertyName = this.propertyName;
+            const ownerName = this.leasingCompany;
+            const notesText = this.notesText;
+            try {
+                const userDocRef = doc(db, 'users', currentUser.uid);
+                const userDocSnap = await getDoc(userDocRef);
+                const username = userDocSnap.data().username;
+                console.log("saving notes for", propertyName, ownerName, username);
+                // Check if the note already exists
+                const querySnapshot = await getDocs(query(collection(db, 'notes'), where('propertyName', '==', propertyName), where('owner', '==', ownerName), where('username', '==', username)));
+                if (!querySnapshot.empty) {
+                    // Note already exists, update it
+                    const noteDoc = querySnapshot.docs[0].ref;
+                    await updateDoc(noteDoc, { text: notesText });
+                    console.log('Note updated successfully.');
+                }
+                else {
+                    // Note does not exist, add a new note
+                    await addDoc(collection(db, 'notes'), {
+                        propertyName: propertyName,
+                        owner: ownerName,
+                        username: username,
+                        text: notesText
+                    });
+                    console.log('New note added successfully.');
+                }
+            }
+            catch (error) {
+                console.error('Error saving notes:', error);
+            }
+        },
+        async validateCurrentUserOwner() {
+            console.log("inside currentUserOwner");
+            const db = getFirestore(firebaseapp);
+            const usersCollectionRef = collection(db, 'users');
+            const userQuerySnapshot = await getDocs(query(usersCollectionRef, where("username", "==", this.leasingCompany)));
+            let isCurrentUserOwner = false;
+            let isSiteModerator = false;
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const currentUserID = currentUser.uid;
+            userQuerySnapshot.forEach(userDoc => {
+                // Retrieve the property data
+                const userData = userDoc.data();
+                // Retrieve the UID assigned to the property
+                const userUID = userDoc.id;
+                console.log("User UID:", userUID);
+                console.log("current user ID", currentUserID);
+                console.log("are equivalent", currentUserID == userUID);
+                if (userUID == currentUserID) {
+                    isCurrentUserOwner = true;
+                }
+            });
+            this.isCurrentUserOwner1 = isCurrentUserOwner;
+            try {
+                const userDocRef = doc(db, 'users', currentUserID);
+                const userDocSnap = await getDoc(userDocRef);
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    console.log(userData);
+                    if (userData.userType) {
+                        if (userData.userType == "sitemoderator") {
+                            isSiteModerator = true;
+                        }
+                    }
+                }
+                else {
+                    console.error('User data does not exist.');
+                }
+            }
+            catch (error) {
+                console.error('Error fetching user data:', error.message);
+            }
+            this.isSiteModerator = isSiteModerator;
+        },
+        async editProperty() {
+            const db = getFirestore(firebaseapp);
+            const propertiesCollectionRef = collection(db, 'properties');
+            const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, where("propertyName", "==", this.propertyName), where("owner", "==", this.leasingCompany)));
+            if (!propertyQuerySnapshot.empty) {
+                // If there are matching properties, loop through the snapshot
+                propertyQuerySnapshot.forEach(propertyDoc => {
+                    // Retrieve the property data
+                    const propertyData = propertyDoc.data();
+                    // Retrieve the UID assigned to the property
+                    const propertyUID = propertyDoc.id;
+                    console.log("Property UID to edit:", propertyUID);
+                    router.push({ name: 'edit-property', params: { id: propertyUID } });
+                });
+            }
+        },
+        async removeProperty() {
+            const confirmDelete = confirm("Are you sure you want to delete this property?");
+            if (confirmDelete) {
+                const db = getFirestore(firebaseapp);
+                const propertiesCollectionRef = collection(db, 'properties');
+                const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, where("propertyName", "==", this.propertyName), where("owner", "==", this.leasingCompany)));
+                if (!propertyQuerySnapshot.empty) {
+                    // If there are matching properties, loop through the snapshot
+                    propertyQuerySnapshot.forEach(propertyDoc => {
+                        // Retrieve the property data
+                        const propertyData = propertyDoc.data();
+                        // Retrieve the UID assigned to the property
+                        const propertyUID = propertyDoc.id;
+                        console.log("Property UID to remove:", propertyUID);
+                        const propertyDocRef = doc(db, 'properties', propertyUID);
+                        deleteDoc(propertyDocRef).then(() => {
+                            console.log("Property removed successfully!");
+                            router.push('/');
+                        }).catch(error => {
+                            console.error("Error removing property:", error);
+                        });
+                    });
+                }
+                // delete using property id
+            }
+            else {
+                console.log("Deletion canceled.");
+            }
+        },
+        async propertyExists(leasingCompany, propertyName) {
+            console.log("inside property page");
+            console.log(leasingCompany, propertyName);
+            try {
+                const db = getFirestore(firebaseapp);
+                // Query the users collection to find the leasing company
+                const usersCollectionRef = collection(db, 'users');
+                const userQuerySnapshot = await getDocs(query(usersCollectionRef, where("username", "==", leasingCompany)));
+                // Check if the leasing company exists
+                if (userQuerySnapshot.empty) {
+                    return false;
+                }
+                const leasingCompanyData = userQuerySnapshot.docs[0].data();
+                // Query the properties collection to find the property
+                const propertiesCollectionRef = collection(db, 'properties');
+                const propertyQuerySnapshot = await getDocs(query(propertiesCollectionRef, where("propertyName", "==", propertyName), where("owner", "==", leasingCompany)));
+                // Check if the property exists within the leasing company
+                if (propertyQuerySnapshot.empty) {
+                    return false;
+                }
+                const propertyData = propertyQuerySnapshot.docs[0].data();
+                console.log("found property1");
+                // console.log(leasingCompanyData);
+                console.log(propertyData);
+                console.log(propertyData.propertyName);
+                console.log(propertyData.amenities);
+                return propertyData;
+            }
+            catch (error) {
+                console.error('Error checking property existence:', error);
+                const defdata = { propertyName: 'Sample Property',
+                    rent: 2000,
+                    location: 'Sample Location',
+                    structureDetails: 'Sample Structure Details',
+                    owner: 'Sample Owner',
+                    amenities: ['Amenity 1', 'Amenity 2'] };
+                return defdata;
+            }
+        },
+        async sub() {
+            console.log("submethod");
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const propname = this.propertyName; //replace with current property
+            const userDoc = currentUser.uid;
+            const db = getFirestore(firebaseapp);
             const userDocRef = doc(db, 'users', userDoc);
-            console.log("did i hang here")
+            console.log("did i hang here");
             //const userDocSnap = await getDoc(userDocRef);
             //const username=userDocSnap.data().username
-            const username = this.loadPack.username
-            console.log("***sub username: " + username)
-            const ownername=this.leasingCompany
-            if(typeof this.form.stars!='undefined' && this.form.stars) {
-              //console.log(this.form.stars)
-              //const db = getFirestore(firebaseapp)
-              try {
-                if(this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0) { 
-                  this.loadPack.usersReviewed.push(username)
-                } else {
-                  this.loadPack.usersReviewed=[username]
+            const username = this.loadPack.username;
+            console.log("***sub username: " + username);
+            const ownername = this.leasingCompany;
+            if (typeof this.form.stars != 'undefined' && this.form.stars) {
+                //console.log(this.form.stars)
+                //const db = getFirestore(firebaseapp)
+                try {
+                    if (this.loadPack.usersReviewed && this.loadPack.usersReviewed.length > 0) {
+                        this.loadPack.usersReviewed.push(username);
+                    }
+                    else {
+                        this.loadPack.usersReviewed = [username];
+                    }
+                    console.log("andrew here 1");
+                    const x = doc(db, this.loadPack.docRef);
+                    console.log("andrew here 2");
+                    const sr = await this.submitReview(db, propname, ownername, username); //push to reviews
+                    //console.log("andrew here 3: " + sr)
+                    await this.updateProperty(x); //update property info
+                    console.log("andrew here 4");
                 }
-                console.log("andrew here 1")
-                const x = doc(db, this.loadPack.docRef)
-                console.log("andrew here 2")
-                const sr = await this.submitReview(db, propname, ownername, username) //push to reviews
-                //console.log("andrew here 3: " + sr)
-                await this.updateProperty(x) //update property info
-                console.log("andrew here 4")
-              } catch(error) {
-                // Handle any errors
+                catch (error) {
+                    // Handle any errors
+                    const errorMessage = error;
+                    alert(errorMessage);
+                }
+                location.reload();
+            }
+            else {
+                alert("Please enter a numerical rating");
+                //throw error
+            }
+        },
+        async submitReview(db, propname, ownername, username) {
+            const c = collection(db, "propertyReviews");
+            try {
+                const docRef = await addDoc(c, {
+                    owner: this.leasingCompany,
+                    propertyName: this.propertyName,
+                    username: username,
+                    reviewText: this.form.text,
+                    stars: this.form.stars,
+                    timestamp: Date.now()
+                });
+                console.log("doc with id: " + docRef);
+            }
+            catch (error) {
                 const errorMessage = error;
                 alert(errorMessage);
             }
-              location.reload()
-            } else {
-              alert("Please enter a numerical rating")
-              //throw error
-            }
-            
-          }, 
-          async submitReview (db, propname, ownername, username){
-            const c = collection(db, "propertyReviews");
+        },
+        async updateProperty(userDocRef) {
             try {
-            const docRef = await addDoc(c, {
-              owner: this.leasingCompany,
-              propertyName: this.propertyName,
-              username: username,
-              reviewText: this.form.text,
-              stars: this.form.stars,
-              timestamp: Date.now()
-            });
-            console.log("doc with id: " + docRef)
-          } catch (error) {
-            const errorMessage = error;
-                alert(errorMessage);
-          }
-          }, 
-          async updateProperty (userDocRef) {
-            try {
-              console.log("***in update" + this.loadPack.totalReviews + " " + this.loadPack.totalScore)
-              await updateDoc(userDocRef, {
-                  totalReviews: this.loadPack.totalReviews+1,
-                  totalScore: Number(this.loadPack.totalScore)+Number(this.form.stars),
-                  usersReviewed: this.loadPack.usersReviewed
-              });
-            } catch (error) {
-              const errorMessage = error;
-              alert(errorMessage);
-            }
-          },
-          edit() {
-            console.log("edit")
-            this.loadPack.isEdit=true;
-            this.form.text=this.loadPack.myReview
-            this.form.stars=this.loadPack.myRating.toString()
-          },
-          async upd() {
-            const db = getFirestore(firebaseapp);
-            const x = doc(db, this.loadPack.docRef)
-            if(typeof this.form.stars!='undefined' && this.form.stars) {
-            const db = getFirestore(firebaseapp)
-            const docRef=doc(db,this.loadPack.revRef)
-            /*await updateDoc(x, {
-                  totalReviews: this.loadPack.totalReviews,
-                  totalScore: this.loadPack.totalScore-this.loadPack.myRating+this.form.stars-100,
-                  usersReviewed: this.loadPack.usersReviewed
-              });*/
-            await this.updateReview()
-            await this.updatePropScore()
-            location.reload()
-            //this.rel()
-          } else {
-            alert("Please enter a numerical rating")
-          }
-          }, async updateReview() {
-              const db = getFirestore(firebaseapp);
-              const x = doc(db, this.loadPack.docRef)
-              if(typeof this.form.stars!='undefined' && this.form.stars) {
-              const db = getFirestore(firebaseapp)
-              const docRef=doc(db,this.loadPack.revRef)
-              await updateDoc(docRef, {
-                reviewText: this.form.text,
-                stars: this.form.stars,
-                timestamp: Date.now()
-              });
-            }
-          }, async updatePropScore() {
-              const db = getFirestore(firebaseapp);
-              const x = doc(db, this.loadPack.docRef)
-              if(typeof this.form.stars!='undefined' && this.form.stars) {
-              const db = getFirestore(firebaseapp)
-              const docRef=doc(db,this.loadPack.revRef)
-              console.log("total: " + typeof this.loadPack.totalScore + " mine: " + typeof this.loadPack.myRating + " stars: " + typeof this.form.stars)
-              await updateDoc(x, {
-                    totalReviews: this.loadPack.totalReviews,
-                    totalScore: Number(this.loadPack.totalScore)-Number(this.loadPack.myRating)+Number(this.form.stars),
+                console.log("***in update" + this.loadPack.totalReviews + " " + this.loadPack.totalScore);
+                await updateDoc(userDocRef, {
+                    totalReviews: this.loadPack.totalReviews + 1,
+                    totalScore: Number(this.loadPack.totalScore) + Number(this.form.stars),
                     usersReviewed: this.loadPack.usersReviewed
                 });
             }
-          },
-          async csub() {
-            console.log("submethod")
-            const auth = getAuth();
-            const currentUser = auth.currentUser;
-            const propname=this.propertyName//replace with current property
-            const userDoc=currentUser.uid
-            const db = getFirestore(firebaseapp)
-            const userDocRef = doc(db, 'users', userDoc);
-            console.log("did i hang here")
-            //const userDocSnap = await getDoc(userDocRef);
-            //const username=userDocSnap.data().username
-            const username = this.loadPack.username 
-            console.log("***sub username: " + username)
-            const ownername=this.leasingCompany
-            if(typeof this.cform.stars!='undefined' && this.cform.stars) {
-              //console.log(this.cform.stars)
-              //const db = getFirestore(firebaseapp)
-              try {
-                if(this.cloadPack.usersReviewed&&this.cloadPack.usersReviewed.length>0) { 
-                  this.cloadPack.usersReviewed.push(username)
-                } else {
-                  this.cloadPack.usersReviewed=[username]
-                }
-                console.log("andrew here 1")
-                const x = doc(db, this.cloadPack.docRef)
-                console.log("andrew here 2" + this.cloadPack.docRef)
-                const sr = await this.csubmitReview(db, propname, ownername, username) //push to reviews
-                //console.log("andrew here 3: " + sr)
-                await this.cupdateProperty(x) //update property info
-                console.log("andrew here 4 c")
-              } catch(error) {
-                // Handle any errors
+            catch (error) {
                 const errorMessage = error;
                 alert(errorMessage);
             }
-              location.reload()
-              //good submission, continue
-            } else {
-              alert("Please enter a numerical rating")
-              //throw error
+        },
+        edit() {
+            console.log("edit");
+            this.loadPack.isEdit = true;
+            this.form.text = this.loadPack.myReview;
+            this.form.stars = this.loadPack.myRating.toString();
+        },
+        async upd() {
+            const db = getFirestore(firebaseapp);
+            const x = doc(db, this.loadPack.docRef);
+            if (typeof this.form.stars != 'undefined' && this.form.stars) {
+                const db = getFirestore(firebaseapp);
+                const docRef = doc(db, this.loadPack.revRef);
+                /*await updateDoc(x, {
+                      totalReviews: this.loadPack.totalReviews,
+                      totalScore: this.loadPack.totalScore-this.loadPack.myRating+this.form.stars-100,
+                      usersReviewed: this.loadPack.usersReviewed
+                  });*/
+                await this.updateReview();
+                await this.updatePropScore();
+                location.reload();
+                //this.rel()
             }
-          }, 
-          async csubmitReview (db, propname, ownername, username){
+            else {
+                alert("Please enter a numerical rating");
+            }
+        }, async updateReview() {
+            const db = getFirestore(firebaseapp);
+            const x = doc(db, this.loadPack.docRef);
+            if (typeof this.form.stars != 'undefined' && this.form.stars) {
+                const db = getFirestore(firebaseapp);
+                const docRef = doc(db, this.loadPack.revRef);
+                await updateDoc(docRef, {
+                    reviewText: this.form.text,
+                    stars: this.form.stars,
+                    timestamp: Date.now()
+                });
+            }
+        }, async updatePropScore() {
+            const db = getFirestore(firebaseapp);
+            const x = doc(db, this.loadPack.docRef);
+            if (typeof this.form.stars != 'undefined' && this.form.stars) {
+                const db = getFirestore(firebaseapp);
+                const docRef = doc(db, this.loadPack.revRef);
+                console.log("total: " + typeof this.loadPack.totalScore + " mine: " + typeof this.loadPack.myRating + " stars: " + typeof this.form.stars);
+                await updateDoc(x, {
+                    totalReviews: this.loadPack.totalReviews,
+                    totalScore: Number(this.loadPack.totalScore) - Number(this.loadPack.myRating) + Number(this.form.stars),
+                    usersReviewed: this.loadPack.usersReviewed
+                });
+            }
+        },
+        async csub() {
+            console.log("submethod");
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const propname = this.propertyName; //replace with current property
+            const userDoc = currentUser.uid;
+            const db = getFirestore(firebaseapp);
+            const userDocRef = doc(db, 'users', userDoc);
+            console.log("did i hang here");
+            //const userDocSnap = await getDoc(userDocRef);
+            //const username=userDocSnap.data().username
+            const username = this.loadPack.username;
+            console.log("***sub username: " + username);
+            const ownername = this.leasingCompany;
+            if (typeof this.cform.stars != 'undefined' && this.cform.stars) {
+                //console.log(this.cform.stars)
+                //const db = getFirestore(firebaseapp)
+                try {
+                    if (this.cloadPack.usersReviewed && this.cloadPack.usersReviewed.length > 0) {
+                        this.cloadPack.usersReviewed.push(username);
+                    }
+                    else {
+                        this.cloadPack.usersReviewed = [username];
+                    }
+                    console.log("andrew here 1");
+                    const x = doc(db, this.cloadPack.docRef);
+                    console.log("andrew here 2" + this.cloadPack.docRef);
+                    const sr = await this.csubmitReview(db, propname, ownername, username); //push to reviews
+                    //console.log("andrew here 3: " + sr)
+                    await this.cupdateProperty(x); //update property info
+                    console.log("andrew here 4 c");
+                }
+                catch (error) {
+                    // Handle any errors
+                    const errorMessage = error;
+                    alert(errorMessage);
+                }
+                location.reload();
+                //good submission, continue
+            }
+            else {
+                alert("Please enter a numerical rating");
+                //throw error
+            }
+        },
+        async csubmitReview(db, propname, ownername, username) {
             const c = collection(db, "lenderReviews");
             try {
-            const docRef = await addDoc(c, {
-              owner: this.leasingCompany,
-              propertyName: this.propertyName,
-              username: username,
-              reviewText: this.cform.text,
-              stars: this.cform.stars,
-              timestamp: Date.now()
-            });
-            console.log("doc with id: " + docRef)
-          } catch (error) {
-            const errorMessage = error;
+                const docRef = await addDoc(c, {
+                    owner: this.leasingCompany,
+                    propertyName: this.propertyName,
+                    username: username,
+                    reviewText: this.cform.text,
+                    stars: this.cform.stars,
+                    timestamp: Date.now()
+                });
+                console.log("doc with id: " + docRef);
+            }
+            catch (error) {
+                const errorMessage = error;
                 alert(errorMessage);
-          }
-          }, 
-          async cupdateProperty (userDocRef) {
+            }
+        },
+        async cupdateProperty(userDocRef) {
             try {
-              console.log("***in update cupcake" + userDocRef)
-              await updateDoc(userDocRef, {
-                  totalReviews: this.cloadPack.totalReviews+1,
-                  totalScore: Number(this.cloadPack.totalScore)+Number(this.cform.stars),
-                  usersReviewed: this.cloadPack.usersReviewed
-              });
-              console.log("***in update cupcake after" + userDocRef)
-            } catch (error) {
-              const errorMessage = error;
-              alert(errorMessage);
+                console.log("***in update cupcake" + userDocRef);
+                await updateDoc(userDocRef, {
+                    totalReviews: this.cloadPack.totalReviews + 1,
+                    totalScore: Number(this.cloadPack.totalScore) + Number(this.cform.stars),
+                    usersReviewed: this.cloadPack.usersReviewed
+                });
+                console.log("***in update cupcake after" + userDocRef);
             }
-          },
-          cedit() {
-            console.log("edit")
-            this.cloadPack.isEdit=true;
-            this.cform.text=this.cloadPack.myReview
-            this.cform.stars=this.cloadPack.myRating.toString()
-          },
-          async cupd() {
+            catch (error) {
+                const errorMessage = error;
+                alert(errorMessage);
+            }
+        },
+        cedit() {
+            console.log("edit");
+            this.cloadPack.isEdit = true;
+            this.cform.text = this.cloadPack.myReview;
+            this.cform.stars = this.cloadPack.myRating.toString();
+        },
+        async cupd() {
             const db = getFirestore(firebaseapp);
-            const x = doc(db, this.cloadPack.docRef)
-            if(typeof this.cform.stars!='undefined' && this.cform.stars) {
-            const db = getFirestore(firebaseapp)
-            const docRef=doc(db,this.cloadPack.revRef)
-            /*await updateDoc(x, {
-                  totalReviews: this.cloadPack.totalReviews,
-                  totalScore: this.cloadPack.totalScore-this.cloadPack.myRating+this.cform.stars-100,
-                  usersReviewed: this.cloadPack.usersReviewed
-              });*/
-            await this.cupdateReview()
-            await this.cupdatePropScore()
-            location.reload()
-            //this.rel()
-          } else {
-            alert("Please enter a numerical rating")
-          }
-          }, async cupdateReview() {
-              const db = getFirestore(firebaseapp);
-              const x = doc(db, this.cloadPack.docRef)
-              if(typeof this.cform.stars!='undefined' && this.cform.stars) {
-              const db = getFirestore(firebaseapp)
-              const docRef=doc(db,this.cloadPack.revRef)
-              await updateDoc(docRef, {
-                reviewText: this.cform.text,
-                stars: this.cform.stars,
-                timestamp: Date.now()
-              });
+            const x = doc(db, this.cloadPack.docRef);
+            if (typeof this.cform.stars != 'undefined' && this.cform.stars) {
+                const db = getFirestore(firebaseapp);
+                const docRef = doc(db, this.cloadPack.revRef);
+                /*await updateDoc(x, {
+                      totalReviews: this.cloadPack.totalReviews,
+                      totalScore: this.cloadPack.totalScore-this.cloadPack.myRating+this.cform.stars-100,
+                      usersReviewed: this.cloadPack.usersReviewed
+                  });*/
+                await this.cupdateReview();
+                await this.cupdatePropScore();
+                location.reload();
+                //this.rel()
             }
-          }, async cupdatePropScore() {
-              const db = getFirestore(firebaseapp);
-              const x = doc(db, this.cloadPack.docRef)
-              if(typeof this.cform.stars!='undefined' && this.cform.stars) {
-              const db = getFirestore(firebaseapp)
-              const docRef=doc(db,this.cloadPack.revRef)
-              console.log("total: " + this.cloadPack.totalScore + " mine: " + this.cloadPack.myRating + " stars: " + typeof this.cform.stars)
-              await updateDoc(x, {
+            else {
+                alert("Please enter a numerical rating");
+            }
+        }, async cupdateReview() {
+            const db = getFirestore(firebaseapp);
+            const x = doc(db, this.cloadPack.docRef);
+            if (typeof this.cform.stars != 'undefined' && this.cform.stars) {
+                const db = getFirestore(firebaseapp);
+                const docRef = doc(db, this.cloadPack.revRef);
+                await updateDoc(docRef, {
+                    reviewText: this.cform.text,
+                    stars: this.cform.stars,
+                    timestamp: Date.now()
+                });
+            }
+        }, async cupdatePropScore() {
+            const db = getFirestore(firebaseapp);
+            const x = doc(db, this.cloadPack.docRef);
+            if (typeof this.cform.stars != 'undefined' && this.cform.stars) {
+                const db = getFirestore(firebaseapp);
+                const docRef = doc(db, this.cloadPack.revRef);
+                console.log("total: " + this.cloadPack.totalScore + " mine: " + this.cloadPack.myRating + " stars: " + typeof this.cform.stars);
+                await updateDoc(x, {
                     totalReviews: this.cloadPack.totalReviews,
-                    totalScore: Number(this.cloadPack.totalScore)-Number(this.cloadPack.myRating)+Number(this.cform.stars),
+                    totalScore: Number(this.cloadPack.totalScore) - Number(this.cloadPack.myRating) + Number(this.cform.stars),
                     usersReviewed: this.cloadPack.usersReviewed
                 });
             }
-          }, sleep(milliseconds) {
-              var start = new Date().getTime();
-              for (var i = 0; i < 1e7; i++) {
-                if ((new Date().getTime() - start) > milliseconds){
-                  break;
+        }, sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
                 }
+
               }
             },
           async updateInterest() {
@@ -793,6 +937,12 @@ import { firebaseapp } from '../main'
             }
           }
   }
+
+            }
+        }
+    },
+    components: { ConfirmationDialog }
+
 };
   </script>
   
@@ -1106,6 +1256,47 @@ div[property] > p {
 
   .hoverbox ul {
     color: purple;
+  .notes-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notes-section h2 {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  #user-notes {
+    color: black;
+    border: 2px solid teal;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    resize: vertical; /* Allow vertical resizing of the textarea */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in the width calculation */
+  }
+
+  #user-notes::placeholder {
+    color: darkgray;
+    font-style: italic;
+  }
+
+  button {
+    background-color: teal;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background-color: darkcyan;
   }
 
 </style> 
