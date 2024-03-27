@@ -8,6 +8,19 @@
       <p class="property-price"> {{ property.rent }}</p>
       <!-- <p class="property-bed-bath">{{ propertyInfo.bedBath }}</p> -->
       <p class="property-location">{{ property.location }}</p>
+      <div class="into">
+        <input type="checkbox" id="interest" name="interest" @click="updateInterest"/>
+        <label for="interest">I'm interested</label>
+        <button v-if="loadPack.interest==true" id="interestHover" @click="changePopUp">->    Click to see who else is!</button>
+        <br>
+        <input v-if="loadPack.interest==true" type="checkbox" id="publicity" name="publicity" @click="updatePublicity"/>
+        <label v-if="loadPack.interest==true" for="publicity">I want my choice to be public</label>
+        <div class="hoverbox" id="hoverbox">
+          <h1>Interested Users</h1>
+          <button type="button" @click="changePopUp">Close</button>
+          <ul class="interestedOthers"></ul>
+        </div>
+      </div>
       <hr>
       <p class="property-about">About property:</p>
       <p class="property-description">{{ property.structureDetails }}</p>
@@ -153,7 +166,10 @@
                 revRef: '',
                 isEdit: false,
                 hasLoaded: false,
-                username: ''
+                username: '',
+                interest:false,
+                interestedUsers: ["user1", "user2", "user3"],
+                publicUsers: ["pu1"]
             },
             cform: {
                 stars: '',
@@ -844,10 +860,89 @@
                 if ((new Date().getTime() - start) > milliseconds) {
                     break;
                 }
+
+              }
+            },
+          async updateInterest() {
+            const db = getFirestore(firebaseapp);
+            console.log("before: " + this.loadPack.interestedUsers)
+            const hoverbox = document.getElementById("hoverbox");
+            hoverbox.style.display="none";
+            if(!this.loadPack.interest) {
+              this.loadPack.interest=true
+              if(!this.loadPack.interestedUsers.includes(this.loadPack.username)) {
+                this.loadPack.interestedUsers.push(this.loadPack.username)
+              }
+            } else {
+              this.loadPack.interest=false;
+              let newarr = this.loadPack.interestedUsers.filter(val => val !== this.loadPack.username);
+              this.loadPack.interestedUsers=newarr;
+            }
+            console.log("after: " + this.loadPack.interestedUsers)
+            const x = doc(db, this.loadPack.docRef)
+            console.log("docref: " + this.loadPack.docRef)
+            this.updateUsersList()
+            const hoverDisplay = document.getElementById("interestHover");
+            if (hoverDisplay.style.display != "none") {
+              hoverDisplay.style.display = "none";
+            } else {
+              hoverDisplay.style.display = "block";
+            }
+            //const hoverbox = document.getElementById("hoverbox");
+            if (hoverbox.style.display != "none") {
+              hoverbox.style.display = "none";
+            }
+            await updateDoc(x, {
+              interestedUsers: this.loadPack.interestedUsers
+            });
+            //value=!value
+            //push to backend
+            //data will be stored with property in an array
+            //hide/show other users
+          },
+          changePopUp() {
+            const hoverbox = document.getElementById("hoverbox");
+            console.log(hoverbox.style.display)
+            if (hoverbox.style.display === "none") {
+              hoverbox.style.display = "block";
+            } else {
+              hoverbox.style.display = "none";
+            }
+            //value=!value
+            //push to backend
+            //data will be stored with property in an array
+            //hide/show other users
+          },
+          updateUsersList() {
+            this.clearUsersList()
+            const interestList = document.querySelector('.interestedOthers');
+            //add from querysnapsho other users
+            this.loadPack.interestedUsers.forEach((interestedUser)=>{
+              const profItem = document.createElement('li')
+              if(interestedUser!=this.loadPack.username) {
+              profItem.innerHTML = //`<a href="https://www.google.com">${interestedUser} //change link to actual link`
+                `<button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+                        <router-link :to="{ name: 'user-page', params: { username: ${interestedUser} } }">
+                          ${interestedUser}`
+              } else { 
+                profItem.innerHTML = `(myself)`
+              }
+              interestList?.appendChild(profItem)
+            })
+          }, 
+          clearUsersList() {
+            const interestList = document.querySelector('.interestedOthers');
+            while (interestList && interestList.firstChild) {
+              interestList.removeChild(interestList.lastChild);
+            }
+          }
+  }
+
             }
         }
     },
     components: { ConfirmationDialog }
+
 };
   </script>
   
@@ -1119,6 +1214,48 @@ div[property] > p {
     color:black;
   }
 
+  .into label{
+    margin: 10px;
+    padding: 10px;
+    color: #000;
+    font-weight: 600;
+  }
+  .into button {
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .hoverbox {
+    display: none;
+    position:absolute;
+    width: 25%;
+    height: fit-content;
+    left: 65%;
+    top: 70px;
+    justify-self: right;
+    background-color: bisque;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: orange;
+    border-radius: 4px;
+  }
+  .hoverbox button {
+    background-color: red;
+    margin: 5px;
+    margin-left: 0px;
+    padding: 5px;
+    color: white;
+    border-radius: 10px;
+    float: right;
+  }
+  .hoverbox h1 {
+    display: inline;
+    font-size: 26px;
+  }
+
+  .hoverbox ul {
+    color: purple;
   .notes-section {
     margin-top: 20px;
     display: flex;

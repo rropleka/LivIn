@@ -110,6 +110,9 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/revprop" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
 					</li>
+          <li v-if="isLoggedIn">
+              <router-link to="/lenderlist" class="block ml-4 py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font">List of Lenders</router-link>
+            </li>
 					<li v-if="isLoggedIn && isLeasingCompany">
 						<router-link to="/add-property" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
 					</li>

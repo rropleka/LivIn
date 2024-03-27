@@ -132,6 +132,9 @@ const router = createRouter({
       component: () => import('../views/ManageFavorites.vue')
     },
     {
+      path: '/lenderlist',
+      name: 'lenderlist',
+      component: () => import('../views/LenderList.vue')
       path: '/search-users',
       name: 'search-users',
       component: () => import('../views/search-users.vue')
