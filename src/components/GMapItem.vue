@@ -154,7 +154,7 @@ import { getLineAndCharacterOfPosition } from "typescript";
       getPosition:function() {
         
       },
-      filterByCurrentLocation:function() {
+      filterByCurrentLocation:function(proximity) {
         console.log("hi");
         let latitude;
         let longitude;
@@ -175,7 +175,7 @@ import { getLineAndCharacterOfPosition } from "typescript";
 
                 distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
                 console.log("Distance: " + distance);
-                if (distance >= .1) {
+                if (distance >= proximity) {
                   this.properties.splice(index, 1);
                 }
 

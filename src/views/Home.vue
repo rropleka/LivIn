@@ -18,7 +18,7 @@ const currentUser = computed(() => store.getters.currentUser);
    export default {
       methods: {
          filterByCurrentLocationButton() {
-          this.$refs.GMapItem.filterByCurrentLocation();
+          this.$refs.GMapItem.filterByCurrentLocation(document.getElementById("currentFilter").value);
          }
       }
    }
@@ -31,7 +31,10 @@ const currentUser = computed(() => store.getters.currentUser);
           <router-link to="/login">Back to Login Screeeeeen</router-link>
           <router-link to="/moderator/hotspots">Manage Hotspots</router-link>
           <router-link to="/favorites">Manage Favorites</router-link>
-          <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="filterByCurrentLocationButton()">Filter by Current Location</button>
+          <div>
+          <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByCurrentLocationButton()">Filter by Current Location</button>
+          <input type="number" id="currentFilter" style="color: black; width: 250px; float: top;" placeholder="Enter distance in km">
+          </div>
           <div class="propertiesTable">
             <listings></listings>
           </div>
