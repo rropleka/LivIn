@@ -289,7 +289,7 @@
               ${data.reviewText} <br>
               `;
                 // Create the report button element with inline styles
-                if (i > 0) {
+                if (true) {
                     const reportButton = document.createElement('button');
                     reportButton.textContent = 'Report';
                     reportButton.style.backgroundColor = '#f44336';
@@ -350,7 +350,7 @@
                 ${data.reviewText} <br>
               `;
                 // Create the report button element with inline styles
-                if (i > 0) {
+                if (true) {
                     const reportButton = document.createElement('button');
                     reportButton.textContent = 'Report';
                     reportButton.style.backgroundColor = '#f44336';
