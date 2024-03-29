@@ -1,4 +1,5 @@
 <template>
+    <div style="background-color: white;">
         <form @submit.prevent="saveChanges" class="container mx-auto overscroll-auto">
             <div class="mb-6">
                 <img v-if="isPurdueEmail" src="@/assets/purdue-logo.png" alt="Purdue Icon" class="icon">
@@ -94,12 +95,13 @@
             <confirmation-dialog v-if="confirmVisible" :message="confirmationMessage" @cancel="hideConfirmation" @confirm="deleteAccount" />
 
         </form>
+        </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
 import { ref, computed } from 'vue'
-import { getAuth, updatePassword, verifyBeforeUpdateEmail, deleteUser } from "firebase/auth"
+import { getAuth, updatePassword, verifyBeforeUpdateEmail, deleteUser, reauthenticateWithCredential, EmailAuthCredential, EmailAuthProvider } from "firebase/auth"
 import { getFirestore, collection, doc, getDoc, setDoc, deleteDoc, updateDoc, where, getDocs, query } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
 import router from '../router/index'
@@ -124,13 +126,20 @@ export default {
     },
     components: {
         ConfirmationDialog
-    },data() {         
+    },
+    data() {         
         return {             
             confirmVisible: false,             
             confirmationMessage: "Are you sure you want to delete your account? This action cannot be undone."         
         };     
     },
     methods: {
+        async reauthenticateUser(user, prompt) {
+            // Refresh auth token here 
+            const password = prompt(prompt)
+            const credential = EmailAuthProvider.credential(user.email, password)
+            await reauthenticateWithCredential(user, credential)
+        },
         toggleLoginEditable() {
             this.isLoginEditable = !this.isLoginEditable
         },
@@ -193,6 +202,10 @@ export default {
                 }
 
                 if (this.user.password) {
+                    // Refresh auth token here 
+                    // const password = prompt("Please enter your current password to complete the password change.")
+                    // const credential = EmailAuthProvider.credential(currUser.email, password)
+                    // await reauthenticateWithCredential(this.user, credential)
                     await updatePassword(currUser, this.user.password);
                     alert("Your account password has been updated please login again with your new credentials.")
                     router.push('/login')
@@ -238,7 +251,15 @@ export default {
                 const db = getFirestore();
                 const userDocRef = doc(db, "users", user.uid);
 
+                
                 try {
+                    // Reauth user before deleteUser is called
+                    // this.reauthenticateUser(user, "Please enter your password to delete your account.")
+                    const password = prompt("Enter your password to delete your account.")
+                    const credential = EmailAuthProvider.credential(user.email, password)
+                    await reauthenticateWithCredential(user, credential)
+
+
                     // Delete user data from Firestore
                     await deleteDoc(userDocRef);
 
@@ -250,7 +271,7 @@ export default {
                 } catch (error) {
                     console.error("Error deleting user account:", error.message);
                     // Handle error appropriately, e.g., show error message to the user
-                    alert("An error occurred while deleting your account. Please try again later.");
+                    alert("Error re-authenticating user, please check your password and try again.");
                 }
             } else {
                 // User is not signed in, handle this case accordingly
