@@ -394,6 +394,7 @@ import { firebaseapp } from '../main'
         text: notesText
       });
       console.log('New note added successfully.');
+      alert('Note saved successfully!');
     }
   } catch (error) {
     console.error('Error saving notes:', error);
