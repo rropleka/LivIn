@@ -277,6 +277,7 @@
             console.log("qsempty2" + querySnapshot2.empty);
             this.loadPack.reviewText.pop();
             let i = 0;
+            if (!this.loadPack.hasReviewed) { i = 1 }
             querySnapshot2.forEach((doc) => {
                 console.log("in qs2 loop");
                 const reviewId = doc.id; // ID for reporting reviews
@@ -313,6 +314,7 @@
                     userList?.appendChild(userItem);
                 }
             });
+            i = 0;
             //end old
             const querySnapshot3 = await getDocs(query(collection(db, 'users'), where('username', '==', ownername)));
             console.log("qs3size: " + querySnapshot3.size);
@@ -336,6 +338,7 @@
             const querySnapshot4 = await getDocs(query(collection(db, 'lenderReviews'), where('owner', '==', ownername)));
             console.log("qsempty2" + querySnapshot4.empty);
             this.cloadPack.reviewText.pop();
+            if (!this.cloadPack.hasReviewed) { i = 1 }
             querySnapshot4.forEach((doc) => {
                 console.log("in qs2 loop");
                 const reviewId = doc.id;
@@ -360,7 +363,7 @@
                     userItem.appendChild(document.createElement('br'));
                     userItem.appendChild(document.createElement('br'));
                 }
-                i++; // Only show report button for reviews no of the current user
+                i++; // Only show report button for reviews not of the current user
                 if (data.username == username) {
                     this.cloadPack.myReview = data.reviewText;
                     this.cloadPack.myRating = data.stars;
