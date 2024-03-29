@@ -267,6 +267,7 @@ export default {
                     await deleteUser(user);
 
                     // Redirect to the login page or any other desired destination
+                    store.dispatch('logoutUser')
                     router.push('/login');
                 } catch (error) {
                     console.error("Error deleting user account:", error.message);
