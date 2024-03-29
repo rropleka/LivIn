@@ -487,6 +487,7 @@
                         text: notesText
                     });
                     console.log('New note added successfully.');
+                    alert('Note saved successfully!');
                 }
             }
             catch (error) {
