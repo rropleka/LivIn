@@ -54,7 +54,8 @@
                             class: userDoc.data().class,
                             aboutme: userDoc.data().aboutme,
                             contactinfo: userDoc.data().contactinfo,
-                            preferences: userDoc.data().preferences
+                            preferences: userDoc.data().preferences,
+                            habits: userDoc.data().habits,
                         };
                         // Dispatch the loginUser action to update the store
                         store.dispatch('loginUser', user);
