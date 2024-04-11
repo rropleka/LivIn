@@ -287,7 +287,6 @@
             <button v-if="!isInfoEditable" @click.prevent="toggleInfoEditable" class="block mb-2 text-sm font-medium text-gray-900"> Edit info</button>
             <button v-if="isInfoEditable" @click.prevent="cancelInfoEditable" class="block mb-2 text-sm font-medium text-gray-900">Cancel</button>
             <button type="submit" v-if="isInfoEditable" class="block mb-2 text-sm font-medium text-gray-900">Save Changes</button>
-
         </form>
         </div>
 </template>

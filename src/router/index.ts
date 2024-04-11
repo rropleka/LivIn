@@ -157,6 +157,11 @@ const router = createRouter({
       path:'/lists',
       name: 'lists',
       component: () => import('../views/ListsPage.vue')
+    },
+    {
+      path:'/roommates',
+      name: 'roommates',
+      component: () => import('../views/find-roommates.vue')
     }
   ]
 })
