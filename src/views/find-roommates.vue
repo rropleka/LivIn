@@ -1,7 +1,8 @@
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
+import { useStore } from 'vuex'
 
 export default {
     async setup() {
@@ -9,6 +10,9 @@ export default {
         const db = getFirestore(firebaseapp)
         const users = ref([])
         let userdb = []
+
+        const store = useStore()
+        const user = computed(() => store.getters.currentUser)
 
         try {
             userdb = collection(db, "users")
@@ -28,9 +32,69 @@ export default {
                     class: doc.data().class,
                     age: doc.data().age,
                     gender: doc.data().gender,
+                    habits: doc.data().habits,
+                    preferences: doc.data().preferences
                 })
             }
         })
+
+        users.value.sort(comparePref)
+
+        function comparePref(user1, user2) {
+            let score1 = 0
+            let score2 = 0
+
+            if (user1.habits !== undefined && user1.preferences !== undefined) {
+                score1 = getScore(user1)
+            } else {
+                score1 = -1
+            }
+
+            if (user2.habits !== undefined && user2.preferences !== undefined) {
+                score2 = getScore(user2)
+            } else {
+                score2 = -1
+            }
+            
+            return score2 - score1
+        }
+
+        function getScore(user1) {
+            let score = 0
+            if (user.value.preferences[0] === 'No' && user1.habits[0] === 'No') { //smoking
+                score += 1
+            }
+
+            if (user.value.preferences[1] === 'No' && user1.habits[1] === 'No') { //late sleep
+                score += 1
+            }
+
+            if (user.value.preferences[2] === 'No' && user1.habits[2] === 'No') { //study habits
+                score += 1
+            }
+
+            if (user.value.preferences[3] === 'No' && user1.habits[3] === 'No') { //party
+                score += 1
+            }
+
+            if (user.value.habits[4] !== 'None' && user1.preferences[4] === 'Yes') { //following a diet
+                score += 10 //higher weight
+            }
+
+            if (user.value.preferences[5] === 'No' && user1.habits[5] === 'No') { //drinking
+                score += 1
+            }
+
+            if (user.value.preferences[6] === 'No' && user1.habits[6] === 'No') { //S.O. over
+                score += 1
+            }
+
+            if (user.value.preferences[7] === 'No' && user1.habits[7] === 'No') { //noisiness
+                score += 1
+            }
+
+            return score
+        }
 
         async function filterUsers() {
             
