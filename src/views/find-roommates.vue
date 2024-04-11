@@ -56,7 +56,7 @@ export default {
     <div class="grid grid-cols-4 p-6 result-cont-height">
         <div class="h-0"></div>
         <div class="col-span-2 result-cont-height">
-            <p class="text-lg font-medium text-gray-900 mb-2">Search results</p>
+            <p class="text-lg font-medium text-gray-900 mb-2">Suggested roommates</p>
             <div class="overflow-hidden overflow-y-auto border-2 p-4 border-dark-orange rounded-lg max-result-height">
                 <div v-for="user in users" :key="user.username" class="flex flex-row justify-between px-4 py-2 my-2 border-2 border-orange-200 shadow-md rounded-md">
                     <div class="flex flex-col">
