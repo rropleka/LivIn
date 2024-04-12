@@ -98,7 +98,7 @@ export default {
             if (user.value.preferences[7] === 'No' && user1.habits[7] === 'No') { //noisiness
                 score += 1
             }
-
+            
             return score
         }
 
