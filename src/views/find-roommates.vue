@@ -6,13 +6,18 @@ import { useStore } from 'vuex'
 
 export default {
     async setup() {
+        const store = useStore()
+        const user = computed(() => store.getters.currentUser)
+        
+        const hasReqs = ref(
+            computed(() => user.value.preferences !== undefined && user.value.habits !== undefined)
+        )
+
         const search = ref('')
         const db = getFirestore(firebaseapp)
         const users = ref([])
         let userdb = []
 
-        const store = useStore()
-        const user = computed(() => store.getters.currentUser)
 
         try {
             userdb = collection(db, "users")
@@ -21,24 +26,25 @@ export default {
         }
         
         users.value = []
-        const q = query(userdb, where("accountPrivacy", "==", "public"))
-        const qSnapshot = await getDocs(q)
-        qSnapshot.forEach((doc) => {
-            if (doc.data().userType != "sitemoderator")
-            {
-                users.value.push({
-                    username: doc.data().username,
-                    name: doc.data().name,
-                    class: doc.data().class,
-                    age: doc.data().age,
-                    gender: doc.data().gender,
-                    habits: doc.data().habits,
-                    preferences: doc.data().preferences
-                })
-            }
-        })
-
-        users.value.sort(comparePref)
+        if (hasReqs.value) {
+            const q = query(userdb, where("accountPrivacy", "==", "public"))
+            const qSnapshot = await getDocs(q)
+            qSnapshot.forEach((doc) => {
+                if (doc.data().userType != "sitemoderator" && doc.data().username != user.value.username)
+                {
+                    users.value.push({
+                        username: doc.data().username,
+                        name: doc.data().name,
+                        class: doc.data().class,
+                        age: doc.data().age,
+                        gender: doc.data().gender,
+                        habits: doc.data().habits,
+                        preferences: doc.data().preferences
+                    })
+                }
+            })
+            users.value.sort(comparePref)
+        }
 
         function comparePref(user1, user2) {
             let score1 = 0
@@ -103,21 +109,22 @@ export default {
         return {
             search,
             users,
-            filterUsers
+            filterUsers,
+            hasReqs
         }
     }
 }
 </script>
 
 <template>
-    <div class="grid grid-cols-3 justify-center">
+    <div v-if="hasReqs" class="grid grid-cols-3 justify-center">
         <div></div>
         <form class="py-4" @submit.prevent="filterUsers()">
             <button type="submit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-4 py-2">Apply</button>
         </form>
     </div>
 
-    <div class="grid grid-cols-4 p-6 result-cont-height">
+    <div v-if="hasReqs" class="grid grid-cols-4 p-6 result-cont-height">
         <div class="h-0"></div>
         <div class="col-span-2 result-cont-height">
             <p class="text-lg font-medium text-gray-900 mb-2">Suggested roommates</p>
@@ -137,6 +144,10 @@ export default {
                 </div>
             </div>
         </div>
+    </div>
+    <div v-else class="grid grid-cols-4 p-6">
+        <div></div>
+        <p class="col-span-2 text-lg text-center font-medium text-gray-900">Please fill out your roommate preferences and habits in the preferences tab</p>
     </div>
 </template>
 
