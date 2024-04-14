@@ -287,7 +287,6 @@
             <button v-if="!isInfoEditable" @click.prevent="toggleInfoEditable" class="block mb-2 text-sm font-medium text-gray-900"> Edit info</button>
             <button v-if="isInfoEditable" @click.prevent="cancelInfoEditable" class="block mb-2 text-sm font-medium text-gray-900">Cancel</button>
             <button type="submit" v-if="isInfoEditable" class="block mb-2 text-sm font-medium text-gray-900">Save Changes</button>
-
         </form>
         </div>
 </template>
@@ -295,7 +294,7 @@
 <script>
 import { useStore } from 'vuex'
 import { ref, computed } from 'vue'
-import { getFirestore, collection, doc, getDoc, setDoc, deleteDoc, updateDoc, where, getDocs, query } from 'firebase/firestore/lite'
+import { getFirestore, collection, doc, updateDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
 import store from '@/stores/auth/store'
 
@@ -353,13 +352,7 @@ export default {
             store.dispatch('loginUser', this.user);
             const db = getFirestore(firebaseapp)
             const userDocRef = doc(collection(db, 'users'), this.user.uid);
-            await setDoc(userDocRef, {
-                username: this.user.username,
-                age: this.user.age,
-                gender: this.user.gender,
-                class: this.user.class,
-                aboutme: this.user.aboutme,
-                contactinfo: this.user.contactinfo,
+            await updateDoc(userDocRef, {
                 preferences: this.user.preferences,
                 habits: this.user.habits
             });
