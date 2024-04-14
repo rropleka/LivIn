@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return{
-      drag: false
+      drag: true
     }
   }
 }
@@ -30,8 +30,7 @@ export default {
 <template>
 	<draggable 
 		v-model="list" 
-		@start="drag=true" 
-		@end="drag=false" 
+		:disabled="!drag"
 		@change="console.log(list)"
 		item-key="id">
 		<template #item="{element}">
