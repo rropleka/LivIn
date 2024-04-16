@@ -16,15 +16,36 @@ export default {
 
 		const drag = ref(false)
 
+		let templist = []
+
 		function changeEdit() {
+			templist = []
+			list.value.forEach((element) => {
+				templist.push(element)
+			})
 			drag.value = !(drag.value)
-			console.log(drag.value)
+			console.log(list.value)
+		}
+
+		function cancelEdit() {
+			list.value = []
+			templist.forEach((element) => {
+				list.value.push(element)
+			})
+			drag.value = !(drag.value)
+			console.log(list.value)
+		}
+
+		function saveEdit() {
+			drag.value = !(drag.value)
 		}
 
 		return {
 			list,
 			drag,
-			changeEdit
+			changeEdit,
+			cancelEdit,
+			saveEdit
 		}
 	}
 }
@@ -38,6 +59,7 @@ export default {
 		<draggable 
 			v-model="list" 
 			:disabled="!drag"
+			:key="list"
 			item-key="id"
 			class="col-span-3">
 			<template #item="{element}">
@@ -61,8 +83,14 @@ export default {
 				</div>
 			</template>
 			<template #header>
-				<button @click="changeEdit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-4 py-2">
+				<button v-if="!drag" @click="changeEdit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-4 py-2">
 					Edit
+				</button>
+				<button v-if="drag" @click="cancelEdit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-4 py-2">
+					Cancel
+				</button>
+				<button v-if="drag" @click="saveEdit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-4 py-2">
+					Save
 				</button>
 			</template>
 		</draggable>
