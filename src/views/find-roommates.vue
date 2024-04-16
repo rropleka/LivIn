@@ -1,6 +1,6 @@
 <script>
 import { ref, computed } from 'vue'
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore/lite'
+import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
 import { useStore } from 'vuex'
 
@@ -18,6 +18,7 @@ export default {
         const users = ref([])
         let userdb = []
 
+        const added = ref(false)
 
         try {
             userdb = collection(db, "users")
@@ -106,10 +107,25 @@ export default {
             
         }
 
+        async function addFavorite(user) {
+            const favdb = collection(db, "fav-users")
+            const favUser = {
+                username: user.username,
+                owner: store.getters.currentUser.username,
+            }
+            await addDoc(favdb, favUser)
+            added.value = true
+            setTimeout(() => {
+                added.value = false
+            }, 800)
+        }
+
         return {
             search,
             users,
             filterUsers,
+            addFavorite,
+            added,
             hasReqs
         }
     }
@@ -136,13 +152,19 @@ export default {
                         <p class="text-lg font-medium text-gray-900">Class: {{ user.class }}</p>
                         <p class="text-lg font-medium text-gray-900">Gender: {{ user.gender }}</p>
                     </div>
-                    <button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
-                        <router-link :to="{ name: 'user-page', params: { username: user.username } }">
-                            View
-                        </router-link>
-                    </button>
+                    <div class="flex flex-col justify-center">
+                        <button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+                            <router-link :to="{ name: 'user-page', params: { username: user.username } }">
+                                View
+                            </router-link>
+                        </button>
+                        <button @click="addFavorite(user)" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+                            Favorite
+                        </button>
+                    </div>
                 </div>
             </div>
+            <span v-if="added" class="text-lg font-medium text-gray-900 m-2">User added to favorites!</span>
         </div>
     </div>
     <div v-else class="grid grid-cols-4 p-6">
