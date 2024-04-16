@@ -113,6 +113,14 @@ export default {
                 username: user.username,
                 owner: store.getters.currentUser.username,
             }
+
+            // check if exists
+            const q = query(collection(db, "fav-users"), where("username", "==", favUser.username), where("owner", "==", favUser.owner));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                return
+            }
+
             await addDoc(favdb, favUser)
             added.value = true
             setTimeout(() => {
