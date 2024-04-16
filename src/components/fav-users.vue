@@ -1,8 +1,8 @@
 <script>
-	import draggable from "vuedraggable"
-	import { ref } from "vue"
+import draggable from "vuedraggable"
+import { ref } from "vue"
 
-	export default {
+export default {
 	components: {
 		draggable,
 	},
@@ -14,13 +14,17 @@
 		{ id: 4, name: "Doe", age: 23, class: 4, gender: 'female', username: 'doe2'}
 		])
 
+		const drag = ref(false)
+
+		function changeEdit() {
+			drag.value = !(drag.value)
+			console.log(drag.value)
+		}
+
 		return {
 			list,
-		}
-	},
-	data() {
-		return{
-			drag: true
+			drag,
+			changeEdit
 		}
 	}
 }
@@ -55,6 +59,11 @@
 						</button>
 					</div>
 				</div>
+			</template>
+			<template #header>
+				<button @click="changeEdit" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-4 py-2">
+					Edit
+				</button>
 			</template>
 		</draggable>
 	</div>
