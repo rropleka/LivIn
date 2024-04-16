@@ -1,6 +1,6 @@
 <script>
 import router from '../router/index'
-import { getFirestore, collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore/lite'
+import { getFirestore, collection, getDocs, query, where, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../firebaseInit'
 import { getAuth } from 'firebase/auth';
 
@@ -65,7 +65,9 @@ export default {
 
                 querySnapshot.forEach(doc => {
                     if (userData.favoriteProperties && userData.favoriteProperties[doc.id]) {
-                        listingsArray.push(doc.data());
+                        const propertyData = doc.data();
+                        propertyData.id = doc.id; // Add .id field with doc.id
+                        listingsArray.push(propertyData);
                     }
                 });
 
@@ -96,6 +98,31 @@ export default {
                 return null;
             }
         },
+        async removeFromFavorites(propertyId) {
+            try {
+                const db = getFirestore(firebaseapp);
+                const auth = getAuth();
+                const currentUser = auth.currentUser;
+
+                if (!currentUser) {
+                    console.error("User is not logged in.");
+                    return;
+                }
+
+                const userDocRef = doc(db, "users", currentUser.uid);
+
+                // Remove propertyId from favoriteProperties
+                await updateDoc(userDocRef, {
+                    [`favoriteProperties.${propertyId}`]: null
+                });
+
+                console.log("Property removed from favorites successfully.");
+            } catch (error) {
+                console.error("Error removing property from favorites:", error);
+            }
+        }
+
+
     },
     computed: {
         //performs sort and pagination
@@ -169,6 +196,8 @@ button {
                                 Property Name: {{ listing.propertyName }} <br>
                                 Rating: {{ listing.rating }} <br>
                                 Price: {{ listing.rent }} <br>
+                                <button @click="removeFromFavorites(listing.id)">Remove from Favorites</button>
+
                             </div>
                         </td>
                     </tr>
