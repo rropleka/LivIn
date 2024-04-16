@@ -110,6 +110,9 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/revprop" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
 					</li>
+					<li>
+						<router-link to="/moneys" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Cost of Living</router-link>
+					</li>
           <li v-if="isLoggedIn">
               <router-link to="/lenderlist" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">List of Lenders</router-link>
             </li>
