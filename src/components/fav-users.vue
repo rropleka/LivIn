@@ -80,7 +80,7 @@ export default {
 	<div class="grid grid-cols-5 p-6">
 		<div></div>
 		<draggable 
-			v-if="favUsers.length > 0"
+			v-if="favUsers && favUsers.length > 0"
 			v-model="favUsers" 
 			:disabled="!drag"
 			:key="favUsers"
