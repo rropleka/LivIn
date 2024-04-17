@@ -1,7 +1,7 @@
 <script>
 import draggable from "vuedraggable"
 import { ref, computed } from "vue"
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore/lite'
+import { getFirestore, collection, doc, getDoc, updateDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
 import { useStore } from 'vuex'
 
@@ -14,26 +14,19 @@ export default {
         const currUser = computed(() => store.getters.currentUser)
 
         const db = getFirestore(firebaseapp)
-        const users = ref([])
         let userdb = []
 
 		try {
-			userdb = collection(db, "fav-users")
+			userdb = collection(db, "users")
 		} catch (error) {
 			console.error('Error fetching properties:', error.message)
 		}
 
-		const q = query(userdb, where("owner", "==", currUser.value.username))
-        const qSnapshot = await getDocs(q)
-		qSnapshot.forEach((doc) => {
-			users.value.push({
-				username: doc.data().username,
-				name: doc.data().name,
-				class: doc.data().class,
-				age: doc.data().age,
-				gender: doc.data().gender
-			})
-		})
+		const userdocref = await doc(userdb, currUser.value.uid)
+        const userdoc = await getDoc(userdocref)
+
+        const favUsers = ref([])
+		favUsers.value = userdoc.data().favUsers
 
 		const drag = ref(false)
 
@@ -41,28 +34,29 @@ export default {
 
 		function changeEdit() {
 			templist = []
-			users.value.forEach((element) => {
+			favUsers.value.forEach((element) => {
 				templist.push(element)
 			})
 			drag.value = !(drag.value)
-			console.log(list.value)
 		}
 
 		function cancelEdit() {
-			users.value = []
+			favUsers.value = []
 			templist.forEach((element) => {
-				list.value.push(element)
+				favUsers.value.push(element)
 			})
 			drag.value = !(drag.value)
-			console.log(list.value)
 		}
 
 		function saveEdit() {
+			updateDoc(userdocref, {
+				favUsers: favUsers.value
+			})
 			drag.value = !(drag.value)
 		}
 
 		return {
-			users,
+			favUsers,
 			drag,
 			changeEdit,
 			cancelEdit,
@@ -78,9 +72,9 @@ export default {
 	<div class="grid grid-cols-5 p-6">
 		<div></div>
 		<draggable 
-			v-model="users" 
+			v-model="favUsers" 
 			:disabled="!drag"
-			:key="users"
+			:key="favUsers"
 			item-key="username"	
 			class="col-span-3">
 			<template #item="{element}">
