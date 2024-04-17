@@ -5,6 +5,12 @@
     </div>
     <div class="property-details">
       <h2 class="property-title">{{ property.propertyName }}</h2>
+      <!-- Adding favoriting functionality -->
+      <button class="favorite-button" @click="toggleFavorite">
+          <i :class="[property.isFavorited ? 'fas fa-heart filled' : 'far fa-heart']"></i>
+          {{ false ? 'Unfavorite' : 'Favorite' }}
+      </button>
+
       <p class="property-price"> {{ property.rent }}</p>
       <!-- <p class="property-bed-bath">{{ propertyInfo.bedBath }}</p> -->
       <p class="property-location">{{ property.location }}</p>
@@ -127,7 +133,7 @@
   <script>
   import { getAuth } from "firebase/auth";
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc, setDoc } from 'firebase/firestore/lite'
   import { firebaseapp } from '../main'
   import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
   
@@ -145,6 +151,7 @@
     data() {
         return {
             property: null,
+            isPropertyFavorited: false,
             isCurrentUserOwner1: false,
             isSiteModerator: false,
             notesText: '',
@@ -220,6 +227,9 @@
         if(this.loadPack.pubInterest){document.getElementById('publicity').checked=true;}
         this.updateUsersList();
         document.getElementById("hoverbox").style.display="none";
+
+        // Load favorite button depending on this function
+        this.checkIfPropertyIsFavorited();
     },
     async beforeMount() {
         const db = getFirestore(firebaseapp);
@@ -972,7 +982,98 @@
             while (interestList && interestList.firstChild) {
               interestList.removeChild(interestList.lastChild);
             }
+          }, 
+
+
+          // Favoriting properites story here.... JASON FOCUS!!!!!!!!!!
+
+        async toggleFavorite() {
+          const db = getFirestore(firebaseapp);
+          const auth = getAuth();
+          const currentUser = auth.currentUser;
+
+          // If the user is not logged in, redirect to the login page
+          if (!currentUser) {
+            alert("You must be logged in to favorite a property.");
+            return;
           }
+
+          const userDocRef = doc(db, "users", currentUser.uid);
+
+          // Query to check if the property exists in the properties collection
+          const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', this.propertyName), where('owner', '==', this.leasingCompany)));
+
+          if (!querySnapshot.empty) {
+            // Property found, get the document ID
+            const propertyDocId = querySnapshot.docs[0].id;
+
+            // Get the existing user document data
+            const userDocSnap = await getDoc(userDocRef);
+            const userData = userDocSnap.data();
+
+            // Update user's favoriteProperties field with the property document ID
+            const updatedFavoriteProperties = {
+              ...(userData.favoriteProperties || {}),
+              [propertyDocId]: true
+            };
+
+            // Remove the property if it already exists in the favoriteProperties field
+            if (userData.favoriteProperties && userData.favoriteProperties[propertyDocId]) {
+              delete updatedFavoriteProperties[propertyDocId];
+            }
+
+            // Update the user document with the modified favoriteProperties field
+            try {
+              await setDoc(userDocRef, { favoriteProperties: updatedFavoriteProperties }, { merge: true });
+              console.log("Property favorite status updated successfully!");
+            } catch (error) {
+                console.error("Error updating property favorite status: ", error);
+            }
+          } else {
+            console.log("Property not found in the database.");
+          }
+          alert("Property added to your favorites!")
+        },
+
+
+
+
+          async checkIfPropertyIsFavorited() {
+            const db = getFirestore(firebaseapp);
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+
+            // If the user is not logged in, redirect to the login page
+            if (!currentUser) {
+              this.isPropertyFavorited = false
+              return;
+            }
+
+            const userDocRef = doc(db, "users", currentUser.uid);
+            const favoritePropertiesRef = collection(db, "users", currentUser.uid, "favoriteProperties");
+
+            const userDocSnap = await getDoc(userDocRef)
+
+            // Query to check if the property exists in the properties collection
+            const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', this.propertyName), where('owner', '==', this.leasingCompany)));
+
+            if (!querySnapshot.empty) {
+              // Property found, get the document ID
+              const propertyDocId = querySnapshot.docs[0].id;
+              try {
+                const favoriteDocSnap = await getDoc(doc(favoritePropertiesRef, propertyDocId));
+                this.isPropertyFavorited = favoriteDocSnap.exists;
+              } catch (error) {
+                console.error("Error checking if property is favorited: ", error);
+              } 
+            }
+          }
+
+
+
+
+
+
   },
     components: { ConfirmationDialog }
 
