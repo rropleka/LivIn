@@ -115,6 +115,7 @@ export default {
                 await updateDoc(userDocRef, {
                     [`favoriteProperties.${propertyId}`]: null
                 });
+                window.location.reload();
 
                 console.log("Property removed from favorites successfully.");
             } catch (error) {

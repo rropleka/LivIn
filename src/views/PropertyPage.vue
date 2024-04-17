@@ -1032,6 +1032,7 @@
           } else {
             console.log("Property not found in the database.");
           }
+          alert("Property added to your favorites!")
         },
 
 
