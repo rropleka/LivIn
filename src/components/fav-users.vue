@@ -55,12 +55,21 @@ export default {
 			drag.value = !(drag.value)
 		}
 
+		function removeUser(favUser) {
+			const idx = favUsers.value.indexOf(favUser)
+			favUsers.value.splice(idx, 1)
+			updateDoc(userdocref, {
+				favUsers: favUsers.value
+			})
+		}
+
 		return {
 			favUsers,
 			drag,
 			changeEdit,
 			cancelEdit,
-			saveEdit
+			saveEdit,
+			removeUser
 		}
 	}
 }
@@ -91,7 +100,7 @@ export default {
 								View
 							</router-link>
 						</button>
-						<button class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
+						<button @click="removeUser(element)" class="text-white bg-light-orange hover:bg-dark-orange font-medium rounded-lg text-sm px-8 py-2">
 							Remove
 						</button>
 					</div>
