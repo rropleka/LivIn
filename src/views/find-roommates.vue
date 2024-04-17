@@ -1,6 +1,6 @@
 <script>
 import { ref, computed } from 'vue'
-import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore/lite'
+import { getFirestore, collection, query, where, getDocs, getDoc, doc, updateDoc } from 'firebase/firestore/lite'
 import { firebaseapp } from '../main'
 import { useStore } from 'vuex'
 
@@ -107,21 +107,25 @@ export default {
             
         }
 
-        async function addFavorite(user) {
-            const favdb = collection(db, "fav-users")
-            const favUser = {
-                username: user.username,
-                owner: store.getters.currentUser.username,
+        async function addFavorite(newFavUser) {
+            const usercoll = collection(db, "users")
+            const userdocref = await doc(usercoll, user.value.uid)
+            const userdoc = await getDoc(userdocref)
+
+            let favList = userdoc.data().favUsers
+            if (favList === undefined) {
+                favList = []
             }
 
-            // check if exists
-            const q = query(collection(db, "fav-users"), where("username", "==", favUser.username), where("owner", "==", favUser.owner));
-            const querySnapshot = await getDocs(q);
-            if (!querySnapshot.empty) {
+            if (favList.includes(newFavUser.username)) {
                 return
             }
 
-            await addDoc(favdb, favUser)
+            favList.push(newFavUser.username)
+            await updateDoc(userdocref, {
+                favUsers: favList
+            })
+            
             added.value = true
             setTimeout(() => {
                 added.value = false

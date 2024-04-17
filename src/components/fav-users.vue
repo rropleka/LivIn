@@ -1,18 +1,39 @@
 <script>
 import draggable from "vuedraggable"
-import { ref } from "vue"
+import { ref, computed } from "vue"
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore/lite'
+import { firebaseapp } from '../main'
+import { useStore } from 'vuex'
 
 export default {
 	components: {
 		draggable,
 	},
-	setup() {
-		const list = ref([
-		{ id: 1, name: "John", age: 20, class: 3, gender: 'male', username: 'john_doe'},
-		{ id: 2, name: "Doe", age: 21, class: 2, gender: 'male', username: 'jdoe'},
-		{ id: 3, name: "Jane", age: 22, class: 1, gender: 'female', username: 'jane_doe'},
-		{ id: 4, name: "Doe", age: 23, class: 4, gender: 'female', username: 'doe2'}
-		])
+	async setup() {
+		const store = useStore()
+        const currUser = computed(() => store.getters.currentUser)
+
+        const db = getFirestore(firebaseapp)
+        const users = ref([])
+        let userdb = []
+
+		try {
+			userdb = collection(db, "fav-users")
+		} catch (error) {
+			console.error('Error fetching properties:', error.message)
+		}
+
+		const q = query(userdb, where("owner", "==", currUser.value.username))
+        const qSnapshot = await getDocs(q)
+		qSnapshot.forEach((doc) => {
+			users.value.push({
+				username: doc.data().username,
+				name: doc.data().name,
+				class: doc.data().class,
+				age: doc.data().age,
+				gender: doc.data().gender
+			})
+		})
 
 		const drag = ref(false)
 
@@ -20,7 +41,7 @@ export default {
 
 		function changeEdit() {
 			templist = []
-			list.value.forEach((element) => {
+			users.value.forEach((element) => {
 				templist.push(element)
 			})
 			drag.value = !(drag.value)
@@ -28,7 +49,7 @@ export default {
 		}
 
 		function cancelEdit() {
-			list.value = []
+			users.value = []
 			templist.forEach((element) => {
 				list.value.push(element)
 			})
@@ -41,7 +62,7 @@ export default {
 		}
 
 		return {
-			list,
+			users,
 			drag,
 			changeEdit,
 			cancelEdit,
@@ -57,10 +78,10 @@ export default {
 	<div class="grid grid-cols-5 p-6">
 		<div></div>
 		<draggable 
-			v-model="list" 
+			v-model="users" 
 			:disabled="!drag"
-			:key="list"
-			item-key="id"
+			:key="users"
+			item-key="username"	
 			class="col-span-3">
 			<template #item="{element}">
 				<div class=" flex flex-row justify-between px-4 py-2 my-2 border-2 border-orange-200 shadow-md rounded-md">
