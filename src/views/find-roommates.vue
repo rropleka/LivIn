@@ -19,6 +19,7 @@ export default {
         let userdb = []
 
         const added = ref(false)
+        const alradded = ref(false)
 
         try {
             userdb = collection(db, "users")
@@ -116,12 +117,24 @@ export default {
             if (favList === undefined) {
                 favList = []
             }
-
-            if (favList.includes(newFavUser.username)) {
-                return
+            
+            for (let i = 0; i < favList.length; i++) {
+                if (favList[i].username === newFavUser.username) {
+                    alradded.value = true
+                    setTimeout(() => {
+                        alradded.value = false
+                    }, 800)
+                    return
+                }
             }
 
-            favList.push(newFavUser.username)
+            favList.push({
+                username: newFavUser.username,
+                name: newFavUser.name,
+                class: newFavUser.class,
+                age: newFavUser.age,
+                gender: newFavUser.gender
+            })
             await updateDoc(userdocref, {
                 favUsers: favList
             })
@@ -138,6 +151,7 @@ export default {
             filterUsers,
             addFavorite,
             added,
+            alradded,
             hasReqs
         }
     }
@@ -177,6 +191,7 @@ export default {
                 </div>
             </div>
             <span v-if="added" class="text-lg font-medium text-gray-900 m-2">User added to favorites!</span>
+            <span v-if="alradded" class="text-lg font-medium text-gray-900 m-2">User already in favorites!</span>
         </div>
     </div>
     <div v-else class="grid grid-cols-4 p-6">
