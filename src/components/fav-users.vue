@@ -31,7 +31,6 @@ export default {
 		const drag = ref(false)
 
 		let templist = []
-
 		function changeEdit() {
 			templist = []
 			favUsers.value.forEach((element) => {
@@ -81,13 +80,14 @@ export default {
 	<div class="grid grid-cols-5 p-6">
 		<div></div>
 		<draggable 
+			v-if="favUsers.length > 0"
 			v-model="favUsers" 
 			:disabled="!drag"
 			:key="favUsers"
 			item-key="username"	
 			class="col-span-3">
 			<template #item="{element}">
-				<div class=" flex flex-row justify-between px-4 py-2 my-2 border-2 border-orange-200 shadow-md rounded-md">
+				<div class="flex flex-row justify-between px-4 py-2 my-2 border-2 border-orange-200 shadow-md rounded-md">
 					<div class="flex flex-col">
 						<p class="text-lg font-medium text-gray-900">{{ element.name }}</p>
 						<p class="text-lg font-medium text-gray-900">Age: {{ element.age }} </p>
@@ -118,5 +118,6 @@ export default {
 				</button>
 			</template>
 		</draggable>
+		<p v-else class="col-span-3 text-lg text-center font-medium text-gray-900">No favorite users</p>
 	</div>
 </template>
