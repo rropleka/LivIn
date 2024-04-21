@@ -9,7 +9,6 @@
             const store = useStore();
 			const isLoggedIn = computed(() => store.getters.isLoggedIn);
 			const currentUser = computed(() => store.getters.currUserCopy).value; 
-			// console.log("currUserCopy", currentUser)
 			
 			const isModerator = ref(false)
             const isLeasingCompany = ref(true);
@@ -37,7 +36,7 @@
 					/* Set moderator flag to allow delete button to appear */
 					if (userDocSnap.exists()) {
 						const userData = userDocSnap.data();
-						console.log(userData);
+						//console.log(userData);
 						if (userData.userType) {
 							if (userData.userType == "sitemoderator") {
 								isModerator.value = true
@@ -58,8 +57,8 @@
 			// Call fetchModeratorStatus when the component is mounted
 		onMounted(async () => {
 			await fetchModeratorStatus();
-			console.log("isModerator", isModerator)
-			console.log("isLoggedIn", isLoggedIn)
+			//console.log("isModerator", isModerator)
+			//console.log("isLoggedIn", isLoggedIn)
 		});
 			// console.log("isModerator",isModerator)
 
