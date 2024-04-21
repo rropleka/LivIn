@@ -59,11 +59,11 @@ const router = createRouter({
       name: 'post-sublease',
       component: () => import('../views/PostSublease.vue')
     },
-    // {
-    //   path: '/:leasingCompany/:PropertyName',
-    //   name: 'property-page',
-    //   component: PropertyPage
-    // },
+    {
+      path: '/favorite-properties',
+      name: 'favorite-properties',
+      component: () => import('../views/FavoriteProperties.vue')
+    },
     {
       path: '/:leasingCompany?/:PropertyName?',
       name: 'property-page',
