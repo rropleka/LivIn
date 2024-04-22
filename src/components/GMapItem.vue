@@ -235,6 +235,39 @@
         }
 
       },
+      filterByHotspotLocation:function(proximity, hotspotPosition) {
+        let latitude;
+        let longitude;
+        console.log(hotspotPosition);
+        let commaIndex;
+        let longIndex;
+        commaIndex = hotspotPosition.indexOf(",");
+        longIndex = hotspotPosition.indexOf("lng");
+        latitude  = parseFloat(hotspotPosition.substring(9, commaIndex));
+        longitude = parseFloat(hotspotPosition.substring(longIndex + 5, hotspotPosition.length - 1));
+        console.log("Lat: " + latitude);
+        console.log("Long: " + longitude);
+        let propertyLat;
+        let propertyLong;
+        let distance;
+        
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            console.log(this.properties[index].position);
+            propertyLat = this.properties[index].position.lat;
+            propertyLong = this.properties[index].position.lng;
+
+            distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+            console.log("Distance: " + distance);
+            if (distance >= proximity) {
+              this.properties.splice(index, 1);
+            }
+
+          }
+          
+        }
+
+      },
       //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
       //calculates distance in km between two coordinates
        haversineDistanceBetweenPoints: function(lat1, lon1, lat2, lon2) {
@@ -372,7 +405,13 @@
     @contextmenu="onMapRightClick"
     :zoom="15">
 
-    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
+    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position">
+      <InfoWindow>
+        <div class="infoWindow">
+          {{ hotspot.position }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
     <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position">
       <InfoWindow>
         <div class="infoWindow">

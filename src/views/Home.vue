@@ -67,7 +67,7 @@ hotspotsSnapshot.forEach((doc) => {
          filterByHotspotLocationButton() {
           var dropdown = document.getElementById("hotspotFilter");
           var hotspotPosition = dropdown.options[dropdown.selectedIndex].text;
-          this.$refs.GMapItem.filterByHotspotLocation(document.getElementById("hotspotFilter").value, hotspotPosition);
+          this.$refs.GMapItem.filterByHotspotLocation(document.getElementById("proximityFilter").value, hotspotPosition);
          },
       },
     })
