@@ -33,6 +33,22 @@ favoritesSnapshot.forEach((doc) => {
     console.log("Misformatted favorite, skipping");
   }
 })
+
+const hotspotsSnapshot = await getDocs(query(collection(db, 'hotspots')));
+let hotspots: Array<object> = [];
+hotspotsSnapshot.forEach((doc) => {
+  try {
+    const data = doc.data();
+    const coords = JSON.parse(data.coords);
+    hotspots.push({
+      position: coords,
+    });
+  } catch (error) {
+    console.log("Misformatted hotspot, skipping");
+  }
+
+})
+
 </script>
 
 <script lang="ts">
@@ -47,6 +63,11 @@ favoritesSnapshot.forEach((doc) => {
           var dropdown = document.getElementById("favoriteFilter");
           var favoritePosition = dropdown.options[dropdown.selectedIndex].text;
           this.$refs.GMapItem.filterByFavoriteLocation(document.getElementById("proximityFilter").value, favoritePosition);
+         },
+         filterByHotspotLocationButton() {
+          var dropdown = document.getElementById("hotspotFilter");
+          var hotspotPosition = dropdown.options[dropdown.selectedIndex].text;
+          this.$refs.GMapItem.filterByHotspotLocation(document.getElementById("hotspotFilter").value, hotspotPosition);
          },
       },
     })
@@ -69,6 +90,13 @@ favoritesSnapshot.forEach((doc) => {
               <option value="" disabled selected hidden>Select a Favorite Location</option>
               <option v-for="favorite in favorites" :value="favorite.position" :key="favorite.position">
                 {{ favorite.position }}
+              </option>
+            </select>
+            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByHotspotLocationButton()">Filter by Hotspot Location</button>
+            <select id="hotspotFilter" style="color: black; width: 250px; float: top;">
+              <option value="" disabled selected hidden>Select a Hotspot Location</option>
+              <option v-for="hotspot in hotspots" :value="hotspot.position" :key="hotspot.position">
+                {{ hotspot.position }}
               </option>
             </select>
           </div>
