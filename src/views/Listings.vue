@@ -45,6 +45,9 @@
             setPageSize:function(event) {
                 this.pageSize = event.target.value;
             },
+            goToPropertyPage:function(propertyURL) {
+                router.push({ path: propertyURL });
+            },
             //return all listings in an array
             async getListings() {
                 try {
@@ -149,7 +152,9 @@
                         Property Name: {{ listing.propertyName }} <br>
                         Rating: {{ listing.rating }} <br>
                         Price: {{ listing.rent }} <br>
+                        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="goToPropertyPage('/' + property.owner + '/' + property.propertyName)">Go to Property Page</button>
                     </div>
+                    
                 </td>
             </tr>
             </tbody>
