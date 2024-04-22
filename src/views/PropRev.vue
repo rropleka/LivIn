@@ -28,6 +28,8 @@
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
           <textarea id="ta" v-model="form.text" rows="7"></textarea>
           <br>
+          <button v-if="!amIVerified" @click="amIVerified=!amIVerified">Verify</button>
+          <button v-else @click="amIVerified=!amIVerified">Verified!</button>
           <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
           <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
       </div>
@@ -63,18 +65,20 @@ import type { FirebaseApp } from 'firebase/app';
                   myReview: '',
                   myRating:-1,
                   revRef: '',
-                  isEdit:false
-                }
+                  isEdit:false,
+                  verifiedUsers: [""],
+                },
+                amIVerified: false,
 
             }
         },
         async beforeMount() {
           const db = getFirestore(firebaseapp)
-          try {
-            const propname="pname123"//replace with current property
-            const username="firstuser"
-            const ownername="owner123"
-                
+          const propname="pname123"//replace with current property
+          const username="firstuser"
+          const ownername="owner123"
+
+          try {      
             const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname), where('owner', '==', ownername)));
             //console.log(querySnapshot.size)
 
@@ -85,6 +89,7 @@ import type { FirebaseApp } from 'firebase/app';
               this.loadPack.usersReviewed=data.usersReviewed
               this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
               this.loadPack.docRef=doc.ref.path
+              this.loadPack.verifiedUsers = data?.verified
             })
 
             const userList = document.querySelector('.users');
@@ -94,9 +99,12 @@ import type { FirebaseApp } from 'firebase/app';
             querySnapshot2.forEach((doc) => {
               const data = doc.data()
               //this.loadPack.reviewText.push(data.reviewText)
+              const verified = this.loadPack?.verifiedUsers?.find(data.username)
+              const verifiedText = verified ? "(Verified)" : ""
+
               const userItem = document.createElement('li')
               userItem.innerHTML = `
-                ${data.username} says <br>
+                ${data.username} ${verifiedText} says <br>
                 ${data.reviewText} <br>
               `
               if (data.username==username) {
@@ -115,8 +123,9 @@ import type { FirebaseApp } from 'firebase/app';
                 const errorMessage = error;
                 alert(errorMessage);
             }
+            this.amIVerified = this.loadPack?.verifiedUsers?.includes(username);
           return {
-            //set data
+
           }
         },
         methods: {
