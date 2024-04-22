@@ -3,8 +3,9 @@
   import {defineComponent, normalizeProps} from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
-  import {MapMouseEvent, LatLng} from "google.maps";
+  import {MapMouseEvent, LatLng, LatLngLiteral} from "google.maps";
   import {decode} from "@googlemaps/polyline-codec";
+  import busRoutes from "@/assets/citybus-lafayette-in-us-json/organized_shapes.json";
   import { useStore } from "vuex";
   import axios from "axios";
   
@@ -24,6 +25,7 @@
         renderPolyline: false,
         formattedTravelTimes: [0, 0, 0], //driving, walking, biking
         renderTravelTimes: false,
+        busRoutes: busRoutes,
       }
     },
     async setup() {
@@ -357,6 +359,28 @@
         console.log(this.formattedTravelTimes);
 
 
+      },
+      // BUS ROUTES CODE
+      // Method to calculate polyline options for bus routes
+      busPolylineOptions(route) {
+        // Check if route is defined and is an array
+        if (!route || !Array.isArray(route)) {
+          return null; // Return null if route is not valid
+        }
+
+        // Convert each coordinate pair in the route to { lat, lng } format
+        const coordLatlngs = route.map(coord => ({ lat: coord.lat, lng: coord.lng }));
+
+        // Generate a random color for the polyline
+        const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+
+        return {
+          path: coordLatlngs,
+          geodesic: true,
+          strokeColor: randomColor,
+          strokeWeight: 2
+        };
       }
     }
   });
@@ -371,6 +395,11 @@
     @click="onMapClick"
     @contextmenu="onMapRightClick"
     :zoom="15">
+
+    <!-- Iterate over busRoutes keys and render polylines -->
+      <template v-for="(routeId, route) in busRoutes">
+        <Polyline v-if="route" :key="routeId" :options="busPolylineOptions(routeId)"/>
+      </template>
 
     <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
     <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position">
