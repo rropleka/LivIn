@@ -28,7 +28,7 @@
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
           <textarea id="ta" v-model="form.text" rows="7"></textarea>
           <br>
-          <button v-if="!amIVerified" @click="amIVerified=!amIVerified">Verify</button>
+          <button v-if="!amIVerified" @click="$router.push({path: '/verify', params: {ownername, propertyName, username}})">Verify</button>
           <button v-else @click="amIVerified=!amIVerified">Verified!</button>
           <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
           <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
@@ -69,7 +69,9 @@ import type { FirebaseApp } from 'firebase/app';
                   verifiedUsers: [""],
                 },
                 amIVerified: false,
-
+                username: "",
+                propertyName: "",
+                ownername: "",
             }
         },
         async beforeMount() {
@@ -124,8 +126,10 @@ import type { FirebaseApp } from 'firebase/app';
                 alert(errorMessage);
             }
             this.amIVerified = this.loadPack?.verifiedUsers?.includes(username);
+            this.propertyName = propname;
+            this.username = username;
+            this.ownername = ownername;
           return {
-
           }
         },
         methods: {
