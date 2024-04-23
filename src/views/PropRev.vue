@@ -28,7 +28,9 @@
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
           <textarea id="ta" v-model="form.text" rows="7"></textarea>
           <br>
-          <button v-if="!amIVerified" @click="$router.push({path: '/verify', params: {ownername, propertyName, username}})">Verify</button>
+          <router-link v-if="!amIVerified" :to=verifyRoute>
+            <button >Verify</button> 
+          </router-link>
           <button v-else @click="amIVerified=!amIVerified">Verified!</button>
           <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
           <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
@@ -37,6 +39,7 @@
 </template>
 
 <script lang="ts">
+//`/verify/${ownername}/${propertyName}/${username}`
     import {ref, type PropType} from 'vue';
     import router from '../router/index'
     import Vue from 'vue';
@@ -48,6 +51,11 @@ import type { FirebaseApp } from 'firebase/app';
     export default {
         components: {
             //starrating: StarRating
+        },
+        computed: {
+          verifyRoute() {
+            return `/verify/${this.ownername}/${this.propertyName}/${this.username}`
+          }
         },
         data() {
             return {
