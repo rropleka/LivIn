@@ -423,7 +423,7 @@
         // GENERATE BUS ROUTES AROUND CLICKED POSITION
         this.clickedPosition = position;
         this.busRoutes = this.allBusRoutes;
-        this.busRoutes = this.filterRoutesByDistance(this.busRoutes, this.clickedPosition.lat, this.clickedPosition.lng, .5)
+        this.busRoutes = this.filterRoutesByDistance(this.busRoutes, this.clickedPosition.lat, this.clickedPosition.lng, .25)
         this.getAllRouteDetails();
         this.renderRouteDetails = false;
       },
