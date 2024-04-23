@@ -25,7 +25,9 @@
         renderPolyline: false,
         formattedTravelTimes: [0, 0, 0], //driving, walking, biking
         renderTravelTimes: false,
-        busRoutes: busRoutes,
+        allBusRoutes: busRoutes, // Constant full list of routes
+        busRoutes: busRoutes,    // Routes to be manipulated
+        clickedPosition: null,
       }
     },
     async setup() {
@@ -373,15 +375,47 @@
 
         // Generate a random color for the polyline
         const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-
+        const red = '#FF0000';
 
         return {
           path: coordLatlngs,
           geodesic: true,
-          strokeColor: randomColor,
+          strokeColor: red,
           strokeWeight: 2
         };
+      },
+      filterRoutesByDistance(busRoutes, targetLat, targetLng, maxDistance) {
+        const filteredRoutes = {};
+
+        for(const routeId in busRoutes) {
+          const route = busRoutes[routeId];
+          let routeHasPointsWithinDistance = false;
+
+          for (const point of route) {
+            const distance = this.haversineDistanceBetweenPoints(point.lat, point.lng, targetLat, targetLng);
+            if (distance <= maxDistance) {
+              routeHasPointsWithinDistance = true;
+              break; // No need to check other points if one is within distance
+            }
+          }
+
+          if (routeHasPointsWithinDistance) {
+            filteredRoutes[routeId] = route;
+          }
+        }
+
+          return filteredRoutes;
+      },
+      onMarkerClick(position) {
+        // GENERATE BUS ROUTES AROUND CLICKED POSITION
+        this.clickedPosition = position;
+        this.busRoutes = this.allBusRoutes;
+        // console.log(position)
+        // console.log(position.lat)
+        this.busRoutes = this.filterRoutesByDistance(this.busRoutes, this.clickedPosition.lat, this.clickedPosition.lng, .5)
       }
+
+
     }
   });
 </script>
@@ -398,18 +432,18 @@
 
     <!-- Iterate over busRoutes keys and render polylines -->
       <template v-for="(routeId, route) in busRoutes">
-        <Polyline v-if="route" :key="routeId" :options="busPolylineOptions(routeId)"/>
+        <Polyline v-if="clickedPosition" :key="routeId" :options="busPolylineOptions(routeId)"/>
       </template>
 
-    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
-    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position">
+    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position" @click="onMarkerClick(hotspot.position)"/>
+    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position" @click="onMarkerClick(favorite.position)">
       <InfoWindow>
         <div class="infoWindow">
           {{ favorite.position }} <br>
         </div>
       </InfoWindow>
     </Marker>
-    <Marker v-for="property in properties" :options="property" :key="property.position">
+    <Marker v-for="property in properties" :options="property" :key="property.position" @click="onMarkerClick(property.position)">
       <InfoWindow>
         <div class="infoWindow">
           Property Name: {{ property.propertyName }} <br>
