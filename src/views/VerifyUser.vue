@@ -10,7 +10,9 @@
 </template>
 
 <style scoped>
-
+    button {
+        color: black;
+    }
 </style>
 
 <script lang="ts">
@@ -25,7 +27,7 @@
         },
         data() {
             return {
-                file: null,
+                file: File,
             }
         },
         methods: {
@@ -34,16 +36,22 @@
             },
             async submit() {
                 console.log(this.file);
+                if (!this.file) {
+                    return;
+                }
                 const db = getFirestore(firebaseapp);
                 const verificationRequestsRef = collection(db, "verification Requests");
                 const request = {
                     user: this.$route.params.user,
                     leasingCompany: this.$route.params.leasingCompany,
                     propertyName: this.$route.params.propertyName,
-                    file: JSON.stringify(this.file),
+                    file: await this.file.text(),
+                    filename: this.file.name,
+                    filetype: {type: this.file.type}
                 }
-                console.log(request);
-                console.log(request.file);
+                //console.log(request);
+                //console.log(request.file);
+                //console.log(await new Blob([request.file], request.filetype).text())
                 try {
                     addDoc(verificationRequestsRef, request)
                 }
