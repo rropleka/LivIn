@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version
+CityBus,https://gocitybus.com,en,20240301,20240818,2024.1.2
