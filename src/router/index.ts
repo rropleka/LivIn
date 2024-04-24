@@ -162,6 +162,11 @@ const router = createRouter({
       path:'/find-roommates',
       name: 'roommates',
       component: () => import('../views/find-roommates.vue')
+    },
+    {
+      path:'/moneys',
+      name: 'money',
+      component: () => import('../views/Moneys.vue')
     }
   ]
 })
