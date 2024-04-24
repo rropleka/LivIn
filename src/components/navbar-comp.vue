@@ -118,6 +118,9 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/favorite-properties" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Favorited Properties</router-link>
 					</li>
+					<li v-if="isLoggedIn && isModerator">
+						<router-link to="/verification-requests" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Verification Requests</router-link>
+					</li>
 				</ul>
 				</div>
 			</li>
@@ -149,6 +152,9 @@
 							</li>
 							<li v-if="isLoggedIn && isModerator">
 								<router-link to="/check-reports" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Reports</router-link>
+							</li>
+							<li v-if="isLoggedIn && isModerator">
+								<router-link to="/verification-requests" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Verification Requests</router-link>
 							</li>
 							<li>
 								<router-link to="/find-roommates" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Find Roommates</router-link>

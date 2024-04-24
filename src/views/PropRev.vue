@@ -54,7 +54,11 @@ import type { FirebaseApp } from 'firebase/app';
         },
         computed: {
           verifyRoute() {
-            return `/verify/${this.ownername}/${this.propertyName}/${this.username}`
+            if (this.ownername && this.propertyName && this.username) {
+              return `/verify/${this.ownername}/${this.propertyName}/${this.username}`
+            } else {
+              return ""
+            }
           }
         },
         data() {
@@ -94,12 +98,13 @@ import type { FirebaseApp } from 'firebase/app';
 
             querySnapshot.forEach((doc) => {
               const data = doc.data()
+              console.log(data)
               this.loadPack.totalReviews=data.totalReviews
               this.loadPack.totalScore=data.totalScore
               this.loadPack.usersReviewed=data.usersReviewed
               this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
               this.loadPack.docRef=doc.ref.path
-              this.loadPack.verifiedUsers = data?.verified
+              this.loadPack.verifiedUsers = data?.verifiedUsers
             })
 
             const userList = document.querySelector('.users');
@@ -109,14 +114,15 @@ import type { FirebaseApp } from 'firebase/app';
             querySnapshot2.forEach((doc) => {
               const data = doc.data()
               //this.loadPack.reviewText.push(data.reviewText)
-              const verified = this.loadPack?.verifiedUsers?.find(data.username)
+              const verified = this.loadPack?.verifiedUsers?.includes(data.username)
               const verifiedText = verified ? "(Verified)" : ""
 
               const userItem = document.createElement('li')
+
               userItem.innerHTML = `
-                ${data.username} ${verifiedText} says <br>
-                ${data.reviewText} <br>
+                ${data.username} ${verifiedText} says <br> ${data.reviewText} <br>
               `
+
               if (data.username==username) {
                 this.loadPack.myReview=data.reviewText
                 this.loadPack.myRating=data.stars
@@ -130,10 +136,12 @@ import type { FirebaseApp } from 'firebase/app';
             //check against selected listing to set hasReviewed
             } catch(error) {
                 // Handle any errors
+                console.log(error)
                 const errorMessage = error;
                 alert(errorMessage);
             }
             this.amIVerified = this.loadPack?.verifiedUsers?.includes(username);
+            console.log(this.amIVerified);
             this.propertyName = propname;
             this.username = username;
             this.ownername = ownername;
