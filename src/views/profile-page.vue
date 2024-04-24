@@ -3,11 +3,13 @@
 import { ref } from 'vue'
 import AccountInfo from '../components/account-info.vue'
 import Preferences from '../components/preference-page.vue'
+import favUsers from '../components/fav-users.vue'
 
 export default {
     components: {
         AccountInfo,
-        Preferences
+        Preferences,
+        favUsers
     },
     setup() {
         const page = ref(1)
@@ -50,7 +52,7 @@ export default {
                             <svg class="w-5 h-5 fill-orange-300 group-hover:fill-orange-400" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="8" cx="10" cy="10"></circle>
                             </svg>
-                            <span class="text-white text-lg ms-3">Saved Properties</span>
+                            <span class="text-white text-lg ms-3">Favorite Users</span>
                         </button>
                     </li>
                     <li>
@@ -69,6 +71,9 @@ export default {
         </div>
         <div v-else-if="page === 2" class="p-10 grow">
             <Preferences />
+        </div>
+        <div v-else-if="page === 3" class="p-10 grow">
+            <favUsers />
         </div>
     </div>
 </template>
