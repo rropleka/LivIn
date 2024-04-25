@@ -90,6 +90,7 @@
           properties.push({
             position: coords,
             propertyName: data.propertyName, 
+            address: data.address,
             icon: {
               strokeColor: "green",
               strokeWeight: 2.5,
@@ -276,6 +277,26 @@
           
         }
 
+      },
+      filterByZipcode:function(zipcode) {  
+        let currentZipcode;  
+        let address;  
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            if (this.properties[index].address) {
+              address = this.properties[index].address.trim();
+              currentZipcode = address.substring(address.length - 5);
+            } else {
+              currentZipcode = "";
+            }
+
+            if (currentZipcode != zipcode) {
+              this.properties.splice(index, 1);
+            }
+
+          }
+          
+        }
       },
       //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
       //calculates distance in km between two coordinates

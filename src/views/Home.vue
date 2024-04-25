@@ -68,6 +68,9 @@ hotspotsSnapshot.forEach((doc) => {
           var hotspotPosition = dropdown.options[dropdown.selectedIndex].text;
           this.$refs.GMapItem.filterByHotspotLocation(document.getElementById("proximityFilter").value, hotspotPosition);
          },
+         filterByZipcodeButton() {
+          this.$refs.GMapItem.filterByZipcode(document.getElementById("zipcodeFilter").value);
+         },
          goToListingsTable(propertyName) {
           this.$refs.ListingsTable.goToProperty(propertyName);
          },
@@ -94,6 +97,8 @@ hotspotsSnapshot.forEach((doc) => {
                 {{ favorite.position }}
               </option>
             </select>
+          </div>
+          <div>
             <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByHotspotLocationButton()">Filter by Hotspot Location</button>
             <select id="hotspotFilter" style="color: black; width: 250px; float: top;">
               <option value="" disabled selected hidden>Select a Hotspot Location</option>
@@ -101,6 +106,10 @@ hotspotsSnapshot.forEach((doc) => {
                 {{ hotspot.position }}
               </option>
             </select>
+          </div>
+          <div>
+            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByZipcodeButton()">Filter by Zipcode</button>
+            <input type="text" id="zipcodeFilter" style="color: black; width: 250px; float: top;" placeholder="Enter Zipcode">
           </div>
           <div class="propertiesTable">
             <listings ref="ListingsTable"></listings>
