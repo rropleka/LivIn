@@ -566,7 +566,13 @@
         <!-- <Polyline v-if="clickedPosition" :key="route" :options="busPolylineOptions(route, shapeId)" @click="showRouteDetails(shapeId)"/> -->
       </template>
 
-    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position" @click="onMarkerClick(hotspot.position)"/>
+    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position" @click="onMarkerClick(hotspot.position)">
+      <InfoWindow>
+        <div class="infoWindow">
+          {{ hotspot.position }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
     <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position" @click="onMarkerClick(favorite.position)">
       <InfoWindow>
         <div class="infoWindow">
