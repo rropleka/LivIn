@@ -429,6 +429,7 @@ if (place.latitude && place.longitude) {
                 structureDetails: structureDetails.value,
                 location: locationCoordinates.value,
                 owner: username,
+                subleaseCount: 0
             });
         } else {
                 await setDoc(propertyDocRef, {
@@ -440,6 +441,7 @@ if (place.latitude && place.longitude) {
                 structureDetails: structureDetails.value,
                 location: location.value,
                 owner: username,
+                subleaseCount: 0
             });
           }
             router.push('/');
