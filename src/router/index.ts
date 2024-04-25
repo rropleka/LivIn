@@ -59,6 +59,12 @@ const router = createRouter({
       name: 'post-sublease',
       component: () => import('../views/PostSublease.vue')
     },
+    {
+      path: '/subleases',
+      name: 'subleases',
+      component: () => import('../views/Subleases.vue')
+    },
+    
     // {
     //   path: '/:leasingCompany/:PropertyName',
     //   name: 'property-page',

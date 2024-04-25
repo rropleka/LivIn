@@ -31,6 +31,8 @@
       <button v-if="isCurrentUserOwner1 || isSiteModerator" class="remove-property-button" @click="removeProperty">Remove Property</button>
       <button v-if="isCurrentUserOwner1" class="edit-property-button" @click="editProperty">Edit Property</button>
       <button class="post-sublease-button" @click="postSublease">Post Sublease</button>
+  <h2 v-if="hasSublease">You have a sublease on this property</h2>
+  <button v-if="hasSublease" @click="confirmDeleteSublease">Delete Sublease</button>
       <hr>
       <p class="amenities-title">Amenities:</p>
       <div class="amenities-list">
@@ -127,7 +129,7 @@
   <script>
   import { getAuth } from "firebase/auth";
   import router from '../router/index'
-  import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc } from 'firebase/firestore/lite'
+  import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc, setDoc } from 'firebase/firestore/lite'
   import { firebaseapp } from '../main'
   import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
   
@@ -145,6 +147,7 @@
     data() {
         return {
             property: null,
+            hasSublease: false, // Add this property to track sublease status
             isCurrentUserOwner1: false,
             isSiteModerator: false,
             notesText: '',
@@ -216,6 +219,14 @@
             console.error("Error fetching property data:", error);
             router.push({ name: 'not-found' });
         }
+        try {
+      const subleaseExists = await this.checkSubleaseExists();
+      this.hasSublease = subleaseExists;
+      console.log("hasSublease", this.hasSublease);
+    } catch (error) {
+      console.error('Error checking sublease:', error);
+      // Handle the error appropriately, such as setting this.hasSublease = false
+    }
         if(this.loadPack.interest){document.getElementById('interest').checked=true;}
         if(this.loadPack.pubInterest){document.getElementById('publicity').checked=true;}
         this.updateUsersList();
@@ -554,6 +565,71 @@
                 });
             }
         },
+        async confirmDeleteSublease() {
+      const confirmed = window.confirm('Are you sure you want to delete this sublease?');
+  if (confirmed) {
+    this.deleteSublease();
+  }
+  },
+      async deleteSublease() {
+    console.log("inside delete sublease");
+    try {
+      const db = getFirestore(firebaseapp);
+      const currentUser = getAuth().currentUser;
+      const propertyName = this.propertyName;
+  const ownerName = this.leasingCompany;
+    const userDocRef = doc(db, 'users', currentUser.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    const username = userDocSnap.data().username;
+
+    const subleasesCollectionRef = collection(db, 'subleases');
+
+    // Construct the query to find the specific sublease document
+    const subleaseQuerySnapshot = await getDocs(
+      query(subleasesCollectionRef, 
+        where('leaseOwner', '==', username), // Use username as leaseOwner
+        where('propertyName', '==', propertyName)
+      )
+    );
+
+    if (!subleaseQuerySnapshot.empty) {
+      // Assuming only one sublease per user and property combination
+      const subleaseDocRef = subleaseQuerySnapshot.docs[0].ref;
+
+      // Delete the sublease document from subleases collection
+      await deleteDoc(subleaseDocRef);
+      console.log('Sublease deleted successfully.');
+      this.hasSublease = false; // Update UI after deletion
+
+      const propertiesCollectionRef = collection(db, 'properties');
+      const propertyQuerySnapshot = await getDocs(
+        query(propertiesCollectionRef, 
+          where('propertyName', '==', propertyName),
+          where('owner', '==', ownerName)
+        )
+      );
+
+      if (!propertyQuerySnapshot.empty) {
+        propertyQuerySnapshot.forEach(async propertyDoc => {
+          const propertyData = propertyDoc.data();
+          const propertyUID = propertyDoc.id;
+
+          // Decrement subleaseCount by 1 if it's greater than 0
+          const updatedSubleaseCount = Math.max(0, propertyData.subleaseCount - 1);
+
+          // Update the property document with the updated subleaseCount
+          const propertyRef = doc(db, 'properties', propertyUID);
+          await setDoc(propertyRef, { ...propertyData, subleaseCount: updatedSubleaseCount }, { merge: true });
+          console.log('Property updated successfully.');
+        });
+      }
+    } else {
+      console.error('Sublease document does not exist.');
+    }
+    } catch (error) {
+      console.error('Error deleting sublease:', error);
+    }
+  },
         async removeProperty() {
             const confirmDelete = confirm("Are you sure you want to delete this property?");
             if (confirmDelete) {
@@ -583,6 +659,24 @@
                 console.log("Deletion canceled.");
             }
         },
+        async checkSubleaseExists() {
+    const db = getFirestore(firebaseapp);
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const propertyName = this.propertyName;
+    const ownerName = this.leasingCompany;
+    try {
+      const userDocRef = doc(db, 'users', currentUser.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      const username = userDocSnap.data().username;
+      console.log("checking sublease for", propertyName, ownerName, username);
+      const querySnapshot = await getDocs(query(collection(db, 'subleases'), where('propertyName', '==', propertyName), where('ownerUsername', '==', ownerName), where('leaseOwner', '==', username)));
+      return !querySnapshot.empty;
+    } catch (error) {
+      console.error('Error checking sublease:', error);
+      return false;
+    }
+  },
         async propertyExists(leasingCompany, propertyName) {
             console.log("inside property page");
             console.log(leasingCompany, propertyName);
@@ -1338,5 +1432,14 @@ div[property] > p {
   button:hover {
     background-color: darkcyan;
   }
+
+  .delete-button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 </style> 
