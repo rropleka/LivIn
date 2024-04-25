@@ -120,7 +120,8 @@ export default {
 
     },
     methods: {
-        toggle() {
+        toggle(props) {
+            console.log("props: " + props.cost)
             let manual = document.getElementById("manual");
             let auto = document.getElementById("auto");
             let hidden = manual.getAttribute("hidden");
@@ -181,7 +182,7 @@ export default {
                 alert("Please fill in all fields");
             }
         },
-        async load() {
+        async load(props) {
             const db = getFirestore(firebaseapp)
             let startYear=1900
             let startMonth=1
@@ -258,17 +259,36 @@ export default {
                 }
               }
             })
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const userDoc = currentUser.uid;
+            const userDocRef = doc(db, 'users', userDoc);
+            const userDocSnap = await getDoc(userDocRef);
+            let anotherCost = userDocSnap.data().favPrice;
+            /*onst querySnapshot2 = await getDocs(query(collection(db, 'users'), where('username', '==', username)))
+            querySnapshot2.forEach((doc) => {
+                anotherCost=doc.data().favPrice
+            })*/
+            if(!anotherCost) {
+                anotherCost=0
+            }
             foods=Number(foods)
+            if(fc<1){fc=1}
             foods=Math.round((foods/fc) * 100) / 100
             trans=Number(trans)
+            if(tc<1){tc=1}
             trans=Math.round((trans/tc) * 100) / 100
             ed=Number(ed)
+            if(ec<1){ec=1}
             ed=Math.round((ed/ec) * 100) / 100
             health=Number(health)
+            if(hc<1){hc=1}
             health=Math.round((health/hc) * 100) / 100
             bills=Number(bills)
+            if(bc<1){bc=1}
             bills=Math.round((bills/bc) * 100) / 100
             other=Number(other)
+            if(oc<1){oc=1}
             other=Math.round((other/oc) * 100) / 100
             let monthly = Number(foods+trans+ed+health+bills+other);
             monthly=Math.round((monthly) * 100) / 100
@@ -276,10 +296,11 @@ export default {
             let plot = document.getElementById('breakdown');
             let vals = [foods, trans, ed, health, bills, other]
             let labs = ['Food and Drink', 'Transportation', 'Education', 'Health', 'Bills', 'Other']
+            console.log("props: " + anotherCost)
             if (document.getElementById("check").checked) {
-                vals.push(100)
+                vals.push(anotherCost)
                 labs.push('Rent')
-                monthly+=100
+                monthly+=anotherCost
             }
             monthly=Math.round((monthly) * 100) / 100
             let totlabel = 'Total Per Month: $' + monthly;
