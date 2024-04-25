@@ -7,6 +7,11 @@
           <label for="property-name">Property Name:</label>
           <input type="text" id="property-name" v-model="propertyName">
         </div>
+
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input type="text" placeholder="e.g. 11111 Sample St, West Lafayette, IN, 47907" id="address" v-model="address">
+        </div>
   
         <div class="form-group">
     <label for="amenities">Amenities:</label>
@@ -277,6 +282,7 @@ if (place.latitude && place.longitude) {
       const locationCoordinates = ref('');
       const selectedMapType = ref('gmap');
       const propertyName = ref('');
+      const address = ref('');
       const amenities = ref([]);
       const newAmenity = ref('');
       const rent = ref(0);
@@ -325,6 +331,11 @@ if (place.latitude && place.longitude) {
             try {
               if (!propertyName.value.trim()) {
                     errorMessage.value = 'Property name cannot be empty';
+                    return;
+                }
+
+                if (!address.value.trim()) {
+                    errorMessage.value = 'Address cannot be empty';
                     return;
                 }
 
@@ -411,6 +422,7 @@ if (place.latitude && place.longitude) {
             // Assign locationCoordinates if selectedType is not equal to 'gmap'
             await setDoc(propertyDocRef, {
                 propertyName: propertyName.value,
+                address: address.value,
                 amenities: amenities.value.map(amenity => amenity.trim()),
                 rent: rent.value,
                 propertySize: propertySize.value,
@@ -421,6 +433,7 @@ if (place.latitude && place.longitude) {
         } else {
                 await setDoc(propertyDocRef, {
                 propertyName: propertyName.value,
+                address: address.value,
                 amenities: amenities.value.map(amenity => amenity.trim()),
                 rent: rent.value,
                 propertySize: propertySize.value,
@@ -454,6 +467,7 @@ if (place.latitude && place.longitude) {
       return {
         selectedMapType,
         propertyName,
+        address,
         amenities,
         newAmenity,
         rent,

@@ -1,6 +1,6 @@
 <script lang="ts">
   import {GoogleMap, Marker, Polyline, InfoWindow} from "vue3-google-map";
-  import {defineComponent, normalizeProps} from "vue";
+  import {defineComponent, normalizeProps, } from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
   import {MapMouseEvent, LatLng, LatLngLiteral} from "google.maps";
@@ -90,6 +90,7 @@
           properties.push({
             position: coords,
             propertyName: data.propertyName, 
+            address: data.address,
             icon: {
               strokeColor: "green",
               strokeWeight: 2.5,
@@ -105,12 +106,16 @@
         }
       })
 
+      let filteredProperties: Array<object> = [];
+      properties.forEach(val => filteredProperties.push(Object.assign({}, val)));
+
       return { 
         center: { lat: 40.420781, lng: -86.918061 },
         campus,
         hotspots,
         favorites,
         properties,
+        filteredProperties,
        };
     },
     computed: {
@@ -172,6 +177,10 @@
         
       },
       filterByCurrentLocation:function(proximity) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         const success = (position) => {
@@ -197,7 +206,7 @@
                 distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
                 console.log("Distance: " + distance);
                 if (distance >= proximity) {
-                  this.properties.splice(index, 1);
+                  this.filteredProperties.splice(index, 1);
                 }
 
               }
@@ -212,6 +221,10 @@
         navigator.geolocation.getCurrentPosition(success, error);
       },
       filterByFavoriteLocation:function(proximity, favoritePosition) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         console.log(favoritePosition);
@@ -236,13 +249,75 @@
             distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
             console.log("Distance: " + distance);
             if (distance >= proximity) {
-              this.properties.splice(index, 1);
+              this.filteredProperties.splice(index, 1);
             }
 
           }
           
         }
 
+      },
+      filterByHotspotLocation:function(proximity, hotspotPosition) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
+        let latitude;
+        let longitude;
+        console.log(hotspotPosition);
+        let commaIndex;
+        let longIndex;
+        commaIndex = hotspotPosition.indexOf(",");
+        longIndex = hotspotPosition.indexOf("lng");
+        latitude  = parseFloat(hotspotPosition.substring(9, commaIndex));
+        longitude = parseFloat(hotspotPosition.substring(longIndex + 5, hotspotPosition.length - 1));
+        console.log("Lat: " + latitude);
+        console.log("Long: " + longitude);
+        let propertyLat;
+        let propertyLong;
+        let distance;
+        
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            console.log(this.properties[index].position);
+            propertyLat = this.properties[index].position.lat;
+            propertyLong = this.properties[index].position.lng;
+
+            distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+            console.log("Distance: " + distance);
+            if (distance >= proximity) {
+              this.filteredProperties.splice(index, 1);
+            }
+
+          }
+          
+        }
+
+      },
+      filterByZipcode:function(zipcode) {  
+        if (!zipcode) {
+          this.filteredProperties = this.properties;
+          return;
+        }
+
+        let currentZipcode;  
+        let address;  
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            if (this.properties[index].address) {
+              address = this.properties[index].address.trim();
+              currentZipcode = address.substring(address.length - 5);
+            } else {
+              currentZipcode = "";
+            }
+
+            if (currentZipcode != zipcode) {
+              this.filteredProperties.splice(index, 1);
+            }
+
+          }
+          
+        }
       },
       //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
       //calculates distance in km between two coordinates
@@ -466,6 +541,9 @@
         this.renderRouteDetails = false;
         this.formattedRouteDetails = ["route_id", "route_long_name", "route_desc", "route_color"]
       },
+      goToPropertyTable: function(propertyName){
+        this.$emit("listingsTableEvent", propertyName);
+      },
 
 
     }
@@ -488,7 +566,13 @@
         <!-- <Polyline v-if="clickedPosition" :key="route" :options="busPolylineOptions(route, shapeId)" @click="showRouteDetails(shapeId)"/> -->
       </template>
 
-    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position" @click="onMarkerClick(hotspot.position)"/>
+    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position" @click="onMarkerClick(hotspot.position)">
+      <InfoWindow>
+        <div class="infoWindow">
+          {{ hotspot.position }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
     <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position" @click="onMarkerClick(favorite.position)">
       <InfoWindow>
         <div class="infoWindow">
@@ -496,7 +580,7 @@
         </div>
       </InfoWindow>
     </Marker>
-    <Marker v-for="property in properties" :options="property" :key="property.position" @click="onMarkerClick(property.position)">
+    <Marker v-for="property in filteredProperties" :options="property" :key="property.position" @click="onMarkerClick(property.position);goToPropertyTable(property.propertyName)">
       <InfoWindow>
         <div class="infoWindow">
           Property Name: {{ property.propertyName }} <br>
