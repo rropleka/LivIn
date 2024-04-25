@@ -36,7 +36,6 @@
 					/* Set moderator flag to allow delete button to appear */
 					if (userDocSnap.exists()) {
 						const userData = userDocSnap.data();
-						//console.log(userData);
 						if (userData.userType) {
 							if (userData.userType == "sitemoderator") {
 								isModerator.value = true

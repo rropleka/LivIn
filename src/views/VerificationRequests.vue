@@ -35,7 +35,6 @@ export default {
         async verify(id) {
             const request = this.requests[id]
             const querySnapshot = await getDocs(query(collection(this.db, 'properties'), where('propertyName', '==', request.propertyName), where('owner', '==', request.leasingCompany)));
-            //console.log(querySnapshot.size)
 
             querySnapshot.forEach(async (doc) => {
                 const data = doc.data()
@@ -46,7 +45,7 @@ export default {
                 else {
                     data.verifiedUsers = [request.user]
                 }
-                await updateDoc(doc.ref.path, data);
+                await updateDoc(doc.ref, data);
                 await this.remove(id);
             })
             
