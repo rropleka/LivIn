@@ -75,6 +75,17 @@ const router = createRouter({
       component: () => import('../views/FavoriteProperties.vue')
     },
     {
+      path: '/verify/:leasingCompany/:propertyName/:user?',
+      //path: '/verify',
+      name: 'verify-user',
+      component: () => import('../views/VerifyUser.vue'),
+    },
+    {
+      path: '/verification-requests',
+      name: 'verification-requests',
+      component: () => import('../views/VerificationRequests.vue')
+    },
+    {
       path: '/:leasingCompany?/:PropertyName?',
       name: 'property-page',
       component: PropertyPage,

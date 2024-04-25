@@ -15,8 +15,10 @@
   "dependencies": {
     "@fawmi/vue-google-maps": "^0.9.79",
     "@googlemaps/polyline-codec": "^1.0.28",
+    "@types/file-saver": "^2.0.7",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",
+    "file-saver": "^2.0.5",
     "firebase": "^10.6.0",
     "firebase-admin": "^12.0.0",
     "flowbite": "^2.2.1",

@@ -117,12 +117,17 @@
       <!--<input type="text" placeholder="Review" v-model="form.text">-->
       <textarea id="ta" v-model="cform.text" rows="7"></textarea>
       <br>
+      
       <button v-if="cloadPack.isEdit==false" v-on:click="csub" type="button">Submit review</button>
       <button v-if="cloadPack.isEdit==true" v-on:click="cupd" type="button">Update review</button>
     </div>
   </form>
 </div>
 <div class="notes-section">
+  <router-link v-if="!amIVerified" :to="{ name: 'verify-user', params: { leasingCompany: ownername, propertyName: propertyName, user: currusername } }">
+        <button >Verify</button> 
+  </router-link>
+  <button v-else @click="amIVerified=!amIVerified">Verified!</button>
   <h2>Notes Section</h2>
   <textarea id="user-notes" rows="4" cols="50" placeholder="Write your notes here..." v-model="notesText"></textarea>
   <button @click="saveNotes">Save</button>
@@ -139,6 +144,8 @@
   import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc, setDoc } from 'firebase/firestore/lite'
   import { firebaseapp } from '../main'
   import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
+  import { useStore } from "vuex";
+import { computed } from "vue";
   
   export default {
     props: {
@@ -181,7 +188,8 @@
                 interest:false,
                 pubInterest:false,
                 interestedUsers: ["user1", "user2", "user3"],
-                publicUsers: ["pu1"]
+                publicUsers: ["pu1"],
+                verifiedUsers: [""],
             },
             cform: {
                 stars: '',
@@ -200,7 +208,9 @@
                 isEdit: false,
                 hasLoaded: false,
                 username: ''
-            }
+            },
+            amIVerified: false,
+            currusername: '',
         };
     },
     async mounted() {
@@ -211,6 +221,11 @@
             router.push({ name: 'login' });
             return;
         }
+
+        const store = useStore();
+        const curruser = computed(() => store.getters.currentUser)
+        this.currusername = curruser.value.username
+
         try {
             const propertyData = await this.propertyExists(this.leasingCompany, this.propertyName);
             // call to validateCurrentUser if owner and display edit and remove button
@@ -287,6 +302,10 @@
                 } else {
                   this.loadPack.publicUsers=[];
                 }
+                if (!(data.verifiedUsers === undefined)){
+                  this.loadPack.verifiedUsers = data.verifiedUsers
+                  this.amIVerified = this.loadPack?.verifiedUsers?.includes(username);
+                }
                 console.log("int: " + this.loadPack.interestedUsers + " pub: " + this.loadPack.publicUsers)
                 this.loadPack.docRef = doc.ref.path;
             });
@@ -310,6 +329,9 @@
               ${data.username} says <br>
               ${data.reviewText} <br>
               `;
+                if (this.loadPack.verifiedUsers.includes(data.username)) {
+                  userItem.innerHTML = "<b style=\"color:blue\">This user is verified</b><br>" + userItem.innerHTML
+                }
                 // Create the report button element with inline styles
                 if (true) {
                     const reportButton = document.createElement('button');
@@ -371,6 +393,9 @@
                 ${data.username} says <br>
                 ${data.reviewText} <br>
               `;
+                if (this.loadPack.verifiedUsers.includes(data.username)) {
+                  userItem.innerHTML = "<b style=\"color:blue\">This user is verified</b><br>" + userItem.innerHTML
+                }
                 // Create the report button element with inline styles
                 if (true) {
                     const reportButton = document.createElement('button');
@@ -1184,7 +1209,16 @@
 
 
   },
-    components: { ConfirmationDialog }
+    components: { ConfirmationDialog },
+    computed: {
+      verifyRoute() {
+            if (this.ownername && this.propertyName && this.currusername) {
+              return `/verify/${this.ownername}/${this.propertyName}/${this.currusername}`
+            } else {
+              return ""
+            }
+          }
+    }
 
 };
   </script>

@@ -28,6 +28,10 @@
           <!--<input type="text" placeholder="Review" v-model="form.text">-->
           <textarea id="ta" v-model="form.text" rows="7"></textarea>
           <br>
+          <router-link v-if="!amIVerified" :to=verifyRoute>
+            <button >Verify</button> 
+          </router-link>
+          <button v-else @click="amIVerified=!amIVerified">Verified!</button>
           <button v-if="loadPack.isEdit==false" v-on:click="sub" type="submit">Submit review</button>
           <button v-if="loadPack.isEdit==true" v-on:click="upd" type="submit">Update review</button>
       </div>
@@ -35,6 +39,7 @@
 </template>
 
 <script lang="ts">
+//`/verify/${ownername}/${propertyName}/${username}`
     import {ref, type PropType} from 'vue';
     import router from '../router/index'
     import Vue from 'vue';
@@ -46,6 +51,15 @@ import type { FirebaseApp } from 'firebase/app';
     export default {
         components: {
             //starrating: StarRating
+        },
+        computed: {
+          verifyRoute() {
+            if (this.ownername && this.propertyName && this.username) {
+              return `/verify/${this.ownername}/${this.propertyName}/${this.username}`
+            } else {
+              return ""
+            }
+          }
         },
         data() {
             return {
@@ -63,28 +77,34 @@ import type { FirebaseApp } from 'firebase/app';
                   myReview: '',
                   myRating:-1,
                   revRef: '',
-                  isEdit:false
-                }
-
+                  isEdit:false,
+                  verifiedUsers: [""],
+                },
+                amIVerified: false,
+                username: "",
+                propertyName: "",
+                ownername: "",
             }
         },
         async beforeMount() {
           const db = getFirestore(firebaseapp)
-          try {
-            const propname="pname123"//replace with current property
-            const username="firstuser"
-            const ownername="owner123"
-                
+          const propname="pname123"//replace with current property
+          const username="firstuser"
+          const ownername="owner123"
+
+          try {      
             const querySnapshot = await getDocs(query(collection(db, 'properties'), where('propertyName', '==', propname), where('owner', '==', ownername)));
             //console.log(querySnapshot.size)
 
             querySnapshot.forEach((doc) => {
               const data = doc.data()
+              console.log(data)
               this.loadPack.totalReviews=data.totalReviews
               this.loadPack.totalScore=data.totalScore
               this.loadPack.usersReviewed=data.usersReviewed
               this.loadPack.hasReviewed=this.loadPack.usersReviewed&&this.loadPack.usersReviewed.length>0&&this.loadPack.usersReviewed.includes(username)
               this.loadPack.docRef=doc.ref.path
+              this.loadPack.verifiedUsers = data?.verifiedUsers
             })
 
             const userList = document.querySelector('.users');
@@ -94,11 +114,15 @@ import type { FirebaseApp } from 'firebase/app';
             querySnapshot2.forEach((doc) => {
               const data = doc.data()
               //this.loadPack.reviewText.push(data.reviewText)
+              const verified = this.loadPack?.verifiedUsers?.includes(data.username)
+              const verifiedText = verified ? "(Verified)" : ""
+
               const userItem = document.createElement('li')
+
               userItem.innerHTML = `
-                ${data.username} says <br>
-                ${data.reviewText} <br>
+                ${data.username} ${verifiedText} says <br> ${data.reviewText} <br>
               `
+
               if (data.username==username) {
                 this.loadPack.myReview=data.reviewText
                 this.loadPack.myRating=data.stars
@@ -112,11 +136,16 @@ import type { FirebaseApp } from 'firebase/app';
             //check against selected listing to set hasReviewed
             } catch(error) {
                 // Handle any errors
+                console.log(error)
                 const errorMessage = error;
                 alert(errorMessage);
             }
+            this.amIVerified = this.loadPack?.verifiedUsers?.includes(username);
+            console.log(this.amIVerified);
+            this.propertyName = propname;
+            this.username = username;
+            this.ownername = ownername;
           return {
-            //set data
           }
         },
         methods: {
