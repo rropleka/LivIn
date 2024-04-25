@@ -1,10 +1,13 @@
 <script lang="ts">
   import {GoogleMap, Marker, Polyline, InfoWindow} from "vue3-google-map";
-  import {defineComponent, normalizeProps} from "vue";
+  import {defineComponent, normalizeProps, } from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
-  import {MapMouseEvent, LatLng} from "google.maps";
+  import {MapMouseEvent, LatLng, LatLngLiteral} from "google.maps";
   import {decode} from "@googlemaps/polyline-codec";
+  import busRoutes from "@/assets/citybus-lafayette-in-us-json/organized_shapes.json";
+  import trips from "@/assets/citybus-lafayette-in-us-json/trips.json"
+  import routes from "@/assets/citybus-lafayette-in-us-json/routes.json"
   import { useStore } from "vuex";
   import axios from "axios";
   
@@ -24,6 +27,12 @@
         renderPolyline: false,
         formattedTravelTimes: [0, 0, 0], //driving, walking, biking
         renderTravelTimes: false,
+        allBusRoutes: busRoutes, // Constant full list of routes
+        busRoutes: busRoutes,    // Routes to be manipulated
+        clickedPosition: null,
+        routeDetails: {},
+        renderRouteDetails: false,
+        formattedRouteDetails: ["route_id", "route_long_name", "route_desc", "route_color"]
       }
     },
     async setup() {
@@ -81,6 +90,7 @@
           properties.push({
             position: coords,
             propertyName: data.propertyName, 
+            address: data.address,
             icon: {
               strokeColor: "green",
               strokeWeight: 2.5,
@@ -96,12 +106,16 @@
         }
       })
 
+      let filteredProperties: Array<object> = [];
+      properties.forEach(val => filteredProperties.push(Object.assign({}, val)));
+
       return { 
         center: { lat: 40.420781, lng: -86.918061 },
         campus,
         hotspots,
         favorites,
         properties,
+        filteredProperties,
        };
     },
     computed: {
@@ -163,6 +177,10 @@
         
       },
       filterByCurrentLocation:function(proximity) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         const success = (position) => {
@@ -188,7 +206,7 @@
                 distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
                 console.log("Distance: " + distance);
                 if (distance >= proximity) {
-                  this.properties.splice(index, 1);
+                  this.filteredProperties.splice(index, 1);
                 }
 
               }
@@ -203,6 +221,10 @@
         navigator.geolocation.getCurrentPosition(success, error);
       },
       filterByFavoriteLocation:function(proximity, favoritePosition) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         console.log(favoritePosition);
@@ -227,13 +249,75 @@
             distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
             console.log("Distance: " + distance);
             if (distance >= proximity) {
-              this.properties.splice(index, 1);
+              this.filteredProperties.splice(index, 1);
             }
 
           }
           
         }
 
+      },
+      filterByHotspotLocation:function(proximity, hotspotPosition) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
+        let latitude;
+        let longitude;
+        console.log(hotspotPosition);
+        let commaIndex;
+        let longIndex;
+        commaIndex = hotspotPosition.indexOf(",");
+        longIndex = hotspotPosition.indexOf("lng");
+        latitude  = parseFloat(hotspotPosition.substring(9, commaIndex));
+        longitude = parseFloat(hotspotPosition.substring(longIndex + 5, hotspotPosition.length - 1));
+        console.log("Lat: " + latitude);
+        console.log("Long: " + longitude);
+        let propertyLat;
+        let propertyLong;
+        let distance;
+        
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            console.log(this.properties[index].position);
+            propertyLat = this.properties[index].position.lat;
+            propertyLong = this.properties[index].position.lng;
+
+            distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
+            console.log("Distance: " + distance);
+            if (distance >= proximity) {
+              this.filteredProperties.splice(index, 1);
+            }
+
+          }
+          
+        }
+
+      },
+      filterByZipcode:function(zipcode) {  
+        if (!zipcode) {
+          this.filteredProperties = this.properties;
+          return;
+        }
+
+        let currentZipcode;  
+        let address;  
+        for (let index = this.properties.length - 1; index >= 0; index--) {
+          if(this.properties[index].position != null) {
+            if (this.properties[index].address) {
+              address = this.properties[index].address.trim();
+              currentZipcode = address.substring(address.length - 5);
+            } else {
+              currentZipcode = "";
+            }
+
+            if (currentZipcode != zipcode) {
+              this.filteredProperties.splice(index, 1);
+            }
+
+          }
+          
+        }
       },
       //function obtained from https://henry-rossiter.medium.com/calculating-distance-between-geographic-coordinates-with-javascript-5f3097b61898
       //calculates distance in km between two coordinates
@@ -357,7 +441,111 @@
         console.log(this.formattedTravelTimes);
 
 
-      }
+      },
+
+
+
+      // BUS ROUTES CODE
+      // Method to calculate polyline options for bus routes
+      busPolylineOptions(route, shapeId) {
+        // Check if route is defined and is an array
+        if (!route || !Array.isArray(route)) {
+          return null; // Return null if route is not valid
+        }
+        // console.log(shapeId)
+
+        // Convert each coordinate pair in the route to { lat, lng } format
+        const coordLatlngs = route.map(coord => ({ lat: coord.lat, lng: coord.lng }));
+
+        // Generate a random color for the polyline
+        const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        const red = '#FF0000';
+        // const color = this.routeDetails[shapeId].route_color;
+        const color = (this.routeDetails && this.routeDetails[shapeId]) ? this.routeDetails[shapeId].route_color : red;
+        const colorStr = "#" + color;
+        // console.log(color)
+
+        return {
+          path: coordLatlngs,
+          geodesic: true,
+          strokeColor: colorStr,
+          strokeWeight: 2
+        };
+      },
+      filterRoutesByDistance(busRoutes, targetLat, targetLng, maxDistance) {
+        const filteredRoutes = {};
+
+        for(const routeId in busRoutes) {
+          const route = busRoutes[routeId];
+          let routeHasPointsWithinDistance = false;
+
+          for (const point of route) {
+            const distance = this.haversineDistanceBetweenPoints(point.lat, point.lng, targetLat, targetLng);
+            if (distance <= maxDistance) {
+              routeHasPointsWithinDistance = true;
+              break; // No need to check other points if one is within distance
+            }
+          }
+
+          if (routeHasPointsWithinDistance) {
+            filteredRoutes[routeId] = route;
+          }
+        }
+
+          return filteredRoutes;
+      },
+      onMarkerClick(position) {
+        // GENERATE BUS ROUTES AROUND CLICKED POSITION
+        this.clickedPosition = position;
+        this.busRoutes = this.allBusRoutes;
+        this.busRoutes = this.filterRoutesByDistance(this.busRoutes, this.clickedPosition.lat, this.clickedPosition.lng, .25)
+        this.getAllRouteDetails();
+        this.renderRouteDetails = false;
+      },
+      findRouteDetailsByShapeId(shapeId) {
+        const trip = trips.find(trip => trip.shape_id === shapeId);
+        if (trip) {
+          const routeId = trip.route_id;
+          return routes.find(route => route.route_id === routeId);
+        }
+        return null; // Return null if no matching trip found
+      },
+      getAllRouteDetails() {
+        // Iterate through busRoutes and find route details for each shape_id
+        const routeDetails = {};
+        for (const shapeId in busRoutes) {
+          if (busRoutes.hasOwnProperty(shapeId)) {
+            const routeDetail = this.findRouteDetailsByShapeId(shapeId);
+            if (routeDetail) {
+              routeDetails[shapeId] = routeDetail;
+            }
+          }
+        }
+        this.routeDetails = routeDetails;
+        // console.log(routeDetails)
+      },
+      showRouteDetails(shapeId) {
+        // Access route details using shapeId
+        const routeDetails = this.routeDetails[shapeId];
+        this.formattedRouteDetails[0] = routeDetails.route_id;
+        this.formattedRouteDetails[1] = routeDetails.route_long_name;
+        this.formattedRouteDetails[2] = routeDetails.route_desc;
+        this.formattedRouteDetails[3] = "#" + routeDetails.route_color;
+
+        // Set route details and show the container
+        // this.routeDetails = routeDetails ? routeDetails : "No details available";
+        this.renderRouteDetails = true;
+      },
+      hideRouteDetails() {
+        // Hide the route details container when mouseout
+        this.renderRouteDetails = false;
+        this.formattedRouteDetails = ["route_id", "route_long_name", "route_desc", "route_color"]
+      },
+      goToPropertyTable: function(propertyName){
+        this.$emit("listingsTableEvent", propertyName);
+      },
+
+
     }
   });
 </script>
@@ -372,15 +560,27 @@
     @contextmenu="onMapRightClick"
     :zoom="15">
 
-    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position"/>
-    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position">
+    <!-- Iterate over busRoutes keys and render polylines -->
+      <template v-for="(route, shapeId) in busRoutes">
+        <Polyline v-if="clickedPosition" :key="route" :options="busPolylineOptions(route, shapeId)" @mouseover="showRouteDetails(shapeId)" @mouseout="hideRouteDetails"/>
+        <!-- <Polyline v-if="clickedPosition" :key="route" :options="busPolylineOptions(route, shapeId)" @click="showRouteDetails(shapeId)"/> -->
+      </template>
+
+    <Marker v-for="hotspot in hotspots" :options="hotspot" :key="hotspot.position" @click="onMarkerClick(hotspot.position)">
+      <InfoWindow>
+        <div class="infoWindow">
+          {{ hotspot.position }} <br>
+        </div>
+      </InfoWindow>
+    </Marker>
+    <Marker v-for="favorite in favorites" :options="favorite" :key="favorite.position" @click="onMarkerClick(favorite.position)">
       <InfoWindow>
         <div class="infoWindow">
           {{ favorite.position }} <br>
         </div>
       </InfoWindow>
     </Marker>
-    <Marker v-for="property in properties" :options="property" :key="property.position">
+    <Marker v-for="property in filteredProperties" :options="property" :key="property.position" @click="onMarkerClick(property.position);goToPropertyTable(property.propertyName)">
       <InfoWindow>
         <div class="infoWindow">
           Property Name: {{ property.propertyName }} <br>
@@ -401,6 +601,13 @@
     <p>Biking Time: {{ formattedTravelTimes[2] }} minutes</p>
   </div>
 
+  <div class="route-details" v-if="renderRouteDetails">
+    <p>Route ID: {{ formattedRouteDetails[0] }}</p>
+    <p>Name: {{ formattedRouteDetails[1] }}</p>
+    <p>Description: {{ formattedRouteDetails[2] }}</p>
+    <p>Color: <span :style="{ backgroundColor: formattedRouteDetails[3], width: '20px', height: '20px', display: 'inline-block' }">&nbsp;</span></p>
+  </div>
+
 </template>
 
 <style scoped>
@@ -414,6 +621,18 @@
     border-radius: 5px;
     background-color: #f9f9f9;
   }
+
+  .route-details {
+    position: absolute;
+    color: black;
+    bottom: 20px; /* Adjust as needed */
+    left: 20px; /* Adjust as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
   .infoWindow {
     color: black;
   }

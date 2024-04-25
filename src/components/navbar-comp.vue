@@ -9,7 +9,6 @@
             const store = useStore();
 			const isLoggedIn = computed(() => store.getters.isLoggedIn);
 			const currentUser = computed(() => store.getters.currUserCopy).value; 
-			// console.log("currUserCopy", currentUser)
 			
 			const isModerator = ref(false)
             const isLeasingCompany = ref(true);
@@ -37,7 +36,7 @@
 					/* Set moderator flag to allow delete button to appear */
 					if (userDocSnap.exists()) {
 						const userData = userDocSnap.data();
-						console.log(userData);
+						//console.log(userData);
 						if (userData.userType) {
 							if (userData.userType == "sitemoderator") {
 								isModerator.value = true
@@ -58,8 +57,8 @@
 			// Call fetchModeratorStatus when the component is mounted
 		onMounted(async () => {
 			await fetchModeratorStatus();
-			console.log("isModerator", isModerator)
-			console.log("isLoggedIn", isLoggedIn)
+			//console.log("isModerator", isModerator)
+			//console.log("isLoggedIn", isLoggedIn)
 		});
 			// console.log("isModerator",isModerator)
 
@@ -110,13 +109,18 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/revprop" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
 					</li>
+					<li>
+						<router-link to="/moneys" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Cost of Living</router-link>
+					</li>
           <li v-if="isLoggedIn">
               <router-link to="/lenderlist" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">List of Lenders</router-link>
             </li>
 					<li v-if="isLoggedIn && isLeasingCompany">
 						<router-link to="/add-property" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
 					</li>
-
+					<li v-if="isLoggedIn">
+						<router-link to="/favorite-properties" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Favorited Properties</router-link>
+					</li>
 				</ul>
 				</div>
 			</li>
@@ -148,6 +152,9 @@
 							</li>
 							<li v-if="isLoggedIn && isModerator">
 								<router-link to="/check-reports" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Reports</router-link>
+							</li>
+							<li>
+								<router-link to="/find-roommates" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Find Roommates</router-link>
 							</li>
 						</ul>
 					</div>

@@ -220,13 +220,13 @@ export default {
             store.dispatch('loginUser', this.user);
             const db = getFirestore(firebaseapp)
             const userDocRef = doc(collection(db, 'users'), this.user.uid);
-            await setDoc(userDocRef, {
+            await updateDoc(userDocRef, {
                 username: this.user.username,
                 age: this.user.age,
                 gender: this.user.gender,
                 class: this.user.class,
                 aboutme: this.user.aboutme,
-                contactinfo: this.user.contactinfo
+                contactinfo: this.user.contactinfo,
             });
         },
         async saveChanges() {

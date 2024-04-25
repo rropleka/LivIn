@@ -3,8 +3,10 @@
     import { getFirestore, collection, getDocs, query, where, setDoc } from 'firebase/firestore/lite'
     import { firebaseapp } from '../firebaseInit'
 
-    export default {
-        async mounted() {
+
+    export default {  
+        //async method to get all listings from firebase
+        async mounted () {
             try {
                 const listingsData = await this.getListings();
                 if (listingsData) {
@@ -27,7 +29,8 @@
                 currentPage: 1,
                 propertyHover: false,
                 maxPrice: null,
-                maxSubleaseCount: null // Added property for filtering by min number of subleases
+                maxSubleaseCount: null, // Added property for filtering by min number of subleases
+                sortedListings: []
             };
         },
         methods: {
@@ -46,6 +49,23 @@
             setPageSize(event) {
                 this.pageSize = event.target.value;
             },
+            goToPropertyPage:function(propertyURL) {
+                router.push({ path: propertyURL });
+            },
+            //takes user to page in table with property
+            goToProperty:function(propertyName) {
+                let foundIndex = 0;
+                for (let i = 0; i < this.sortedListings.length; i++) {
+                    if (this.sortedListings[i].propertyName === propertyName) {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+                if (this.currentPage != Math.floor(foundIndex / this.pageSize) + 1) {
+                    this.currentPage = Math.floor(foundIndex / this.pageSize) + 1;
+                }
+            },
+            //return all listings in an array
             async getListings() {
                 try {
                     const db = getFirestore(firebaseapp);

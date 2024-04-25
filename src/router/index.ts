@@ -64,12 +64,16 @@ const router = createRouter({
       name: 'subleases',
       component: () => import('../views/Subleases.vue')
     },
-    
+    {
     // {
     //   path: '/:leasingCompany/:PropertyName',
     //   name: 'property-page',
     //   component: PropertyPage
     // },
+      path: '/favorite-properties',
+      name: 'favorite-properties',
+      component: () => import('../views/FavoriteProperties.vue')
+    },
     {
       path: '/:leasingCompany?/:PropertyName?',
       name: 'property-page',
@@ -163,6 +167,16 @@ const router = createRouter({
       path:'/lists',
       name: 'lists',
       component: () => import('../views/ListsPage.vue')
+    },
+    {
+      path:'/find-roommates',
+      name: 'roommates',
+      component: () => import('../views/find-roommates.vue')
+    },
+    {
+      path:'/moneys',
+      name: 'money',
+      component: () => import('../views/Moneys.vue')
     }
   ]
 })

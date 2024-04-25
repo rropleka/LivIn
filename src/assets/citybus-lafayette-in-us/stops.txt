@@ -1,0 +1,767 @@
+stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,location_type,wheelchair_boarding
+BUS209,BUS209,Elmwood Ave & Underwood St (SE Corner): BUS209,Elmwood Ave & Underwood St (SE Corner) - BUS209,40.4377901815051,-86.8621290839987,0,0
+BUS830,BUS830,27th St & Underwood St (South of): BUS830,27th St & Underwood St (South of) - BUS830,40.4377311729033,-86.8661751965389,0,0
+BUS281,BUS281,Elmwood Ave & Vinton: BUS281,,40.434413,-86.86357,0,0
+BUS835,BUS835,Market Square Shopping Center: BUS835,Market Square Shopping Center - BUS835,40.4307,-86.8707,0,0
+BUS837NE,BUS837NE,Northend Community Center: BUS837NE,Northend Community Center - BUS837NE,40.4281771438228,-86.8740756436631,0,0
+BUS838,BUS838,Speedway on Elmwood Ave (NE Corner): BUS838,Speedway on Elmwood Ave (NE Corner) - BUS838,40.4270291582959,-86.8763528392525,0,0
+BUS839,BUS839,18th St & Salem St: BUS839,18th St & Salem St - BUS839,40.425894583815,-86.8774082885628,0,0
+BUS840,BUS840,Grants House: BUS840,Grants House - BUS840,40.425625,-86.88058,0,0
+BUS842,BUS842,Village Pantry on Salem St: BUS842,Village Pantry on Salem St - BUS842,40.4257966831801,-86.8824427951838,0,0
+BUS843,BUS843,Salem St & 11th St (NE Corner): BUS843,Salem St & 11th St (NE Corner) - BUS843,40.4257725432976,-86.8844544520649,0,0
+BUS380NE,BUS380NE,Salem St & 9th St (NE Corner): BUS380NE,Salem St & 9th St (NE Corner) - BUS380NE,40.4257631555654,-86.8868308893937,0,0
+BUS845,BUS845,Salem St & 7th (NE Corner): BUS845,Salem St & 7th (NE Corner) - BUS845,40.425741697892,-86.8894165390382,0,0
+BUS519E,BUS519E,Salem St & Fannon (NE Corner): BUS519E,Salem St & Fannon (NE Corner) - BUS519E,40.4257403567875,-86.8912203247082,0,0
+BUS215,BUS215,CityBus Center: BUS215,CityBus Center - BUS215,40.4207112145848,-86.8948077794795,0,0
+BUS682S,BUS682S,Edgelea School on Beck Ln (West Drive): BUS682S,Edgelea School on Beck Ln (West Drive) - BUS682S,40.388000332594,-86.879344843587,0,0
+BUS776,BUS776,Beck Ln & 18th St (West of): BUS776,Beck Ln & 18th St (West of) - BUS776,40.388028,-86.877485,0,0
+BUS738,BUS738,18th St & Iroquuois Trl (SE Corner): BUS738,18th St & Iroquuois Trl (SE Corner) - BUS738,40.3921993630524,-86.8763367685691,0,0
+BUS198,BUS198,18th St & JR Hiatt Dr (NE Corner): BUS198,18th St & JR Hiatt Dr (NE Corner) - BUS198,40.3978082742218,-86.8763976191943,0,0
+BUS986N,BUS986N,Logan Ave & 18th St (West of): BUS986N,Logan Ave & 18th St (West of) - BUS986N,40.4027068854992,-86.8772272394435,0,0
+BUS327NE,BUS327NE,Logan Ave & El Prado Ave (NE Corner): BUS327NE,Logan Ave & El Prado Ave (NE Corner) - BUS327NE,40.4026690375594,-86.8793486373488,0,0
+BUS544NE,BUS544NE,Logan Ave & 14th St (NE Corner): BUS544NE,Logan Ave & 14th St (NE Corner) - BUS544NE,40.4026571111443,-86.881287902017,0,0
+BUS241,BUS241,9th St & Logan Ave (NE Corner): BUS241,9th St & Logan Ave (NE Corner) - BUS241,40.402644,-86.885609,0,0
+BUS528,BUS528,9th St & King St (SE Corner): BUS528,9th St & King St (SE Corner) - BUS528,40.4044161600154,-86.8861926400256,0,0
+BUS697,BUS697,9th St & Central Ave (SE Corner): BUS697,9th St & Central Ave (SE Corner) - BUS697,40.40624,-86.886257,0,0
+BUS575,BUS575,9th St & Kossuth St (South of): BUS575,9th St & Kossuth St (South of) - BUS575,40.409628,-86.886396,0,0
+BUS279,BUS279,9th St & State St (SE Corner): BUS279,9th St & State St (SE Corner) - BUS279,40.412692,-86.886503,0,0
+BUS918,BUS918,Prospect Hill Apts on 9th: BUS918,Prospect Hill Apts on 9th - BUS918,40.414034,-86.886556,0,0
+BUS502,BUS502,Art Museum on 9th St (East side): BUS502,Art Museum on 9th St (East side) - BUS502,40.4164102921731,-86.886651181379,0,0
+BUS243N,BUS243N,Columbia St & 7th St (NE Corner): BUS243N,Columbia St & 7th St (NE Corner) - BUS243N,40.418292,-86.888474,0,0
+BUS674,BUS674,Columbia St & 6th St (NE Corner): BUS674,Columbia St & 6th St (NE Corner) - BUS674,40.4182797919678,-86.8905095392769,0,0
+BUS675,BUS675,Columbia St & 5th St (NE Corner): BUS675,Columbia St & 5th St (NE Corner) - BUS675,40.4182704042358,-86.8915395076,0,0
+BUS248,BUS248,Columbia St & 4th St (NE Corner): BUS248,Columbia St & 4th St (NE Corner) - BUS248,40.4182730864449,-86.8929369385801,0,0
+BUS246,BUS246,24th St & Schuyler Ave (South of): BUS246,24th St & Schuyler Ave (South of) - BUS246,40.4418188596856,-86.8696352463743,0,0
+BUS863,BUS863,Schuyler Ave & 21st St (NE Corner): BUS863,Schuyler Ave & 21st St (NE Corner) - BUS863,40.4425564672086,-86.8726084752446,0,0
+BUS227,BUS227,Schuyler Ave & 20th St (NE Corner): BUS227,Schuyler Ave & 20th St (NE Corner) - BUS227,40.4418698216599,-86.8744524940522,0,0
+BUS858,BUS858,Schuyler Ave & 18th St (NE Corner): BUS858,Schuyler Ave & 18th St (NE Corner) - BUS858,40.4406494164854,-86.8774444983866,0,0
+BUS859,BUS859,Star Lanes on Schuyler Ave: BUS859,Star Lanes on Schuyler Ave - BUS859,40.4397723340852,-86.8794507908494,0,0
+BUS860,BUS860,Schuyler Ave & Barbee St (at Shelter): BUS860,Schuyler Ave & Barbee St (at Shelter) - BUS860,40.4386525117548,-86.881294809657,0,0
+BUS861,BUS861,15th St & Hart St (NW Corner): BUS861,15th St & Hart St (NW Corner) - BUS861,40.4362787566351,-86.8815375495873,0,0
+BUS862,BUS862,15th St & Ball St (NW Corner): BUS862,15th St & Ball St (NW Corner) - BUS862,40.4333645363667,-86.8815053630772,0,0
+BUS348,BUS348,15th St & Greenbush St (NW Corner): BUS348,15th St & Greenbush St (NW Corner) - BUS348,40.4321548600289,-86.8814812231947,0,0
+BUS508SW,BUS508SW,14th St & Greenbush St (South of): BUS508SW,14th St & Greenbush St (South of) - BUS508SW,40.4318222660912,-86.8823676933269,0,0
+BUS787,BUS787,14th St & Howell St (NW Corner): BUS787,14th St & Howell St (NW Corner) - BUS787,40.4303054768029,-86.882322095771,0,0
+BUS786,BUS786,St Anthony Health Care: BUS786,St Anthony Health Care - BUS786,40.4291105526156,-86.8823033203067,0,0
+BUS546N,BUS546N,14th St & Hartford St (NW Corner): BUS546N,14th St & Hartford St (NW Corner) - BUS546N,40.427864,-86.882285,0,0
+BUS367,BUS367,9th St & Union St (NW Corner @ Shelter): BUS367,9th St & Union St (NW Corner @ Shelter) - BUS367,40.4248015835763,-86.8869864575259,0,0
+BUS783NW,BUS783NW,9th St & Cincinnati St (NW Corner): BUS783NW,9th St & Cincinnati St (NW Corner) - BUS783NW,40.422861,-86.886934,0,0
+BUS748,BUS748,Brown St & 7th St (NE Corner): BUS748,Brown St & 7th St (NE Corner) - BUS748,40.4219061387721,-86.8893776470052,0,0
+BUS410NE,BUS410NE,Brown St & 6th St (NE Corner): BUS410NE,Brown St & 6th St (NE Corner) - BUS410NE,40.4218860222033,-86.8904746705576,0,0
+BUS492,BUS492,Brown St & 4th St (NE Corner): BUS492,Brown St & 4th St (NE Corner) BUS492,40.421887,-86.892951,0,0
+BUS265,BUS265,South St & 4th St (SW Corner): BUS265,South St & 4th St (SW Corner) - BUS265,40.417262,-86.893175,0,0
+BUS329,BUS329,South St & 5th St (SW Corner): BUS329,South St & 5th St (SW Corner) - BUS329,40.4172766457365,-86.891884171479,0,0
+BUS351,BUS351,Tippecanoe Co Public Library on South St: BUS351,Tippecanoe Co Public Library on South St - BUS351,40.4172645757952,-86.8894339733978,0,0
+BUS659,BUS659,South St & 10th St (West of): BUS659,South St & 10th St (West of) - BUS659,40.4172873745732,-86.886183135878,0,0
+BUS661,BUS661,South St & McGrath Ave (West of): BUS661,South St & McGrath Ave (West of) - BUS661,40.4173128555603,-86.8837141623327,0,0
+BUS206,BUS206,South St & 14th St (SW Corner): BUS206,South St & 14th St (SW Corner) - BUS206,40.4173141966649,-86.8818594146883,0,0
+BUS939,BUS939,South St & 16th St (SW Corner): BUS939,South St & 16th St (SW Corner) - BUS939,40.417276,-86.878829,0,0
+BUS391NW,BUS391NW,Alabama St & Main St (NW Corner): BUS391NW,Alabama St & Main St (NW Corner) - BUS391NW,40.416541,-86.877817,0,0
+BUS444SW,BUS444SW,Main St & Jackson St (SW Corner): BUS444SW,Main St & Jackson St (SW Corner) - BUS444SW,40.4154098281509,-86.8765043840709,0,0
+BUS482NW,BUS482NW,Main St & Scott St (NW): BUS482NW,Main St & Scott St (NW) - BUS482NW,40.4138702400846,-86.8748306855458,0,0
+BUS947,BUS947,Main St & Congress St (North of): BUS947,Main St & Congress St (North of) - BUS947,40.4114777095006,-86.8721793217766,0,0
+BUS216W,BUS216W,Main St & 24th St (West Side North of): BUS216W,Main St & 24th St (West Side North of) - BUS216W,40.4095907753462,-86.870029531123,0,0
+BUS663SE,BUS663SE,Main St & S 25th St (SE Corner): BUS663SE,Main St & S 25th St (SE Corner) - BUS663SE,40.4076341037532,-86.867442540374,0,0
+BUS664SE,BUS664SE,Main St & S 28th St (SE Corner): BUS664SE,Main St & S 28th St (SE Corner) -  BUS664SE,40.4059255365089,-86.8650580564176,0,0
+BUS531SW,BUS531SW,Main St & Earl Ave (SW Corner): BUS531SW,Main St & Earl Ave (SW Corner) - BUS531SW,40.404968,-86.863717,0,0
+BUS525,BUS525,Main St & McCarty Ln (West Side): BUS525,Main St & McCarty Ln (West Side) - BUS525,40.4027015210808,-86.8605626738407,0,0
+BUS667,BUS667,Lafayette Marketplace: BUS667,Lafayette Marketplace - BUS667,40.4001,-86.8525,0,0
+BUS141,BUS141,SR 38/25 @ Shoe Carnival: BUS141,SR 38/25 @ Shoe Carnival - BUS141,40.396992,-86.852573,0,0
+BUS948,BUS948,Professional Ct & SR 38/25(SW Corner): BUS948,Professional Ct & SR 38/25(SW Corner) - BUS948,40.395101,-86.849922,0,0
+BUS421SW,BUS421SW,SR 38/25 & Kingsway Dr (SW Corner): BUS421SW,SR 38/25 & Kingsway Dr (SW Corner) - BUS421SW,40.3942901131088,-86.8487985044002,0,0
+BUS672,BUS672,"Wendy's at Tippecanoe Mall (South Side): BUS672","Wendy's at Tippecanoe Mall (South Side) - BUS672",40.3932896490866,-86.848649641791,0,0
+BUS673,BUS673,Dicks at Tippecanoe Mall: BUS673,Dicks at Tippecanoe Mall - BUS673,40.392557,-86.849441,0,0
+BUS373,BUS373,Tippecanoe Mall Entrance E: BUS373,Tippecanoe Mall Entrance E - BUS373,40.39168,-86.84966,0,0
+BUS553,BUS553,Circle Pines on David Ross Rd (NW Corner): BUS553,Circle Pines on David Ross Rd (NW Corner) - BUS553,40.4353386423194,-86.9249517872901,0,0
+BUS554W,BUS554W,Alpha Chi on David Ross Rd: BUS554W,Alpha Chi on David Ross Rd - BUS554W,40.4344240089908,-86.9257041469636,0,0
+BUS562S,BUS562S,Theta Chi on Tower Dr: BUS562S,Theta Chi on Tower Dr - BUS562S,40.4331875105612,-86.9259388402664,0,0
+BUS472S,BUS472S,Tower Dr & Hilltop Dr (SE Corner): BUS472S,Tower Dr & Hilltop Dr (SE Corner) - BUS472S,40.4331915338749,-86.92314800162,0,0
+BUS509SW,BUS509SW,Tower Dr & Jischke Dr (SW Corner): BUS509SW,Tower Dr & Jischke Dr (SW Corner) - BUS509SW,40.4329756160364,-86.9216929031427,0,0
+BUS213S,BUS213S,Steven Beering Dr & Tower Dr (SW of): BUS213S,Steven Beering Dr & Tower Dr (SW of) - BUS213S,40.432584,-86.919271,0,0
+BUS190,BUS190,Armstrong Hall on Stadium Ave (@Shelter): BUS190,Armstrong Hall on Stadium Ave (@Shelter) - BUS190,40.431280459838,-86.9153011986793,0,0
+BUS557,BUS557,Physics Building: BUS557,Physics Building- BUS557,40.430362,-86.913149,0,0
+BUS538,BUS538,Electrical Engineering (at Shelter): BUS538,Electrical Engineering (at Shelter) - BUS538,40.428627,-86.911277,0,0
+BUS271,BUS271,Purdue Memorial Union (PMU) on MD Blvd: BUS271,Purdue Memorial Union (PMU) on Mitch Daniels Blvd - BUS271,40.4241243257597,-86.9118599243081,0,0
+BUS403,BUS403,Walmart West Lafayette (at Shelter): BUS403,Walmart West Lafayette (at Shelter) - BUS403,40.4574747648632,-86.9341416475481,0,0
+BUS922,BUS922,Slim Chickens-Cumberland Ave (SE Corner):  BUS922,Slim Chickens-Cumberland Ave (SE Corner) - BUS922,40.459835,-86.933891,0,0
+BUS252,BUS252,Sagamore Pkwy & Win Hentschel Blvd (NE): BUS252,,40.4646444597628,-86.9362707100076,0,0
+BUS395,BUS395,Sagamore Pkwy W & Morehouse Rd (NW Corner): BUS395,,40.4672006051064,-86.9400486016302,0,0
+BUS385,BUS385,Genoa Dr (East): BUS385,,40.468597,-86.943293,0,0
+BUS396,BUS396,Genoa Dr & Paramont Dr: BUS396,,40.469666,-86.945745,0,0
+BUS180NW,BUS180NW,Sagamore Pkwy & Paramount Dr (NW corner): BUS180NW,Sagamore Pkwy & Paramount Dr (NW corner) - BUS180NW,40.4678332359637,-86.9473175422508,0,0
+BUS178,BUS178,Maples Park and Barrington West: BUS178,,40.4676874260716,-86.9501337081274,0,0
+BUS171,BUS171,Meijer West Lafayette: BUS171,,40.469433,-86.957676,0,0
+BUS174,BUS174,Meijer West Lafayette frontage road: BUS174,Meijer West Lafayette frontage road - BUS174,40.468561,-86.95818,0,0
+BUS314,BUS314,Klondike Dental Care: BUS314,,40.4661948951611,-86.9621373581621,0,0
+BUS226,BUS226,Klondike & Elite Lane (West): BUS226,,40.460373,-86.962164,0,0
+BUS463,BUS463,52 Flats on Klondike Rd (West): BUS463,,40.457784,-86.962104,0,0
+BUS268SW,BUS268SW,Snowdrop Dr (for Cumberland Ave): BUS268SW,,40.4543192955446,-86.9621406174982,0,0
+BUS199,BUS199,Rutherford Dr: BUS199,,40.4476070670847,-86.9621272064523,0,0
+BUS268,BUS268,Redpoint (@Snowdrop Dr): BUS268,Redpoint (@ Snowdrop Dr) - BUS268,40.4543166133354,-86.9618965364633,0,0
+BUS464,BUS464,Family Express on Klondike Rd: BUS464,Family Express on Klondike Rd - BUS464,40.458023,-86.961967,0,0
+BUS204,BUS204,West Ridge Flats on Klondike Rd: BUS204,West Ridge Flats on Klondike Rd - BUS204,40.460136912021,-86.9619910804538,0,0
+BUS317,BUS317,Klondike Schools (SE Corner Center Drive): BUS317,Klondike Schools (SE Corner Center Drive) - BUS317,40.464537432812,-86.9619693961562,0,0
+BUS342,BUS342,Klondike Rd & US 52 (SE Corner): BUS342,Klondike Rd & US 52 (SE Corner) - BUS342,40.467205850925,-86.9620047429928,0,0
+BUS197,BUS197,Sagamore Pkwy & Bethel Dr (West of): BUS197,,40.467332,-86.956453,0,0
+BUS283,BUS283,Sagamore Pkwy W & Hunter Rd (SW Corner): BUS283,Sagamore Pkwy W & Hunter Rd (SW Corner) - BUS283,40.4674007777971,-86.9495004440862,0,0
+BUS180,BUS180,Sagamore Pkwy & Paramount Dr: BUS180,Sagamore Pkwy & Paramount Dr - BUS180,40.467406,-86.94749,0,0
+BUS390,BUS390,Sagamore Pkwy W & Morehouse Rd(SW Corner): BUS390,Sagamore Pkwy W & Morehouse Rd(SW Corner) - BUS390,40.4669444541302,-86.9402041697624,0,0
+BUS250,BUS250,Sagamore Pkwy W & Geddes Way (South of): BUS250,Sagamore Pkwy W & Geddes Way (South of) - BUS250,40.4644084253555,-86.9365308842976,0,0
+5146,5146,Sagamore Pkwy W and Sachem Blvd (SW corner): 5146,Sagamore Pkwy W and Sachem Blvd (SW corner) 5146,40.462219,-86.934847,0,0
+BUS137,BUS137,Quality Inn on Cumberland Ave (NE Corner):BUS137,Quality Inn on Cumberland Ave (NE Corner) - BUS137,40.459544239017,-86.9350087305909,0,0
+BUS260,BUS260,Krannert Grad School: BUS260,Krannert Grad School - BUS260,40.423931,-86.911286,0,0
+BUS153,BUS153,Young Hall on Grant St (West): BUS153,Young Hall on Grant St (West) - BUS153,40.4227671279172,-86.9103860503665,0,0
+BUS322,BUS322,Grant St & Harrison St (NW Corner): BUS322,Grant St & Harrison St (NW Corner) - BUS322,40.4204201948893,-86.9103739804252,0,0
+BUS323,BUS323,Grant St & Williams St (NW Corner): BUS323,Grant St & Williams St (NW Corner) - BUS323,40.418631,-86.910346,0,0
+BUS352,BUS352,Harrison St & Martin Jischke Dr (NE Corner):BUS352,Harrison St & Martin Jischke Dr (NE Corner) - BUS352,40.420501,-86.921415,0,0
+BUS898,BUS898,First Street Towers on Mitch Daniels Blvd: BUS898,First Street Towers on Mitch Daniels Blvd - BUS898,40.424317,-86.923096,0,0
+BUS566,BUS566,Purdue West on Mitch Daniels Blvd: BUS566,Purdue West on Mitch Daniels Blvd - BUS566,40.4243335380753,-86.9294847207954,0,0
+BUS167,BUS167,Mitch Daniels Blvd & Trailway Blvd (E of): BUS167,Mitch Daniels Blvd & Trailway Blvd (East of) - BUS167,40.4243101654989,-86.9364870837703,0,0
+BUS268E,BUS268E,Redpoint (on Cumberland Ave): BUS268E,,40.453042,-86.958841,0,0
+BUS698,BUS698,Historical Museum on 9th St (West side): BUS698,Historical Museum on 9th St (West side) - BUS698,40.416797,-86.886797,0,0
+BUS683,BUS683,9th St & Hitt St (NW Corner): BUS683,9th St & Hitt St (NW Corner) - BUS683,40.413437,-86.886683,0,0
+1259,1259,S 9th St and Kossuth St (NW corner),,40.4101120166287,-86.8865623028976,0,0
+1267,1267,S 9th St & Central St (NW corner),,40.406408,-86.88642,0,0
+1275,1275,S 9th St & King St (NW corner),,40.4045849036707,-86.8863466982879,0,0
+1281,1281,S 9th St & Logan St (SE corner),,40.402539,-86.885713,0,0
+1370,1370,S 14th St & Logan St (SW corner),,40.4025810334251,-86.8815307454459,0,0
+BUS327SW,BUS327SW,Logan Ave & El Prado Ave (SW Corner): BUS327SW,Logan Ave & El Prado Ave (SW Corner) - BUS327SW,40.4025856424104,-86.8795137111386,0,0
+BUS986S,BUS986S,Logan Ave & 18th St (SW Corner): BUS986S,Logan Ave & 18th St (SW Corner) - BUS986S,40.402577068326,-86.8768649531078,0,0
+BUS815,BUS815,18th St & JR Hiatt (NW Corner): BUS815,18th St & JR Hiatt (NW Corner) - BUS815,40.3976172562333,-86.8766216879477,0,0
+BUS187NW,BUS187NW,Teal Rd & 18th St (West of): BUS187NW,Teal Rd & 18th St (West of) - BUS187NW,40.3956310580685,-86.8767756517984,0,0
+BUS494,BUS494,Fairgrounds on Teal Rd (NE Corner: BUS494,Fairgrounds on Teal Rd (NE Corner) - BUS494,40.395486,-86.881218,0,0
+BUS515,BUS515,Teal Rd & Crestview Ct (NE Corner): BUS515,Teal Rd & Crestview Ct (NE Corner) - BUS515,40.3954662618319,-86.8832568456684,0,0
+BUS316,BUS316,9th St & Rosemont St (NW Corner): BUS316,9th St & Rosemont St (NW Corner) - BUS316,40.3947890040153,-86.8860718241973,0,0
+BUS693,BUS693,9th St & Sarasota Dr (SW Corner): BUS693,9th St & Sarasota Dr (SW Corner) - BUS693,40.3931206699086,-86.8860503665239,0,0
+BUS679,BUS679,Bishop Woods on 9th St (West Side): BUS679,Bishop Woods on 9th St (West Side) - BUS679,40.389712923152,-86.8859551480982,0,0
+BUS537,BUS537,Beck Ln & 9th St (Southeast of): BUS537,Beck Ln & 9th St (Southeast of) - BUS537,40.387925230737,-86.8855152657935,0,0
+BUS521,BUS521,Beck Ln & Davis Dr (SW Corner): BUS521,Beck Ln & Davis Dr (SW Corner) - BUS521,40.3879654638747,-86.881746761903,0,0
+BUS893,BUS893,Walmart (South Lafayette) (West of Entr): BUS893,Walmart (South Lafayette) (West of Entr) - BUS893,40.365249,-86.860616,0,0
+BUS880,BUS880,Veterans Mem Pkwy S & Cheryl Ln (NE Corner):BUS880,Veterans Mem Pkwy S & Cheryl Ln (NE Corner) - BUS880,40.367268,-86.865301,0,0
+BUS881,BUS881,Veterans Mem Pkwy S & IFCU Dr (West of): BUS881,Veterans Mem Pkwy S & IFCU Dr (West of) - BUS881,40.367241,-86.8686066191558,0,0
+BUS875NE,BUS875NE,Veterans Mem Pkwy S & Regal Valley Dr: BUS875NE,Veterans Mem Pkwy S & Regal Valley Dr - BUS875NE,40.3672413746858,-86.8710313362498,0,0
+BUS917,BUS917,18th St & Troxel Ct: BUS917,18th St & Troxel Ct - BUS917,40.3679320435483,-86.8758123741038,0,0
+BUS883,BUS883,18th St & Bridgewater Cir (SE Corner): BUS883,18th St & Bridgewater Cir (SE Corner) - BUS883,40.3707067889396,-86.8758834526469,0,0
+BUS884,BUS884,18th St & Summertime Trl (SE Corner): BUS884,18th St & Summertime Trl (SE Corner) - BUS884,40.374293,-86.875856,0,0
+BUS990,BUS990,18th St at RRX (at Trailhead): BUS990,18th St at RRX (at Trailhead) - BUS990,40.3782116102106,-86.8760349974653,0,0
+BUS338,BUS338,Twyckenham Blvd & 18th St (NW Corner): BUS338,Twyckenham Blvd & 18th St (NW Corner) -  BUS338,40.381785653936,-86.8766532466801,0,0
+BUS340N,BUS340N,Twyckenham Blvd & 9th St (NW Corner): BUS340N,Twyckenham Blvd & 9th St (NW Corner) - BUS340N,40.382035,-86.886537,0,0
+BUS704N,BUS704N,Rampart St & Twyckenham (NE Corner): BUS704N,Rampart St & Twyckenham (NE Corner) - BUS704N,40.383573,-86.89251,0,0
+BUS702,BUS702,Poland Hill Rd & Matterhorn (SE Corner): BUS702,Poland Hill Rd & Matterhorn (SE Corner) -  BUS702,40.3848165503035,-86.8951162335346,0,0
+BUS701,BUS701,Poland Hill Rd & Beck Ln (South of): BUS701,Poland Hill Rd & Beck Ln (South of) - BUS701,40.3870696060103,-86.8951966998098,0,0
+BUS700,BUS700,Limestone &  Beck Ln (NE Corner): BUS700,Limestone &  Beck Ln (NE Corner) - BUS700,40.3879882626526,-86.89703267199,0,0
+BUS336,BUS336,Pay Less on Beck Ln: BUS336,Pay Less on Beck Ln - BUS336,40.3879721693976,-86.9017426313008,0,0
+BUS343,BUS343,McDonalds on Old 231: BUS343,McDonalds on Old 231 - BUS343,40.3874115876801,-86.9047346356353,0,0
+BUS239,BUS239,Twyckenham Blvd & CR 10W (North): BUS239,Twyckenham Blvd & CR 10W (North) - BUS239,40.384746812865,-86.9066443685677,0,0
+BUS222,BUS222,Old Romney Rd & Twyckenham (NE Corner): BUS222,Old Romney Rd & Twyckenham (NE Corner) - BUS222,40.3848460546044,-86.9108111805207,0,0
+BUS208,BUS208,Old Romney Rd and US52 / SR25 (South of): BUS208,Old Romney Rd and US52 / SR25 (South of) - BUS208,40.3876301877278,-86.9122099526054,0,0
+BUS214,BUS214,Old Romney Rd and US52 / SR25 (NE Corner): BUS214,Old Romney Rd and US52 / SR25 (NE Corner) - BUS214,40.3893870347373,-86.9128295429247,0,0
+BUS974,BUS974,Old Romney Rd & Elston Rd (SE Corner); BUS974,Old Romney Rd & Elston Rd (SE Corner) - BUS974,40.3932976957141,-86.9135000952184,0,0
+BUS975,BUS975,Elston Rd & Beck Ln (South side):BUS975,Elston Rd & Beck Ln (South side) - BUS975,40.3931005533398,-86.9109493142932,0,0
+BUS976,BUS976,Elston Rd & Breckenridge St (SW of): BUS976,Elston Rd & Breckenridge St (SW of) - BUS976,40.3926405544663,-86.9054709020538,0,0
+BUS258,BUS258,Old US 231S & Elston Rd: BUS258,Old US 231S & Elston Rd - BUS258,40.392726,-86.902611,0,0
+BUS653SW,BUS653SW,Old US 231S & Windy Hill Dr (SW Corner): BUS653SW,Old US 231S & Windy Hill Dr (SW Corner) -  BUS653SW,40.3942217167748,-86.900318378229,0,0
+BUS910,BUS910,Valley Plaza on 4th St (South Driveway): BUS910,Valley Plaza on 4th St (South Driveway) - BUS910,40.3964761135862,-86.8952369329474,0,0
+BUS148,BUS148,4th St & Thise Ct (SE Corner): BUS148,4th St & Thise Ct (SE Corner) - BUS148,40.3988605975426,-86.8940031167271,0,0
+BUS264E,BUS264E,4th St & Montefiore St (SE Corner): BUS264E,4th St & Montefiore St (SE Corner) - BUS264E,40.401953,-86.892955,0,0
+BUS979,BUS979,Owen St & 4th St (West of): BUS979,Owen St & 4th St (West of) - BUS979,40.4051839056721,-86.8933178122829,0,0
+BUS912,BUS912,Owen St & 2nd St (NE Corner): BUS912,Owen St & 2nd St (NE Corner) - BUS912,40.4051772001491,-86.8952409562612,0,0
+BUS424,BUS424,Holloway Dr & Owen St (North of): BUS424,Holloway Dr & Owen St (North of) - BUS424,40.4054776075767,-86.8975758193478,0,0
+BUS657,BUS657,Holloway Dr & Washington St (North of): BUS657,Holloway Dr & Washington St (North of) - BUS657,40.406955504832,-86.8976227580084,0,0
+BUS310,BUS310,Kossuth St & 3rd St (SE Corner): BUS310,Kossuth St & 3rd St (SE Corner) - BUS310,40.4098348563811,-86.8946039315822,0,0
+BUS991,BUS991,South Tipp Park on 3rd St: BUS991,South Tipp Park on 3rd St - BUS991,40.4131715245945,-86.894162708173,0,0
+BUS165,BUS165,3rd St & Alabama St (SE Corner): BUS165,3rd St & Alabama St (SE Corner) - BUS165,40.4163512835712,-86.8941868480555,0,0
+BUS172,BUS172,2rd St & Alabama St (NE Corner): BUS172,2rd St & Alabama St (NE Corner) - BUS172,40.416478688507,-86.8953562912557,0,0
+BUS185,BUS185,2nd St & Columbia St (SE Corner): BUS185,2nd St & Columbia St (SE Corner) - BUS185,40.4181067894761,-86.8954166409622,0,0
+BUS287NE,BUS287NE,Columbia St & 2nd St (NE Corner): BUS287NE,,40.4182677220266,-86.8953321513732,0,0
+BUS156,BUS156,Wabash Landing on State St (at shelter): BUS156,Wabash Landing on State St - BUS156,40.4210143042215,-86.9014207661999,0,0
+BUS547,BUS547,Mitch Daniels Blv & Russell St (NE Corner): BUS547,Mitch Daniels Blvd & Russell St (NE Corner) - BUS547,40.424234,-86.918942,0,0
+BUS504,BUS504,Purdue West on McCormick Rd: BUS504,Purdue West on McCormick Rd - BUS504,40.427222,-86.930559,0,0
+BUS251E,BUS251E,McCormick Rd & Stadium Ave (NE Corner): BUS251E,McCormick Rd & Stadium Ave (NE Corner) - BUS251E,40.430131,-86.931639,0,0
+BUS906E,BUS906E,Schwartz Tennis Cntr on McCormick Rd: BUS906E,Schwartz Tennis Cntr on McCormick Rd - BUS906E,40.436504,-86.936006,0,0
+BUS393,BUS393,SW Blackbird Farms Apt Buildings (E): BUS393,SW Blackbird Farms Apt Buildings (E) - BUS393,40.442945387539,-86.9424277211683,0,0
+BUS236,BUS236,McCormick Rd & Lindberg Rd (SE Corner): BUS236,McCormick Rd & Lindberg Rd - BUS236,40.444768,-86.9435,0,0
+BUS551,BUS551,University Pl (at clubhouse): BUS551,,40.447349575004,-86.9369479678242,0,0
+BUS308,BUS308,Village West Apts on Lindberg (at Shelter): BUS308,Village West Apts on Lindberg (at Shelter) - BUS308,40.4460902777964,-86.9401183390688,0,0
+BUS300,BUS300,Station 21 on Lindberg (@ Shelter): BUS300,Station 21 on Lindberg (Shelter) - BUS300,40.4460969833193,-86.9435153569886,0,0
+BUS225,BUS225,Connection Point Church: BUS225,,40.456454,-86.948642,0,0
+BUS223,BUS223,Lodge Apts on Cumberland Ave (@Shelter): BUS223,Lodge Apts on Cumberland Ave (@Shelter) - BUS223,40.459215,-86.939929,0,0
+BUS549S,BUS549S,Fowler Apartments on Ferry St: BUS549S,Fowler Apartments on Ferry St - BUS549S,40.4200017702581,-86.8924286599415,0,0
+BUS534S,BUS534S,Ferry St & 6th St (SW Corner): BUS534S,Ferry St & 6th St (SW Corner) - BUS534S,40.4200124990948,-86.89084079211,0,0
+BUS532SW,BUS532SW,Ferry St & 8th St (SW Corner): BUS532SW,Ferry St & 8th St (SW Corner) - BUS532SW,40.4200205457223,-86.888530068906,0,0
+BUS255,BUS255,9th St & Ferry St (NE Corner): BUS255,9th St & Ferry St (NE Corner) -  BUS255,40.420261944548,-86.8867504231185,0,0
+BUS220SE,BUS220SE,Brown St & 9th St (SE Corner): BUS220SE,Brown St & 9th St (SE Corner) - BUS220SE,40.4217317951758,-86.8867866329424,0,0
+BUS783SE,BUS783SE,9th St & Cincinnati St (SE Corner): BUS783SE,9th St & Cincinnati St (SE Corner) - BUS783SE,40.422775,-86.886793,0,0
+BUS430,BUS430,9th St & Union St (SE Corner): BUS430,9th St & Union St (SE Corner) - BUS430,40.4246232166662,-86.8868711225314,0,0
+BUS853,BUS853,Salem St & 9th St (SE Corner): BUS853,Salem St & 9th St (SE Corner) - BUS853,40.42558,-86.886886,0,0
+BUS292SE,BUS292SE,9th St & Hartford St (SE Corner): BUS292SE,9th St & Hartford St (SE Corner) - BUS292SE,40.4276192443144,-86.8869435421791,0,0
+BUS789SW,BUS789SW,Hartford St & 12th St (SW Corner): BUS789SW,Hartford St & 12th St (SW Corner)  - BUS789SW,40.427658,-86.884342,0,0
+BUS546W,BUS546W,Hartford St & 14th St (at Shelter): BUS546W,Hartford St & 14th St (at Shelter) - BUS546W,40.427681,-86.882416,0,0
+BUS847,BUS847,Tippecanoe St & 14th (East of): BUS847,Tippecanoe St & 14th (East of) - BUS847,40.42642,-86.88135,0,0
+BUS488,BUS488,Tippecanoe St & 17th St (SW Corner): BUS488,Tippecanoe St & 17th St (SW Corner) - BUS488,40.426423,-86.879189,0,0
+BUS451,BUS451,Riggs Community Health Clinic (@ Shelter): BUS451,Riggs Community Health Clinic (at Shelter) - BUS451,40.4285526531072,-86.878922395642,0,0
+BUS849,BUS849,17th St & Howell St (SE Corner): BUS849,17th St & Howell St (SE Corner) - BUS849,40.4300506669313,-86.8789438533154,0,0
+BUS452,BUS452,17th St & Greenbush St (SE Corner): BUS452,17th St & Greenbush St (SE Corner) - BUS452,40.431944,-86.878946,0,0
+BUS330SW,BUS330SW,Greenbush St & 18th St (SW Corner): BUS330SW,Greenbush St & 18th St (SW Corner) - BUS330SW,40.4320328195114,-86.8777046726766,0,0
+BUS850,BUS850,Wabash Center on 20th St (at Shelter): BUS850,Wabash Center on 20th St (at Shelter) - BUS850,40.432693,-86.874373,0,0
+BUS851,BUS851,20th St & Meharry St (SE Corner): BUS851,20th St & Meharry St (SE Corner) - BUS851,40.4338325818677,-86.8744659050981,0,0
+BUS852,BUS852,20th St & Perrine St (SE Corner): BUS852,20th St & Perrine St (SE Corner) - BUS852,40.435801323402,-86.8744846805623,0,0
+BUS274,BUS274,Underwood St & 20th St (SE Corner): BUS274,Underwood St & 20th St (SE Corner) - BUS274,40.4377137385436,-86.8744940682944,0,0
+BUS937,BUS937,Underwood St & 22nd St (SW Corner): BUS937,Underwood St & 22nd St (SW Corner) - BUS937,40.4377271495895,-86.8713813645471,0,0
+BUS353,BUS353,Underwood St & 24th St (NE Corner): BUS353,Underwood St & 24th St (NE Corner) - BUS353,40.437993,-86.869625,0,0
+BUS854,BUS854,24th St & Albany St (SE Corner): BUS854,24th St & Albany St (SE Corner) - BUS854,40.4397857451311,-86.8696419518973,0,0
+BUS676,BUS676,"Malibu Jack's at Tippecanoe Mall: BUS676","Malibu Jack's at Tippecanoe Mall - BUS676",40.39185,-86.84846,0,0
+BUS671,BUS671,"Wendy's at Tippecanoe Mall (North Side): BUS671","Wendy's at Tippecanoe Mall (North Side) - BUS671",40.393337,-86.84857,0,0
+BUS677,BUS677,SR 38/25 & Kingsway Dr: BUS677,SR 38/25 & Kingsway Dr - BUS677,40.3945435818758,-86.8487636356809,0,0
+BUS462,BUS462,SR 38/25 @ Lafayette Marketplace: BUS462,SR 38/25 @ Lafayette Marketplace - BUS462,40.397343,-86.852698,0,0
+BUS946,BUS946,SR 38/25 @ Golden Lion: BUS946,SR 38/25 @ Golden Lion - BUS946,40.39956,-86.85581,0,0
+BUS678,BUS678,Main St & Sagamore Pkwy S (NW Corner): BUS678,Main St & Sagamore Pkwy S (NW Corner) - BUS678,40.4014703870696,-86.8585925912018,0,0
+BUS506,BUS506,Main St & McCarty Ln (Southeast of): BUS506,Main St & McCarty Ln (Southeast of) - BUS506,40.4027216376496,-86.8603024995507,0,0
+BUS531NE,BUS531NE,Main St &  Earl Ave (Northeast of): BUS531NE,Main St &  Earl Ave (Northeast of) - BUS531NE,40.405109,-86.863676,0,0
+BUS664NW,BUS664NW,Main St & S 28th St (NW Corner): BUS664NW,Main St & S 28th St (NW Corner) -  BUS664NW,40.4064941648539,-86.8655958393571,0,0
+BUS663NE,BUS663NE,Main St & S 25th St (NE Corner): BUS663NE,Main St & S 25th St (NE Corner) - BUS663NE,40.4079318289716,-86.8676088373428,0,0
+BUS216E,BUS216E,Main St & 24th St (East Side North of): BUS216E,Main St & 24th St (East Side North of) - BUS216E,40.409462,-86.86967,0,0
+BUS191,BUS191,Frozen Custard on Main St: BUS191,Frozen Custard on Main St -  BUS191,40.410741,-86.871123,0,0
+BUS408,BUS408,Main St & 21st St (Northeast of): BUS408,Main St & 21st St (Northeast of) - BUS408,40.412350768587,-86.8729289992409,0,0
+BUS482SE,BUS482SE,Main St & Scott St (Southeast Corner): BUS482SE,Main St & Scott St (Southeast Corner) - BUS482SE,40.4137575872992,-86.8745061382357,0,0
+BUS444NE,BUS444NE,Main St & Jackson St (North of): BUS444NE,Main St & Jackson St (North of) - BUS444NE,40.4157048711601,-86.8767122552819,0,0
+BUS391NE,BUS391NE,Alabama St & Main St (NE Corner): BUS391NE,,40.416573,-86.877639,0,0
+BUS305,BUS305,Columbia St & 14th St (NE Corner): BUS305,Columbia St & 14th St (NE Corner) - BUS305,40.4182730864449,-86.8811808157671,0,0
+BUS309,BUS309,Columbia St & 12th St (NE Corner): BUS309,Columbia St & 12th St (NE Corner) - BUS309,40.4182704042358,-86.8837704887253,0,0
+BUS242,BUS242,Columbia St & 9th St (NE Corner): BUS242,Columbia St & 9th St (NE Corner) - BUS242,40.4182717453403,-86.8867101899809,0,0
+BUS257,BUS257,Meijer Store East (at Shelter): BUS257,Meijer Store East (at Shelter) - BUS257,40.41539,-86.8138,0,0
+BUS299,BUS299,Meijer Ct & Meijer Dr (NE Corner): BUS299,Meijer Ct & Meijer Dr (SN Corner) - BUS299,40.4167898247713,-86.8140719422145,0,0
+BUS277N,BUS277N,SR 26 & Frontage Rd (NE Corner): BUS277N,SR 26 & Frontage Rd (NE Corner) -  BUS277N,40.4176441083934,-86.8164698372167,0,0
+BUS386,BUS386,South St & Red Cloud Trl (East of): BUS386,South St & Red Cloud Trl (East of) - BUS386,40.4177916298981,-86.823625971295,0,0
+BUS406,BUS406,South St & Brinker St (West of): BUS406,South St & Brinker St - BUS406,40.4178519796045,-86.8295093971198,0,0
+BUS806,BUS806,South St & Eastland Dr (West of): BUS806,South St & Eastland Dr (West of) - BUS806,40.4177943121072,-86.8338532348784,0,0
+BUS377,BUS377,South St & Creasy Ln (Northeast of): BUS377,South St & Creasy Ln (Northeast of) - BUS377,40.417806,-86.836661,0,0
+BUS831,BUS831,South St & Creasy Ln (West of): BUS831,South St & Creasy Ln (West of) - BUS831,40.417769,-86.839813,0,0
+BUS302,BUS302,South St & Executive Dr (West of): BUS302,South St & Executive Dr (West of) - BUS302,40.4177125047274,-86.843884697192,0,0
+BUS811,BUS811,Target on South St(@ 5th/3rd Bank): BUS811,Target on South St(@ 5th/3rd Bank) - BUS811,40.4177031169953,-86.8479978649615,0,0
+BUS411,BUS411,36th St & South St (North of): BUS411,36th St & South St (North of) - BUS411,40.4181269060449,-86.8498459070829,0,0
+BUS813E,BUS813E,36th St & Coleman Ct (East Side): BUS813E,36th St & Coleman Ct (East Side) - BUS813E,40.422411,-86.850843,0,0
+BUS552SE,BUS552SE,36th St & Union St (SE Corner): BUS552SE,36th St & Union St (SE Corner) - BUS552SE,40.4247707381708,-86.8503541857215,0,0
+BUS793,BUS793,RRX on Union St (NE Corner): BUS793,RRX on Union St (NE Corner) - BUS793,40.4249464228717,-86.854750326559,0,0
+BUS196W,BUS196W,Earl Ave & Union St (West Side South of): BUS196W,Earl Ave & Union St (West Side South of) - BUS196W,40.424254,-86.860709,0,0
+BUS507W,BUS507W,Portledge Commons Apts on Earl Ave: BUS507W,Portledge Commons Apts on Earl Ave - BUS507W,40.4220482958584,-86.860636434593,0,0
+BUS459NW,BUS459NW,Earl Ave & Cason St (NW Corner): BUS459NW,Earl Ave & Cason St (NW Corner) - BUS459NW,40.4205395531976,-86.8606029069783,0,0
+BUS487W,BUS487W,Ferry St & Earl Ave (NW Corner): BUS487W,Ferry St & Earl Ave (NW Corner) -  BUS487W,40.4191327344854,-86.86074372296,0,0
+BUS116,BUS116,Ferry St & 28th St (NW Corner): BUS116,Ferry St & 28th St (NW Corner) - BUS116,40.419079090302,-86.8653396883809,0,0
+BUS542,BUS542,Ferry St & 26th St (NE Corner): BUS542,Ferry St & 26th St (NE Corner) - BUS542,40.4190415393735,-86.86752032444,0,0
+BUS545N,BUS545N,Ferry St & 24rd St (NW Corner): BUS545N,Ferry St & 24rd St (NW Corner) - BUS545N,40.4190469037918,-86.8700670820515,0,0
+BUS548NE,BUS548NE,Ferry St & 21st St (NE Corner): BUS548NE,Ferry St & 21st St (NE Corner) - BUS548NE,40.4189798485625,-86.8734453245071,0,0
+BUS280N,BUS280N,Ferry St & 19th St (West of): BUS280N,Ferry St & 19th St (West of) - BUS280N,40.418951,-86.875856,0,0
+BUS798NE,BUS798NE,Ferry St & Asher St (NE Corner): BUS798NE,Ferry St & Asher St (NE Corner) - BUS798NE,40.4193298768598,-86.8789398300016,0,0
+BUS797N,BUS797N,Ferry St & Perrin Ave (West of): BUS797N,Ferry St & Perrin Ave (West of) - BUS797N,40.4200822365333,-86.8818848956755,0,0
+BUS796N,BUS796N,Ferry St & Erie St (West of): BUS796N,Ferry St & Erie St (West of) - BUS796N,40.420085,-86.884236,0,0
+BUS794N,BUS794N,Ferry St & 10th St (NE corner): BUS794N,Ferry St & 10th St (NE corner) - BUS794N,40.420086,-86.885774,0,0
+BUS532NE,BUS532NE,Ferry St & 8th St (NE Corner): BUS532NE,Ferry St & 8th St (NE Corner) - BUS532NE,40.420088,-86.888169,0,0
+BUS534N,BUS534N,Ferry St & 6th St (NE Corner): BUS534N,Ferry St & 6th St (NE Corner) - BUS534N,40.4200902831608,-86.8902252251044,0,0
+BUS549N,BUS549N,Fowler House Apts on Ferry St: BUS549N,Fowler House Apts on Ferry St - BUS549N,40.4200741899058,-86.8925855691782,0,0
+BUS287,BUS287,2nd St & Columbia St (NW Corner): BUS287,2nd St & Columbia St (NW Corner) -  BUS287,40.418309,-86.895538,0,0
+BUS172W,BUS172W,2nd St & Alabama St (NE Corner): BUS172,,40.4164961228666,-86.8955695268851,0,0
+BUS150,BUS150,Alabama St & 4th St (SW Corner): BUS150,Alabama St & 4th St (SW Corner) - BUS150,40.4163702683192,-86.8932114875016,0,1
+BUS194,BUS194,Fountain St & 4th St (NW Corner): BUS194,Fountain St & 4th St (NW Corner) - BUS194,40.412823,-86.893106,0,0
+BUS240,BUS240,4th St & Fairmont St (NW Corner): BUS240,4th St & Fairmont St (NW Corner) - BUS240,40.408744,-86.893084,0,0
+BUS399,BUS399,4th St & Owen St (NW Corner): BUS399,4th St & Owen St (NW Corner) - BUS399,40.405259007529,-86.8930482502608,0,0
+BUS264W,BUS264W,4th St & Montefiore St (NW Corner): BUS264W,4th St & Montefiore St (NW Corner) - BUS264W,40.4018123687394,-86.8930978711306,0,0
+BUS665,BUS665,4th St & Williams Ridge/Saw Mill Rd: BUS665,4th St & Williams Ridge/Saw Mill Rd - BUS665,40.3980760513589,-86.8945610162354,0,0
+BUS261,BUS261,4th St & Teal Rd (North of): BUS261,4th St & Teal Rd (North of) - BUS261,40.396167,-86.895664,0,0
+BUS653NE,BUS653NE,Old US 231S & Windy Hill Dr (NE Corner): BUS653NE,Old US 231S & Windy Hill Dr (NE Corner) - BUS653NE,40.3944725033326,-86.9001373291098,0,0
+BUS254,BUS254,Elston Rd & Old US231 (West of): BUS254,Elston Rd & Old US231 (West of) - BUS254,40.3925842280736,-86.9038146378884,0,0
+BUS270,BUS270,Elston Rd & Beck Ln (West of): BUS270,Elston Rd & Beck Ln (West of) - BUS270,40.3930361803196,-86.9093386476838,0,0
+BUS655,BUS655,Elston Point Apts on Elston Rd(NE Corner): BUS655,Elston Point Apts on Elston Rd (NE Corner) - BUS655,40.393304401237,-86.9124728091045,0,0
+BUS159,BUS159,Old Romney Rd & US52 / SR25 (NW Corner): BUS159,Old Romney Rd & US52 / SR25 (NW Corner) - BUS159,40.3891818457354,-86.9129435368147,0,0
+BUS212,BUS212,Romney Meadows Apts (at Shelter): BUS212,Romney Meadows Apts (at Shelter) - BUS212,40.387018644036,-86.9121938593503,0,0
+BUS211,BUS211,Twyckenham Blvd & Old Romney (NW Corner): BUS211,Twyckenham Blvd & Old Romney (NW Corner) - BUS211,40.3849426141347,-86.911437476363,0,0
+BUS658,BUS658,CR 10 W & Twyckenham Blvd (SW Corner): BUS658,CR 10 W & Twyckenham Blvd (SW Corner) - BUS658,40.3846301367658,-86.906809324432,0,0
+BUS764,BUS764,Twyckenham Blvd & Old US 231S (East of): BUS764,Twyckenham Blvd & Old US 231S (East of) - BUS764,40.3846355011842,-86.9042022171141,0,0
+BUS703S,BUS703S,Twyckenham & Poland Hill (Southwest of): BUS703S,Twyckenham & Poland Hill (Southwest of) - BUS703S,40.383391,-86.896151,0,0
+BUS704S,BUS704S,Quarry Dr & Twyckenham (SW Corner): BUS704S,Quarry Dr & Twyckenham (SW Corner) - BUS704S,40.3834995855987,-86.8924259777323,0,0
+BUS340S,BUS340S,Twyckenham Blvd & 9th St (SW Corner): BUS340S,Twyckenham Blvd & 9th St (SW Corner) - BUS340S,40.3818433214332,-86.885783486711,0,0
+BUS866,BUS866,Twyckenham & 18th St (SW Corner): BUS866,Twyckenham & 18th St (SW Corner) - BUS866,40.3815871704571,-86.8765660748819,0,0
+BUS869,BUS869,18th St & Normandy Dr (NW Corner): BUS869,18th St & Normandy Dr (NW Corner) - BUS869,40.378214,-86.876233,0,0
+BUS871,BUS871,18th St & Ortman Ln (NW Corner): BUS871,18th St & Ortman Ln (NW Corner) - BUS871,40.375111,-86.876154,0,0
+BUS873,BUS873,18th St & Bridgewater Circle (West Side): BUS873,18th St & Bridgewater Circle (West Side) - BUS873,40.3709803742755,-86.8761315569956,0,0
+BUS874,BUS874,Valley Lakes Center on Vet Mem Pkwy S: BUS874,Valley Lakes Center on Vet Mem Pkwy S - BUS874,40.367103,-86.874180249821,0,0
+BUS875SW,BUS875SW,Vet Mem Pkwy S & Regal Valley Dr: BUS875SW,Vet Mem Pkwy S & Regal Valley Dr - BUS875SW,40.367103,-86.8713411314095,0,0
+BUS876,BUS876,Foxfire Apts on Veterans Mem Pkwy S: BUS876,Foxfire Apts on Veterans Mem Pkwy S - BUS876,40.367103,-86.8681922178383,0,0
+BUS877,BUS877,Promenade Pkwy & Veterans Memorial Pkwy S: BUS877,Promenade Pkwy & Veterans Memorial Pkwy S - BUS87,40.366733,-86.862837,0,0
+BUS892,BUS892,Pink Walrus Yogurt: BUS892,Pink Walrus Yogurt - BUS892,40.366158,-86.861817,0,0
+BUS959,BUS959,Soldiers Home Rd & Linda Ln (SW Corner): BUS959,Soldiers Home Rd & Linda Ln (SW Corner) - BUS959,40.457171825002,-86.9027846695652,0,0
+BUS144,BUS144,Univ Crossing Apts Soldiers Home(@Shelter): BUS144,University Crossing Apts on Soldiers Home Rd (@Shelter) - BUS144,40.4544386538529,-86.9031937064644,0,0
+BUS595W,BUS595W,Happy Hollow Apts on Happy Hollow Rd: BUS595W,Happy Hollow Apts on Happy Hollow Rd - BUS595W,40.450704,-86.901699,0,0
+BUS361NW,BUS361NW,Happy Hollow Rd & Chippewa St (NW Corner):BUS361NW,Happy Hollow Rd & Chippewa St (NW Corner) - BUS361NW,40.4499472945897,-86.9011485219686,0,0
+BUS596,BUS596,Happy Hollow Rd & Knox Dr (NW Corner): BUS596,Happy Hollow Rd & Knox Dr (NW Corner) - BUS596,40.4483004181564,-86.8998141229042,0,0
+BUS597W,BUS597W,Happy Hollow Rd & Pathway Ln (SW Corner): BUS597W,Happy Hollow Rd & Pathway Ln (SW Corner) - BUS597W,40.4464376238846,-86.8995298087316,0,0
+BUS599W,BUS599W,Happy Hollow Rd & Laurel Dr (SW Corner): BUS599W,Happy Hollow Rd & Laurel Dr (SW Corner) -  BUS599W,40.4440906908566,-86.899749749884,0,0
+BUS123W,BUS123W,Nobb Hill Apts on Happy Hollow (West): BUS123W,Nobb Hill Apts on Happy Hollow (West) - BUS123W,40.439366,-86.899393,0,0
+BUS600E,BUS600E,Catherwood Dr & Happy Hollow Rd (East of): BUS600E,Catherwood Dr & Happy Hollow Rd (East of) - BUS600E,40.4368943236407,-86.8981350599608,0,0
+BUS066,BUS066,North River Rd (SW at shelter): BUS066,North River Rd (SW at shelter) - BUS066,40.4319925863738,-86.8992522000821,0,0
+BUS602W,BUS602W,River Rd & Robinson (NW Corner): BUS602W,River Rd & Robinson (NW Corner) - BUS602W,40.428513,-86.900827,0,0
+BUS124,BUS124,River Rd & Quincy St (at Shelter): BUS124,River Rd & Quincy St (at Shelter) - BUS124,40.427241,-86.901458,0,0
+BUS580,BUS580,River Rd & Howard Ave (SW of Corner): BUS580,River Rd & Howard Ave (SW of Corner) - BUS580,40.423842,-86.903363,0,0
+BUS184,BUS184,Grissom Hall on Grant St (at Shelter): BUS184,Grissom Hall on Grant St (at Shelter) - BUS184,40.4265181974481,-86.9103069251959,0,0
+BUS295,BUS295,Wang Hall on Northwestern (at Crosswalk): BUS295,Wang Hall on Northwestern (at Crosswalk) - BUS295,40.4293452459183,-86.9117512948365,0,0
+BUS530,BUS530,Northwestern Ave & Stadium Ave (McDonalds): BUS530,Northwestern Ave & Stadium Ave (McDonalds) -  BUS530,40.431117,-86.913622,0,0
+BUS105,BUS105,Northwestern Ave & Evergreen St(SE Corner): BUS105,Northwestern Ave & Evergreen St(SE Corner) - BUS105,40.432242,-86.914828,0,0
+BUS284,BUS284,Northwestern Ave & Meridian St(SE Corner): BUS284,Northwestern Ave & Meridian St(SE Corner) - BUS284,40.4340002199411,-86.9151375839196,0,0
+BUS203,BUS203,Northwestern Ave & Northridge Dr(SE Corner):BUS203,Northwestern Ave & Northridge Dr(SE Corner) - BUS203,40.436737,-86.915429,0,0
+BUS901,BUS901,Northwestern Ave & Hillcrest Rd(SE Corner): BUS901,Northwestern Ave & Hillcrest Rd(SE Corner) -  BUS901,40.440343,-86.918101,0,0
+BUS632,BUS632,Northwestern Ave & Garden St (SE Corner): BUS632,Northwestern Ave & Garden St (SE Corner) - BUS632,40.442652,-86.919269,0,0
+BUS126,BUS126,Northwestern Ave & Elm Dr (SE Corner): BUS126,Northwestern Ave & Elm Dr (SE Corner) - BUS126,40.44462,-86.920471,0,0
+BUS375SE,BUS375SE,Lindberg Rd & Northwestern (Southeast): BUS375SE,Lindberg Rd & Northwestern (Southeast) - BUS375SE,40.445914,-86.92105,0,0
+BUS102NE,BUS102NE,Carlisle Rd & Lindberg Rd (North of): BUS102NE,Carlisle Rd & Lindberg Rd  (North of) - BUS102NE,40.446097,-86.91917,0,0
+BUS623SE,BUS623SE,Carlisle Rd & Windsor Dr (SE Corner): BUS623SE,Carlisle Rd & Windsor Dr (SE Corner) - BUS623SE,40.44786,-86.919464,0,0
+BUS624E,BUS624E,Carlisle Rd & Sycamore Ln (SE Corner): BUS624E,Carlisle Rd & Sycamore Ln (SE Corner) - BUS624E,40.450319,-86.919401,0,0
+BUS101NE,BUS101NE,Mayfair Village Apts on Sycamore Ln: BUS101NE,Mayfair Village Apts on Sycamore Ln - BUS101NE,40.4521225662305,-86.9216633988418,0,0
+BUS104N,BUS104N,Anthrop Dr & Yeager Rd (NE Corner): BUS104N,Anthrop Dr & Yeager Rd (NE Corner) - BUS104N,40.4520260067002,-86.924451555279,0,0
+5101,5101,Yeager Rd & Kent Ave (SE Corner),,40.4554194944845,-86.9244715651229,0,0
+BUS626SE,BUS626SE,Yeager Rd & Montgomery St (SE Corner): BUS626SE,Yeager Rd & Montgomery St (SE Corner) - BUS626SE,40.4585866903416,-86.924490447312,0,0
+BUS218SE,BUS218SE,Yeager Rd & Cumberland Ave (SE Corner): BUS218SE,Yeager Rd & Cumberland Ave (SE Corner) - BUS218SE,40.4604092514759,-86.9244636252203,0,0
+BUS119,BUS119,Country Villa Apts on Yeager (SE Corner): BUS119,Country Villa Apts on Yeager Rd (SE Corner) BUS119,40.4619220174505,-86.9244850828937,0,0
+BUS118,BUS118,Yeager Rd & Roxboro St (SE Corner): BUS118,Yeager Rd & Roxboro St (SE Corner) - BUS118,40.4648992696344,-86.9244998350441,0,0
+BUS957,BUS957,Mcclure Ave @ Kurz Tech Center: BUS957,Mcclure Ave @ Kurz Tech Center - BUS957,40.465173,-86.926934,0,0
+BUS956,BUS956,Win Hentschel Blvd & MED Institute: BUS956,Win Hentschel Blvd & MED Institute - BUS956,40.465335,-86.929928,0,0
+BUS955,BUS955,Kent Ave @ Purdue Research Center: BUS955,Kent Ave @ Purdue Research Center - BUS955,40.4664978663026,-86.9317538697573,0,0
+BUS944N,BUS944N,West View Apts on Kalberer Rd (North): BUS944N,West View Apts on Kalberer Rd (North) - BUS944N,40.467868,-86.934742,0,0
+BUS115N,BUS115N,Kalberer Rd & Morehouse Rd (NE Corner): BUS115N,Kalberer Rd & Morehouse Rd (NE Corner) - BUS115N,40.467824,-86.938576,0,0
+BUS114E,BUS114E,Trailside Flats on Morehouse (East): BUS114E,Trailside Flats on Morehouse (East) - BUS114E,40.4691773932682,-86.9387061559383,0,0
+BUS113NE,BUS113NE,Morehouse Rd & Ellison Dr (East Side): BUS113NE,Morehouse Rd & Ellison Dr (East Side) - BUS113NE,40.4708001298189,-86.93884697192,0,0
+BUS631E,BUS631E,Morehouse Rd & Abnaki Dr (East): BUS631E,Morehouse Rd & Abnaki Dr (East) - BUS631E,40.4744479342966,-86.938885863953,0,0
+BUS112SE,BUS112SE,Morehouse Rd & Mason Dixon Dr (SE Corner):BUS112SE,Morehouse Rd & Mason Dixon Dr (SE Corner) - BUS112SE,40.47773,-86.938702,0,0
+BUS627,BUS627,Mason Dixon Dr & Vicksburg Ln (SW Corner): BUS627,Mason Dixon Dr & Vicksburg Ln (SW Corner) - BUS627,40.4777349816403,-86.9362586400663,0,0
+BUS110SE,BUS110SE,Mason Dixon Dr & Shining Armor(SE Corner):BUS110SE,Mason Dixon Dr & Shining Armor(SE Corner) - BUS110SE,40.47924,-86.934531,0,0
+BUS628,BUS628,Mason Dixon Dr & Roundtable Dr (SE Corner): BUS628,Mason Dixon Dr & Roundtable Dr (SE Corner) - BUS628,40.4808329332371,-86.9345540961357,0,0
+BUS157,BUS157,Roundtable Dr & Shining Armor Ln(SW Corner):BUS157,Roundtable Dr & Shining Armor Ln (SW Corner) - BUS157,40.4808450031784,-86.9311771947847,0,0
+BUS110NE,BUS110NE,Shining Armor Ln & Mason Dixon(NE Corner):BUS110NE,Shining Armor Ln & Mason Dixon(NE Corner) - BUS110NE,40.479422,-86.934318,0,0
+BUS630,BUS630,Mason Dixon Dr & Military Ct (NE Corner): BUS630,Mason Dixon Dr & Military Ct (NE Corner) - BUS630,40.4778194712293,-86.936568435226,0,0
+BUS112NE,BUS112NE,Mason Dixon Dr & Morehouse Rd (NE Corner):BUS112NE,Mason Dixon Dr & Morehouse Rd (NE Corner)-BUS112NE,40.477854,-86.938743,0,0
+BUS631W,BUS631W,Morehouse Rd & Abnaki Dr (West): BUS631W,Morehouse Rd & Abnaki Dr (West) - BUS631W,40.4744787797021,-86.9389851056924,0,0
+BUS113NW,BUS113NW,Morehouse Rd & Ellison Dr (West Side): BUS113NW,Morehouse Rd & Ellison Dr (West Side) - BUS113NW,40.4707961065052,-86.9389462136594,0,0
+BUS114W,BUS114W,Trailside Flats Apts on Morehouse (West): BUS114W,Trailside Flats Apts on Morehouse (West) - BUS114W,40.4691881221049,-86.9387973510502,0,0
+BUS115S,BUS115S,Kalberer Rd & Morehouse Rd (SE Corner): BUS115S,Kalberer Rd & Morehouse Rd (SE Corner) - BUS115S,40.46774,-86.938013,0,0
+BUS944S,BUS944S,West View Apts on Kalberer Rd (South): BUS944S,West View Apts on Kalberer Rd (South) - BUS944S,40.467776,-86.934978,0,0
+BUS945SW,BUS945SW,Kalberer Rd & Kent Ave (SW Corner): BUS945SW,Kalberer Rd & Kent Ave (SW Corner) - BUS945SW,40.467770574556,-86.9318437237646,0,0
+BUS046,BUS046,Kent Ave @ Purdue Research Center: BUS046,Kent Ave @ Purdue Research Center - BUS046,40.4660378674291,-86.9318772513793,0,0
+BUS047,BUS047,Win Hentschel Blvd & MED Institute: BUS047,Win Hentschel Blvd & MED Institute - BUS047,40.465203,-86.930392,0,0
+BUS048,BUS048,Mcclure Ave @ Kurz Tech Center: BUS048,Mcclure Ave @ Kurz Tech Center - BUS048,40.465156,-86.92715,0,0
+BUS117,BUS117,Yeager Rd & McClure Ave (SW Corner): BUS117,Yeager Rd & McClure Ave (SW Corner) - BUS117,40.4649247506216,-86.9246071234111,0,0
+BUS129,BUS129,Peppermill Apts on Yeager Rd (at shelter): BUS129,Peppermill Apts on Yeager Rd (at shelter) - BUS129,40.461673,-86.92462,0,0
+BUS626NW,BUS626NW,Yeager Rd & Montgomery St (NW Corner): BUS626NW,Yeager Rd & Montgomery St (NW Corner) - BUS626NW,40.458653745571,-86.9245735957964,0,0
+5103,5103,Yeager Rd & Kent Ave (NW Corner),,40.4555590720415,-86.9246047950184,0,0
+BUS104S,BUS104S,Anthrop Dr & Yeager (at Shelter): BUS104S,Anthrop Dr & Yeager (at Shelter) - BUS104S,40.4519495637387,-86.924191380989,0,0
+BUS101SW,BUS101SW,Mayfair Village Apts on Sycamore Ln: BUS101SW,Mayfair Village Apts on Sycamore Ln - BUS101SW,40.4520648987332,-86.9217492295354,0,0
+BUS611S,BUS611S,Sycamore Ln & W Navajo St: BUS611S,Sycamore Ln & W Navajo St - BUS611S,40.450768,-86.919916,0,0
+BUS623NW,BUS623NW,Carlisle Rd & Windsor Dr (NW Corner): BUS623NW,Carlisle Rd & Windsor Dr (NW Corner) - BUS623NW,40.448055,-86.919598,0,0
+BUS102NW,BUS102NW,Carlisle Rd & Lindberg Rd (NW Corner): BUS102NW,Carlisle Rd & Lindberg Rd (NW Corner) - BUS102NW,40.446024,-86.919318,0,0
+BUS952,BUS952,Lindberg Rd & Northwestern (Northeast): BUS952,Lindberg Rd & Northwestern (Northeast) - BUS952,40.446042,-86.921129,0,0
+BUS375SW,BUS375SW,Northwestern & Lindberg (Southwest of): BUS375SW,Northwestern & Lindberg (Southwest of) - BUS375SW,40.445597,-86.921499,0,0
+BUS629,BUS629,Northwestern Ave & Garden St (NW Corner): BUS629,Northwestern Ave & Garden St (NW Corner) - BUS629,40.44281,-86.919553,0,0
+BUS476,BUS476,Northwestern Ave & Carrolton Blv(NW Corner):BUS476,Northwestern Ave & Carrolton Blv(NW Corner) - BUS476,40.4418590928232,-86.9190214228047,0,0
+BUS431,BUS431,Cherry Ln & Northwestern Ave (South of): BUS431,Cherry Ln & Northwestern Ave -  BUS431,40.438373,-86.917026,0,0
+BUS169,BUS169,Northwestern Ave & Chelsea Rd (West Side): BUS169,Northwestern Ave & Chelsea Rd (West Side) - BUS169,40.4347083231633,-86.9153253385619,0,0
+BUS111,BUS111,Lambert Fieldhouse on Stadium Ave: BUS111,Lambert Fieldhouse on Stadium Ave - BUS111,40.431439,-86.91649,0,0
+BUS439,BUS439,Russell St & 4th St (NW Corner): BUS439,Russell St & 4th St (NW Corner) - BUS439,40.4283072309677,-86.9192064952377,0,0
+BUS804,BUS804,Russell St & 2nd (NW Corner): BUS804,Russell St & 2nd (NW Corner) - BUS804,40.4263116673417,-86.9191515099496,0,0
+BUS345,BUS345,Lilly Hall on Mitch Daniels Blvd (shelter): BUS345,Lilly Hall on Mitch Daniels Blvd (at shelter) - BUS345,40.4240934887021,-86.9172436713025,0,1
+BUS894,BUS894,Lark Apts (at mailboxes): BUS894,Lark Apts (at mailboxes) - BUS894,40.4722,-86.9459,0,0
+BUS179,BUS179,Alight Apts (at shelter): BUS179,Alight Apts (at shelter) - BUS179,40.467188,-86.947349,0,0
+BUS564,BUS564,4th St & Wall St (SE Corner): BUS564,4th St & Wall St (SE Corner) - BUS564,40.4237783207761,-86.8930442269471,0,0
+BUS519W,BUS519W,Fannon & Salem St (NW Corner): BUS519W,Fannon & Salem St (NW Corner) - BUS519W,40.42585,-86.891551,0,0
+BUS359,BUS359,E Fowler Ave & Littleton St (NW Corner): BUS359,E Fowler Ave & Littleton St(NW Corner) - BUS359,40.4266630367436,-86.9038280489342,0,0
+BUS949,BUS949,W Fowler Ave & Vine St (NW Corner): BUS949,W Fowler Ave & Vine St (NW Corner) -  BUS949,40.4276541130337,-86.9082376008176,0,0
+BUS530S,BUS530S,Dodge St & Garfield St (SW Corner): BUS530S,pre detour McDonalds on Stadium Ave - BUS530S,40.4332290848034,-86.9129582889651,0,0
+BUS622,BUS622,Dodge St & Grant St (SW Corner): BUS622,Dodge St & Grant St (SW Corner) - BUS622,40.4331834872474,-86.910508090884,0,0
+BUS635,BUS635,Stadium Ave & Vine St (SW Corner): BUS635,Stadium Ave & Vine St (SW Corner) - BUS635,40.4307788867223,-86.9082550351772,0,0
+BUS061,BUS061,Stadium Ave & Salisbury St (SW Corner): BUS061,Stadium Ave & Salisbury St (SW Corner) - BUS061,40.430746,-86.905845,0,0
+BUS636SE,BUS636SE,Salisbury St & Dehart St (SE Corner): BUS636SE,Salisbury St & Dehart St (SE Corner) - BUS636SE,40.4326001067519,-86.9056988898336,0,0
+BUS333SE,BUS333SE,Salisbury St & Robinson St (SE Corner): BUS333SE,Salisbury St & Robinson St (SE Corner) - BUS333SE,40.434932,-86.905752,0,0
+BUS493,BUS493,Salisbury St & Leslie Ave (NE Corner): BUS493,Salisbury St & Leslie Ave (NE Corner) - BUS493,40.437283243971,-86.9061776641713,0,0
+BUS637SE,BUS637SE,Salisbury St & Rockland Dr (SE Corner): BUS637SE,Salisbury St & Rockland Dr (SE Corner) -  BUS637SE,40.4389354848227,-86.9074436669018,0,0
+BUS337NE,BUS337NE,Salisbury St & Grant St (NE Corner): BUS337NE,Salisbury St & Grant St (NE Corner) - BUS337NE,40.4418362940452,-86.9107830173244,0,0
+BUS924E,BUS924E,Salisbury St & Riley Ln (East side): BUS924E,,40.4434040453079,-86.9128402717614,0,0
+BUS365SE,BUS365SE,Salisbury St & Lindberg Rd (Southeast of):BUS365SE,Salisbury St & Lindberg Rd (Southeast of) - BUS365SE,40.445537,-86.91398,0,0
+BUS633SE,BUS633SE,Salisbury St & Sycamore Ln (SE Corner): BUS633SE,Salisbury St & Sycamore Ln (SE Corner) - BUS633SE,40.4480804770041,-86.9156713435454,0,0
+BUS484,BUS484,Salisbury St & Park Ridge Dr (SE Corner): BUS484,Salisbury St & Park Ridge Dr (SE Corner) - BUS484,40.4508190125715,-86.9156793901729,0,0
+BUS610,BUS610,Salisbury St & Kent Ave (north of): BUS610,Salisbury St & Kent Ave (north of) - BUS610,40.455428,-86.915589,0,0
+BUS427,BUS427,Westminster Village N & Salisbury (East): BUS427,Westminster Village N & Salisbury (East) - BUS427,40.4586108302242,-86.9155734429105,0,0
+BUS418,BUS418,Cumberland Ave & Salisbury St (West of):  BUS418,(West of) Cumberland Ave & Salisbury St - BUS418,40.460496,-86.916281,0,0
+BUS594,BUS594,Cumberland Pointe on Cumberland Ave(North): BUS594,Cumberland Pointe on Cumberland(North Side) - BUS594,40.460557,-86.918859,0,0
+BUS541,BUS541,Cumberland Ave & Browning St (NE Corner): BUS541,Cumberland Ave & Browning St (NE Corner) - BUS541,40.4607083177989,-86.921175236772,0,0
+BUS218NE,BUS218NE,Cumberland Ave & Yeager Rd (East of): BUS218NE,Cumberland Ave & Yeager Rd (East of)  - BUS218NE,40.4607552564594,-86.9241310312826,0,0
+BUS455N,BUS455N,Salem Courthouse Apts (at Shelter): BUS455N,Salem Courthouse Apts (at Shelter) - BUS455N,40.4607431865181,-86.9267904416794,0,0
+BUS511NE,BUS511NE,Cumberland Ave & Kent Ave (West of): BUS511NE,Cumberland Ave & Kent Ave (West of) - BUS511NE,40.4607035164366,-86.9298450525496,0,0
+BUS900,BUS900,Discovery Learning Center:  BUS900,Discovery Learning Center - BUS900,40.420875,-86.9219942013115,0,0
+BUS440,BUS440,Harrison St & Russell Dr (SW Corner): BUS440,Harrison St & Russell Dr (SW Corner) - BUS440,40.4202740144893,-86.9197617125369,0,0
+BUS324,BUS324,Lynn Hall on Harrison St: BUS324,Lynn Hall on Harrison St - BUS324,40.420295,-86.91458,0,0
+BUS294,BUS294,Grant Street Station Apts (@ Shelter): BUS294,Grant Street Station Apts (@ Shelter) - BUS294,40.419584,-86.910194,0,0
+BUS321,BUS321,Grant St & Wood St (SE Corner): BUS320,Grant St & Wood St (SE Corner) - BUS320,40.4220254970804,-86.910270715372,0,0
+BUS154,BUS154,Young Hall on Grant St (East): BUS154,Young Hall on Grant St (East) - BUS154,40.4231436139921,-86.9102643947257,0,0
+BUS899,BUS899,Morgan & Jischke Dr (SW Corner): BUS899,Morgan & Jischke Dr (SW Corner) - BUS899,40.4234215869559,-86.9217934859868,0,0
+BUS491E,BUS491E,McCutcheon Hall on McCutcheon (@Shelter): BUS491E,McCutcheon Hall on McCutcheon (at Shelter) - BUS491E,40.4255217567397,-86.9288731771036,0,0
+BUS470,BUS470,Hillenbrand Hall on 3rd St: BUS470,Hillenbrand Hall on 3rd St - BUS470,40.4273751632795,-86.9263746992573,0,0
+BUS285,BUS285,MacArthur Dr & 1st St (West Side of Street):BUS285,MacArthur Dr & 1st St (West Side of Street) - BUS285,40.4254010573269,-86.9258221641673,0,0
+BUS584SW,BUS584SW,1st St & Jischke Dr (SW Corner): BUS584SW,1st St & Jischke Dr (SW Corner) - BUS584SW,40.4252602413452,-86.9221716774804,0,0
+BUS523,BUS523,Williams St & Salisbury St (SW Corner): BUS523,Williams St & Salisbury St (SW Corner) - BUS523,40.4184031735899,-86.9080914204175,0,0
+BUS458,BUS458,River Rd & Wood St (SE Corner): BUS458,River Rd & Wood St (SE Corner) - BUS458,40.42041,-86.905211,0,0
+BUS644,BUS644,Wabash Landing on State St (at Roebuck Dr): BUS644,Wabash Landing on State St (at Roebuck Dr) - BUS644,40.420805,-86.901506,0,0
+BUS188,BUS188,2nd St & Main St (SE Corner): BUS188,2nd St & Main St (SE Corner) - BUS188,40.418996,-86.895413,0,0
+BUS987SE,BUS987SE,9th St & Roberts St (SE Corner): BUS987SE,9th St & Roberts St (SE Corner) - BUS987SE,40.4296818631698,-86.8869985274672,0,0
+BUS512,BUS512,Greenbush St & 9th St (SE Corner); BUS512,Greenbush St & 9th St (SE Corner) - BUS512,40.4320596416032,-86.8870655826965,0,0
+BUS139,BUS139,9th St & Canal Rd (North of): BUS139,,40.43542,-86.88636,0,0
+BUS163,BUS163,Oscar Winski on 9th St: BUS163,,40.44021,-86.88472,0,0
+BUS164,BUS164,Duncan & 9th St (East of): BUS164,,40.44603,-86.88027,0,0
+BUS127,BUS127,Tippecanoe County Community Corrections: BUS127,,40.456775,-86.876203,0,0
+BUS511SW,BUS511SW,Cumberland Ave & Kent Ave (West of): BUS511SW,Cumberland Ave & Kent Ave (West of) - BUS511SW,40.460526,-86.930698,0,0
+BUS455S,BUS455S,Salem Courthouse on Cumberland (South): BUS455S,Salem Courthouse on Cumberland (South) - BUS455S,40.4604897177511,-86.9274381951951,0,0
+BUS964,BUS964,Cumberland Ave & Yeager Rd (SW Corner): BUS964,Cumberland Ave & Yeager Rd (SW Corner)  - BUS964,40.4605742073401,-86.9249142363616,0,0
+BUS136,BUS136,Cumberland Ave & Manchester St (SW Corner): BUS136,Cumberland Ave & Manchester St (SW Corner) - BUS136,40.46057,-86.92061,0,0
+BUS133,BUS133,Cumberland Pointe on Cumberland Ave(South): BUS133,Cumberland Pointe on Cumberland (South) - BUS133,40.4603998637438,-86.9189771663533,0,0
+BUS138,BUS138,Cumberland Ave & Salisbury St (SW Corner): BUS138,Cumberland Ave & Salisbury St (SW Corner) - BUS138,40.4603784060704,-86.9158108184225,0,0
+BUS131W,BUS131W,N Salisbury St & Westminster Village N: BUS131W,N Salisbury St & Westminster Village N (NW Corner) - BUS131W,40.4586121713288,-86.9156941423234,0,0
+BUS130,BUS130,Westminster Village S & N Salisbury St: BUS130,Westminster Village S & Salisbury (NW Corner) - BUS130,40.457042,-86.915715,0,0
+BUS149,BUS149,Salisbury St & Kent Ave (at Shelter): BUS149,Salisbury St & Kent Ave (at Shelter) - BUS149,40.455419,-86.915778,0,0
+BUS293,BUS293,Salisbury St & Navajo St (at Shelter): BUS293,Salisbury St & Navajo St (at Shelter) - BUS293,40.4510563880835,-86.9158430049326,0,0
+BUS633NW,BUS633NW,Salisbury St & Sycamore Ln (NW Corner): BUS633NW,Salisbury St & Sycamore Ln (NW Corner) - BUS633NW,40.4482910304243,-86.9158470282464,0,0
+BUS365NW,BUS365NW,Salisbury St & Lindberg Rd (NW Corner): BUS365NW,Salisbury St & Lindberg Rd (NW Corner) - BUS365NW,40.4458609705668,-86.9142679896864,0,0
+BUS924,BUS924,Salisbury St & Riley Ln (Southeast of): BUS924,Salisbury St & Riley Ln (Southeast of) - BUS924,40.443075474684,-86.9127651699046,0,0
+BUS582,BUS582,Salisbury St & Grant St (Southeast of): BUS582,Salisbury St & Grant St (Southeast of) - BUS582,40.4414835835387,-86.9103994614124,0,0
+BUS637NW,BUS637NW,Salisbury St & Rockland Dr (NW Corner): BUS637NW,Salisbury St & Rockland Dr (NW Corner) - BUS637NW,40.4391367682917,-86.9078956683653,0,0
+BUS224,BUS224,Salisbury St & Leslie Ave (NW Corner): BUS224,Salisbury St & Leslie Ave (NW Corner) - BUS224,40.4368312917251,-86.9061387721383,0,0
+BUS333NW,BUS333NW,Salisbury St & Meridian St (NW Corner): BUS333NW,Salisbury St & Meridian St (NW Corner) - BUS333NW,40.435305,-86.905928,0,0
+BUS636NW,BUS636NW,Salisbury St & Dehart St (NW Corner): BUS636NW,Salisbury St & Dehart St (NW Corner) - BUS636NW,40.4327529926749,-86.9058008137823,0,0
+BUS291NW,BUS291NW,Salisbury St & Stadium Ave (NW Corner): BUS291NW,Salisbury St & Stadium Ave (NW Corner) - BUS291NW,40.4308808106709,-86.9057552162263,0,0
+BUS647,BUS647,Stadium Ave & Vine St (NE Corner): BUS647,Stadium Ave & Vine St (NE Corner) - BUS647,40.4308459419516,-86.9080364351294,0,0
+BUS634,BUS634,Stadium Ave & Grant St (NE Corner): BUS634,Stadium Ave & Grant St (NE Corner) - BUS634,40.4309478659003,-86.9102774208949,0,0
+BUS530N,BUS530N,W Stadium Ave & Garfield St (NE Corner): BUS530N,,40.431434,-86.913331,0,0
+BUS950,BUS950,Vine St & Wiggins St (SW Corner): BUS950,Vine St & Wiggins St (SW Corner) - BUS950,40.426621,-86.908275,0,0
+BUS402,BUS402,Littleton St & Wiggins St: BUS402,Littleton St & Wiggins St - BUS402,40.426237,-86.903733,0,0
+BUS282NE,BUS282NE,MacArthur Dr & 1st St (NE Shelter): BUS282NE,MacArthur Dr & 1st St (NE Shelter) -  BUS282NE,40.425558,-86.925678,0,0
+BUS366,BUS366,Jischke Dr & 3rd St (SW Corner): BUS366,Jischke Dr & 3rd St (SW Corner) - BUS366,40.4273201779914,-86.9222427560236,0,0
+BUS362,BUS362,Wiley Dining/RSC on Jischke Dr: BUS362,Wiley Dining/RSC on Jischke Dr - BUS362,40.4290434973862,-86.921574885939,0,0
+BUS201,BUS201,Jischke Dr & Stadium Ave (SE Corner): BUS201,Jischke Dr & Stadium Ave (SE Corner) - BUS201,40.431319,-86.921487,0,0
+BUS567,BUS567,Ford Hall on Stadium Ave: BUS567,Ford Hall on Stadium Ave -  BUS567,40.431395,-86.919409,0,0
+BUS559,BUS559,Northwestern Ave & Wiggins St (NW of): BUS559,Northwestern Ave & Wiggins St (NW of) - BUS559,40.4270640270152,-86.9094673937242,0,0
+BUS412,BUS412,NW Ave & Columbia St (Chauncey Village): BUS412,NW Ave & Columbia St (Chauncey Village) - BUS412,40.42497,-86.908061,0,0
+BUS448,BUS448,Stewart Center: BUS448,Stewart Center - BUS448,40.4252830401232,-86.913670415501,0,0
+BUS435,BUS435,Class of 1950: BUS435,Class of 1950 - BUS435,40.4257859543434,-86.9148264476554,0,0
+BUS063,BUS063,Stone Hall on Oval Dr: BUS063,Stone Hall on Oval Dr - BUS063,40.424251,-86.914949,0,0
+BUS002,BUS002,3rd St & Ferry St (NW Corner): BUS002,,40.4202187635183,-86.8943307935698,0,0
+BUS962,BUS962,South St & Douglas St (SW Corner): BUS962,South St & Douglas St (SW Corner) - BUS962,40.4173101733512,-86.8755280599313,0,0
+BUS967,BUS967,South St & Thompson St (SW Corner): BUS967,South St & Thompson St (SW Corner) - BUS967,40.4173879574172,-86.8713853878609,0,0
+BUS694SW,BUS694SW,South St & 26th St (SW Corner): BUS694SW,,40.4174429427053,-86.8675323943813,0,0
+BUS695SW,BUS695SW,South St & 29th St (SW Corner): BUS695SW,,40.4174711059017,-86.8641796329128,0,0
+BUS696SW,BUS696SW,South St & Earl Ave (SW Corner): BUS696SW,,40.4175099979347,-86.860821507026,0,0
+BUS699SW,BUS699SW,South St & Sagamore Pkwy (SW Corner): BUS699SW,,40.4175019513072,-86.8582170819174,0,0
+BUS221W,BUS221W,Sagamore Pkwy S at alorica (west side): BUS221W,,40.413971,-86.8582,0,0
+BUS219W,BUS219W,Sagamore Pkwy S & National Dr (NW Corner): BUS219W,,40.406510258109,-86.8578268204824,0,0
+BUS298,BUS298,McCarty Ln & Sagamore Pkwy S (East of): BUS298,McCarty Ln & Sagamore Pkwy S (East of) - BUS298,40.402724,-86.85667,0,0
+BUS120,BUS120,McCarty Ln & Industrial Dr (SW Corner): BUS120,McCarty Ln & Industrial Dr (SW Corner) - BUS120,40.4028396548533,-86.8516054363016,0,0
+BUS994,BUS994,McCarty Ln & Kepner Dr (SW Corner): BUS994,McCarty Ln & Kepner Dr (SW Corner) - BUS994,40.402861,-86.844709,0,0
+BUS995,BUS995,McCarty Ln & Landmark Dr (South of): BUS995,McCarty Ln & Landmark Dr (South of) - BUS995,40.4029482843249,-86.8413017297567,0,0
+BUS895,BUS895,McCarty Ln & Emerald Pines Ct (SW Corner): BUS895,McCarty Ln & Emerald Pines Ct (SW Corner) - BUS895,40.402934873279,-86.8367071054403,0,0
+BUS996,BUS996,McCarty Ln & Burberry Dr: BUS996,McCarty Ln & Burberry Dr - BUS996,40.4029630364754,-86.8345130583354,0,0
+BUS997,BUS997,Mezzanine Dr & McCarty Ln (NW of): BUS997,Mezzanine Dr & McCarty Ln (NW of) - BUS997,40.4037274660902,-86.8322009940267,0,0
+BUS601,BUS601,Arnett Clinic at 925 Mezzanine Dr: BUS601,Arnett Clinic at 925 Mezzanine Dr - BUS601,40.4059590641236,-86.832612713135,0,0
+BUS615,BUS615,Mezzanine Dr & Park East Blvd (SW Corner): BUS615,Mezzanine Dr & Park East Blvd (SW Corner) - BUS615,40.4069730579865,-86.8290878748619,0,0
+1507,1507,Lafayette VA Clinic: Stop 1507,,40.405455,-86.828217,0,0
+BUS625,BUS625,Park East Blvd & Retail Dr (SW Corner): BUS625,Park East Blvd & Retail Dr (SW Corner) - BUS625,40.40433,-86.82796,0,0
+BUS982W,BUS982W,IU Health Arnett Hospital: BUS982W,IU Health Arnett Hospital - BUS982W,40.401044,-86.804833,0,0
+BUS540,BUS540,Pi Beta Phi (on Russell St): BUS540,,40.4245414092864,-86.9190750669882,0,0
+BUS805,BUS805,Russell St & 2nd St (NE Corner): BUS805,Russell St & 2nd St (NE Corner) - BUS805,40.4264444366958,-86.9190764080928,0,0
+BUS810,BUS810,Russell St & 4th St (SE Corner); BUS810,Russell St & 4th St (SE Corner) - BUS810,40.428195919287,-86.9191220056487,0,0
+BUS800,BUS800,Russell St & 6th St (SE Corner): BUS800,Russell St & 6th St (SE Corner) - BUS800,40.4302384215735,-86.9191072534983,0,0
+BUS951,BUS951,Wiggins St & Salisbury St (SW Corner): BUS951,Wiggins St & Salisbury St (SW Corner) - BUS951,40.426558,-86.906066,0,0
+BUS602E,BUS602E,River Rd & Robinson St (NE corner): BUS602E,River Rd & Robinson St (NE corner) - BUS602E,40.428378,-86.900634,0,0
+BUS460,BUS460,Launch Apts (South Drive): BUS460,Launch Apts (South Drive) - BUS460,40.430559,-86.899728,0,0
+BUS065,BUS065,Launch Apts (North Drive): BUS065,Launch Apts (North Drive) - BUS065,40.4319899041646,-86.8990912675316,0,0
+BUS600N,BUS600N,Happy Hollow Rd & Catherwood Dr(NE Corner):BUS600N,Happy Hollow Rd & Catherwood Dr(NE Corner) - BUS600N,40.4371008537472,-86.8993031620564,0,0
+BUS123E,BUS123E,Nobb Hill Apts on Happy Hollow Rd (East): BUS123E,Nobb Hill Apts on Happy Hollow Rd (East) - BUS123E,40.4396154248485,-86.8992173313628,0,0
+BUS597E,BUS597E,Happy Hollow Rd & Pathway Ln (SE Corner): BUS597E,Happy Hollow Rd & Pathway Ln (SE Corner) - BUS597E,40.4464268950478,-86.8992522000821,0,0
+BUS361SE,BUS361SE,Happy Hollow Rd & Chippewa St (East Side): BUS361,Happy Hollow Rd & Chippewa St (East Side) - BUS361SE,40.449890968197,-86.9008601844824,0,0
+BUS595E,BUS595E,Happy Hollow Apts on Happy Hollow(East): BUS595E,Happy Hollow Apts on Happy Hollow Rd (East) - BUS595E,40.4514815182377,-86.9021838547101,0,0
+BUS335,BUS335,Soldiers Home Rd & Sharon Rd (NE Corner): BUS335,Soldiers Home Rd & Sharon Rd (NE Corner) - BUS335,40.4544171961795,-86.9029670597891,0,0
+BUS926,BUS926,Soldiers Home Rd & Myrtle Dr (NW of): BUS926,Soldiers Home Rd & Myrtle Dr (NW of) - BUS926,40.4565093193358,-86.9029308499653,0,0
+BUS613,BUS613,Soldiers Home Rd & Hartman Ct (SE Corner): BUS613,Soldiers Home Rd & Hartman Ct (SE Corner) - BUS613,40.4595496034354,-86.9014609993375,0,0
+BUS936NE,BUS936NE,Soldiers Home & Overlook Dr (NE Corner): BUS936NE,Soldiers Home & Overlook Dr (NE Corner) - BUS936NE,40.4608759558723,-86.9009889305227,0,0
+BUS614,BUS614,Soldiers Home Rd & Indian Rock Dr (S of): BUS614,Soldiers Home Rd & Indian Rock Dr (S of) - BUS614,40.4641871430985,-86.8996692836088,0,0
+BUS616,BUS616,Heritage Health Care (South Drive): BUS616,Heritage Health Care (South Drive) - BUS616,40.4667017141999,-86.8994399547243,0,0
+BUS927SE,BUS927SE,Soldiers Home & Broadview-(BY REQUEST): BUS927SE,Soldiers Home Rd & Broadview (SE Corner) - BUS927SE,40.4724590761935,-86.8965445099201,0,0
+BUS928SE,BUS928SE,Veterans Home Entrance (S)-(BY REQUEST): BUS928SE,Veterans Home Entrance on Soldiers Home - BUS928SE,40.4743688091259,-86.8955695268851,0,0
+BUS929,BUS929,Lincoln Hall at Ind Vets Home-(BY REQUEST): BUS929,Lincoln Hall at Indiana Veterans Home - BUS929,40.4729284627991,-86.8912592167413,0,0
+BUS930,BUS930,Dehart Hall at Ind Vets Home -(BY REQUEST): BUS930,Dehart Hall at Indiana Veterans Home - BUS930,40.4725770933972,-86.8885890775078,0,0
+BUS931,BUS931,Mitchell Hall at Ind Vets Home(BY REQUEST): BUS931,Mitchell Hall at Indiana Veterans Home - BUS931,40.4707625788905,-86.8900951379594,0,0
+BUS932,BUS932,Pyle Hall at Ind Vets Home(BY REQUEST): BUS932,Pyle Hall at Indiana Veterans Home - BUS932,40.47173,-86.89174,0,0
+BUS928NE,BUS928NE,Veterans Home Entrance (N)- (BY REQUEST): BUS928NE,Veterans Home Entrance (North Side) - BUS928NE,40.4745029195847,-86.8953200814319,0,0
+BUS927NW,BUS927NW,Soldiers Home & Broadview:(BY REQUEST): BUS927NW,Soldiers Home Rd & Broadview (NW Corner) - BUS927NW,40.4727769179807,-86.8967161713073,0,0
+BUS824,BUS824,Soldiers Home Rd & Prophet Dr (S of): BUS824,Soldiers Home Rd & Prophet Dr (S of) - BUS824,40.4642662682692,-86.8998878836565,0,0
+BUS267,BUS267,Soldiers Home Rd & Cumberland (NW Corner): BUS267,Soldiers Home Rd & Cumberland (NW Corner) - BUS267,40.459414151872,-86.9017466546146,0,0
+BUS437E,BUS437E,PayLess Supermarket on SR 38/25: BUS437E,PayLess Supermarket on SR 38/25 - BUS437E,40.391669,-86.84469,0,0
+BUS719,BUS719,SR 38/25 & Torchwood Dr (SW Corner): BUS719,SR 38/25 & Torchwood Dr (SW Corner) - BUS719,40.389966391919,-86.8410576487218,0,0
+BUS941NW,BUS941NW,Creasy Ln & Bonlou Dr (Menards Entrance): BUS941NW,Creasy Ln & Bonlou Dr (Menards Entrance) - BUS941NW,40.387378,-86.840122,0,0
+BUS142N,BUS142N,Ivy Tech on Creasy Ln: BUS142N,Ivy Tech on Creasy Ln (across Shelter) - BUS142N,40.3852443626669,-86.8418126906045,0,0
+BUS404NE,BUS404NE,Creasy Ln & US 52 (NE Corner): BUS404NE,Creasy Ln & US 52 (NE Corner) - BUS404NE,40.3831694063173,-86.8434909208439,0,0
+BUS711N,BUS711N,Brady Ln & Imperial Pkwy (NE Corner): BUS711N,Brady Ln & Imperial Pkwy (NE Corner) - BUS711N,40.3820190061342,-86.848964801369,0,0
+BUS713,BUS713,Brady Ln East of Reagan Dr (North):  BUS713,,40.3819830237602,-86.8549889100409,0,0
+BUS961,BUS961,Village Pantry on Brady Ln (North): BUS961,Village Pantry on Brady Ln (North) - BUS961,40.381947,-86.85875,0,0
+BUS301N,BUS301N,Pheasant Run Apts on Brady Ln (at Shelter):BUS301N,Pheasant Run Apts on Brady Ln (at Shelter) - BUS301N,40.381919,-86.861057,0,0
+BUS720,BUS720,Brady Ln & Portsmouth Dr W (NE Corner): BUS720,Brady Ln & Portsmouth Dr W (NE Corner) - BUS720,40.381895,-86.863708,0,0
+BUS449N,BUS449N,Brady Ln & Commanche Trl (NE Corner): BUS449N,Brady Ln & Commanche Trl (NE Corner) - BUS449N,40.381865,-86.868718,0,0
+BUS735E,BUS735E,Commanche Trl & Shasta Dr (SE Corner): BUS735E,Commanche Trl & Shasta Dr (SE Corner) - BUS735E,40.3824766598999,-86.8693562783365,0,0
+BUS736,BUS736,Commanche Trl & Yuma Ave (SE Corner): BUS736,Commanche Trl & Yuma Ave (SE Corner) - BUS736,40.38449,-86.86938,0,0
+BUS731E,BUS731E,Commanche Trl & Beck Ln (SE Corner): BUS731E,Commanche Trl & Beck Ln (SE Corner) - BUS731E,40.3880687289279,-86.8699302893836,0,0
+BUS737,BUS737,Summerfield Dr & Maumee Pl (SE Corner): BUS737,Summerfield Dr & Maumee Pl (SE Corner) - BUS737,40.388794,-86.870999,0,0
+BUS942,BUS942,Ottawa Dr & Summerfield Dr (SE Corner): BUS942,Ottawa Dr & Summerfield Dr (SE Corner) - BUS942,40.3910339111706,-86.8710715693874,0,0
+BUS428N,BUS428N,Iroquois Trl & Summerfield Dr (NW of): BUS428N,Iroquois Trl & Summerfield Dr (NW of) - BUS428N,40.3918801481652,-86.8715905768627,0,0
+BUS315N,BUS315N,Shoshone Dr & Osage Dr (West of): BUS315N,Shoshone Dr & Osage Dr (West of) - BUS315N,40.39349,-86.872436,0,0
+BUS469N,BUS469N,Georgetown Apts on Shoshone Dr ; BUS469N,Georgetown Apts on Shoshone Dr  - BUS469N,40.3934720393105,-86.8735633417108,0,0
+BUS739,BUS739,Shoshone Dr & 18th St (NE Corner): BUS739,Shoshone Dr & 18th St (NE Corner) - BUS739,40.3934416992812,-86.8762902667298,0,0
+BUS420,BUS420,18th St & Teal Rd (SE Corner): BUS420,18th St & Teal Rd (SE Corner) - BUS420,40.395135238301,-86.876390727853,0,0
+BUS466SE,BUS466SE,22nd St & JR Hiatt Dr (SECorner): BUS466SE,,40.397376,-86.871622,0,0
+BUS378NW,BUS378NW,State St & Earl Ave (West of): BUS378NW,State St & Earl Ave (West of) - BUS378NW,40.4018700362367,-86.8699973446129,0,0
+BUS726N,BUS726N,State St & 20th St (NE Corner): BUS726N,State St & 20th St (NE Corner) - BUS726N,40.4046903791839,-86.8741681798797,0,0
+BUS256N,BUS256N,State St & 18th St (NE Corner): BUS256N,State St & 18th St (NE Corner) - BUS256N,40.406348,-86.87663,0,0
+BUS725E,BUS725E,18th St & Adams St (SE Corner): BUS725E,18th St & Adams St (SE Corner) - BUS725E,40.4081598842922,-86.8767878979474,0,0
+BUS662,BUS662,18th south of Congress St at alley: BUS662,18th south of Congress St at alley - BUS662,40.4109721130712,-86.8771601842141,0,0
+BUS740,BUS740,18th St & Everett St (SE Corner): BUS740,18th St & Everett St (SE Corner) - BUS740,40.4131339736661,-86.8770958111939,0,0
+BUS772,BUS772,Creasy Ln & SR 38 (Northeast of): BUS772,Creasy Ln & SR 38 (Northeast of) – BUS772,40.3896,-86.8383,0,0
+BUS923,BUS923,St Francis Way & Creasy Ln (SE): BUS923,St Francis Way & Creasy Ln (SE) - BUS923,40.3923012550057,-86.8382896088534,0,0
+BUS992,BUS992,St. Elizabeth Hospital: BUS992,St. Elizabeth Hospital - BUS992,40.394007,-86.836989,0,0
+BUS770SE,BUS770SE,Creasy Ct & Creasy Ln (SE Corner): BUS770SE,Creasy Ct & Creasy Ln (SE Corner) - BUS770SE,40.3962186215054,-86.8383124076314,0,0
+BUS681,BUS681,Creasy Ln & Amelia Ave (NE Corner): BUS681,Creasy Ln & Amelia Ave (NE Corner) - BUS681,40.398659,-86.838397,0,0
+BUS773,BUS773,Creasy Ln & Burberry Dr (SE Corner): BUS773,Creasy Ln & Burberry Dr (SE Corner) - BUS773,40.4007287562328,-86.8384223782076,0,0
+BUS766E,BUS766E,Sickle Ct & McCarty Ln (NE Corner): BUS766E,Sickle Ct & McCarty Ln (NE Corner) - BUS766E,40.4034431519177,-86.8342528840454,0,0
+BUS765NE,BUS765NE,Sickle Ct & Julia Ln (NE Corner): BUS765NE,Sickle Ct & Julia Ln (NE Corner) - BUS765NE,40.4047373178445,-86.8353056511465,0,0
+BUS200N,BUS200N,Harper Dr & Julia Ln (NW Corner): BUS200N,Harper Dr & Julia Ln (NW Corner) - BUS200N,40.4064157004464,-86.8348438399349,0,0
+BUS775NE,BUS775NE,Creasy Ln & Harper Dr (NE Corner): BUS775NE,Creasy Ln & Harper Dr (NE Corner) - BUS775NE,40.4063654188136,-86.8385001622736,0,0
+BUS539,BUS539,Creasy Ln & Stinger St (SE Corner): BUS539,Creasy Ln & Stinger St (SE Corner) - BUS539,40.4089944250571,-86.8386829758086,0,0
+BUS763E,BUS763E,Creasy Ln & Fortune Dr (SE Corner): BUS763E,Creasy Ln & Fortune Dr (SE Corner) - BUS763E,40.4112560695348,-86.838716566553,0,0
+BUS461,BUS461,"Sam's Club on Creasy Ln: BUS461","Sam's Club on Creasy Ln -  BUS461",40.414271,-86.838761,0,0
+BUS762,BUS762,The Pavilions & Creasy Ln (@ Regions Bank): BUS762,The Pavilions & Creasy Ln - BUS762,40.416057141127,-86.8388157493029,0,0
+BUS879,BUS879,Creasy Ln & South St (North and East side): BUS879,Creasy Ln & South St (North and East side)-BUS879,40.418453,-86.838863,0,0
+BUS777,BUS777,Culvers on Rome Dr & Creasy Ln (North): BUS777,Culvers on Rome Dr & Creasy Ln (North)  - BUS777,40.4208455546115,-86.8395938495996,0,0
+BUS896,BUS896,Rome Dr & Executive Dr (NE Corner): BUS896,Rome Dr & Executive Dr (NE Corner) - BUS896,40.420661593715,-86.8435883130782,0,0
+BUS812,BUS812,Rome Dr & Shenandoah Dr (NE Corner): BUS812,Rome Dr & Shenandoah Dr (NE Corner) - BUS812,40.420631,-86.845789,0,0
+BUS759E,BUS759E,Shenandoah Dr & Driftwood Dr (SE Corner): BUS759E,Shenandoah Dr & Driftwood Dr (SE Corner) - BUS759E,40.421474303095,-86.8463174609135,0,0
+BUS920SE,BUS920SE,Shenandoah Dr & Claremont Ln (SE Corner): BUS920SE,Shenandoah Dr & Claremont Ln (SE Corner) - BUS920SE,40.4229951156971,-86.8470456807044,0,0
+BUS341,BUS341,Shenandoah Dr & Union St (SE Corner): BUS341,Shenandoah Dr & Union St (SE Corner) - BUS341,40.4247345283469,-86.847053727332,0,0
+BUS757SE,BUS757SE,Shenandoah Dr & Navarre Dr (SE Corner): BUS757SE,Shenandoah Dr & Navarre Dr (SE Corner) - BUS757SE,40.4264089587317,-86.84708672319,0,0
+BUS051,BUS051,Munger Trl on Shenandoah Dr (East Side): BUS051,Munger Trl on Shenandoah Dr (East Side) - BUS051,40.4288061218742,-86.8448221292986,0,0
+BUS778,BUS778,Shenandoah Dr & Amherst Dr (SE Corner): BUS778,Shenandoah Dr & Amherst Dr (SE Corner) - BUS778,40.4314065236692,-86.8448382225536,0,0
+BUS526NE,BUS526NE,Greenbush St & Chauncey Court (NE Corner):BUS526NE,Greenbush St & Chauncey Court (NE Corner) - BUS526NE,40.432257,-86.847354,0,0
+BUS780,BUS780,Greenbush St & Hemlock Rd (NE Corner):  BUS780,Greenbush St & Hemlock Rd (NE Corner) - BUS780,40.4322648306051,-86.8558379623794,0,0
+BUS231N,BUS231N,Greenbush St & Sagamore Pkwy N (West of): BUS231N,Greenbush St & Sagamore Pkwy N (West of) - BUS231N,40.4321924109574,-86.8589667593817,0,0
+BUS781,BUS781,Greenbush St & 29th St (West of): BUS781,Greenbush St & 29th St (West of) - BUS781,40.43219,-86.862337,0,0
+BUS278NE,BUS278NE,Greenbush St & Elmwood Ave (East of): BUS278NE,Greenbush St & Elmwood Ave (East of) - BUS278NE,40.432186,-86.865217,0,0
+BUS721,BUS721,Greenbush St & Melbourne Rd (West of): BUS721,Greenbush St & Melbourne Rd (West of) - BUS721,40.4321843643298,-86.8685073774163,0,0
+BUS245NW,BUS245NW,Market Square (WEST) on Greenbush St: BUS245NW,Market Square (WEST) on Greenbush St - BUS245NW,40.432191,-86.870874,0,1
+BUS230N,BUS230N,Wabash Center on Greenbush St (@Shelter): BUS230N,Wabash Center on Greenbush St (@Shelter) - BUS230N,40.432202,-86.87349,0,0
+BUS330NE,BUS330NE,Greenbush St & 18th St (NE Corner): BUS330NE,Greenbush St & 18th St (NE Corner) - BUS330NE,40.4321347434601,-86.8773586676931,0,0
+BUS750,BUS750,Greenbush St & 16th St (NE Corner): BUS750,Greenbush St & 16th St (NE Corner) - BUS750,40.4321159679959,-86.880166940699,0,0
+BUS508NE,BUS508NE,Greenbush St & 14th St (NE Corner): BUS508NE,Greenbush St & 14th St (NE Corner) - BUS508NE,40.4321065802638,-86.8822697926921,0,0
+BUS296,BUS296,Greenbush St &12th St (Northeast of): BUS296,Greenbush St &12th St (Northeast of) - BUS296,40.4321173091005,-86.8842774262594,0,1
+BUS960,BUS960,ZF Industries on 9th St: BUS960,ZF Industries on 9th St - BUS960,40.4313931126233,-86.887203716469,0,0
+BUS987NW,BUS987NW,9th St & Roberts St (NW Corner): BUS987NW,9th St & Roberts St (NW Corner) - BUS987NW,40.4298146325239,-86.8871487311809,0,0
+BUS292NW,BUS292NW,9th St & Hartford St (NW Corner): BUS292NW,9th St & Hartford St (NW Corner) - BUS292NW,40.4277520136685,-86.8870856992654,0,0
+BUS380NW,BUS380NW,Salem St & 9th St (NW Corner): BUS380NW,Salem St & 9th St (NW Corner) - BUS380NW,40.425795,-86.887023,0,0
+BUS903,BUS903,Klondike Rd & Rosewood Dr (NW Corner): BUS903,Klondike Rd & Rosewood Dr (NW Corner) - BUS903,40.4439646270254,-86.9619474984376,0,0
+BUS572,BUS572,Klondike Rd & Georgeton Rd (NW Corner): BUS572,Klondike Rd & Georgeton Rd (NW Corner) - BUS572,40.4416704453146,-86.9620276610214,0,0
+BUS175,BUS175,Klondike Rd & E Pine Ave: BUS175,Klondike Rd & E Pine Ave - BUS175,40.4398849868706,-86.9620480812817,0,0
+BUS902,BUS902,Klondike Rd & Blueberry Ln (NW Corner): BUS902,Klondike Rd & Blueberry Ln (NW Corner) - BUS902,40.4385049902502,-86.9620158947716,0,0
+BUS176,BUS176,Klondike Rd & SR 26: BUS176,Klondike Rd & SR 26 - BUS176,40.4372577629839,-86.9619649327972,0,0
+BUS173,BUS173,SR 26 & Scarlett Dr (SW Corner): BUS173,SR 26 & Scarlett Dr (SW Corner) - BUS173,40.4341839512696,-86.9555584761833,0,0
+BUS168,BUS168,Entomology Field Operations Building EFOB: BUS168,Entomology Field Operations Building - BUS168,40.429932,-86.948088,0,0
+BUS419,BUS419,Mitch Daniels Blvd & Trailway Blvd (SW of),,40.4241288905476,-86.9366794686523,0,0
+BUS566S,BUS566S,Purdue West on Mitch Daniels Blvd (South): BUS566S,Purdue West on on Mitch Daniels Blvd (South): BUS566S,40.4242021098257,-86.9293586569642,0,0
+BUS011,BUS011,Aspire Apts at Discovery Park: BUS011,,40.4242,-86.925359,0,0
+BUS422W,BUS422W,9th St & Canal Rd: BUS422W (NW of) (by Request),9th St & Canal Rd (NW of) - BUS422W,40.4340578874384,-86.8875899545902,0,0
+BUS143,BUS143,CityBus Offices - Canal Rd (1A by Request): BUS143,CityBus Offices (Canal Rd) - BUS143,40.429388,-86.891693,0,0
+BUS422E,BUS422E,9th St & Canal Rd: BUS422E (SE of) (by Request),9th St & Canal Rd (Southeast of) - BUS422E,40.4340417941834,-86.8873874477975,0,0
+1515,1515,Precedent Flats Apts: Stop 1515,,40.403083,-86.813864,0,0
+BUS819,BUS819,McCarthy Ln & Park East Blvd (NE Corner): BUS819,McCarthy Ln & Park East Blvd (NE Corner) - BUS819,40.403166,-86.82745,0,0
+BUS617,BUS617,North of Mezzanine Dr: BUS617,,40.40707,-86.830272,0,0
+BUS618,BUS618,West of Mezzanine Dr: BUS618,,40.406039,-86.832779,0,0
+BUS965,BUS965,McCarty Ln & Mezzanine Dr (NW Corner):  BUS965,,40.403199,-86.832339,0,0
+BUS650,BUS650,McCarty Ln & Sickle Ct (NW Corner): BUS650,McCarty Ln & Sickle Ct (NW Corner) - BUS650,40.403048867169,-86.8341187735867,0,0
+BUS774N,BUS774N,McCarty Ln & Emerald Pines Ct (NE Corner): BUS774N,McCarty Ln & Emerald Pines Ct (NE Corner) - BUS774N,40.403042161646,-86.8365676305632,0,0
+BUS651,BUS651,McCarty Ln & Landmark Dr (NE Corner): BUS651,McCarty Ln & Landmark Dr (NE Corner) - BUS651,40.4030072929268,-86.8410469198851,0,0
+BUS656,BUS656,McCarty Ln & Kepner Dr (NE Corner): BUS656,McCarty Ln & Kepner Dr (NE Corner) - BUS656,40.4030233861818,-86.8444493022233,0,0
+BUS660,BUS660,McCarty Ln & Industrial Dr (NE Corner): BUS660,McCarty Ln & Industrial Dr (NE Corner) - BUS660,40.4029831530442,-86.851298323351,0,0
+BUS669,BUS669,McCarty Ln & Sagamore Pkwy S (East of): BUS669,McCarty Ln & Sagamore Pkwy S (East of) - BUS669,40.402918780024,-86.8561155710289,0,0
+BUS219E,BUS219E,Sagamore Pkwy S & National Dr (SE Corner): BUS219E,,40.406302386898,-86.857529095264,0,0
+BUS221E,BUS221E,Sagamore Pkwy S: BUS221E,,40.413743,-86.857816,0,0
+BUS696NE,BUS696NE,South St & Earl Ave (east of RRX): BUS696NE,,40.4176078985696,-86.8597928798075,0,0
+BUS695NE,BUS695NE,South St & 29th St (NE Corner): BUS695NE,,40.4175555954907,-86.8640468635587,0,0
+BUS694NE,BUS694NE,South St & 26th St (NE Corner): BUS694NE,,40.417538161131,-86.8673500041574,0,0
+BUS690,BUS690,South St & 23rd St (NE Corner): BUS690,South St & 23rd St (NE Corner) - BUS690,40.417492563575,-86.8711520356626,0,0
+BUS691,BUS691,South St & 19th St (NE Corner): BUS691,South St & 19th St (NE Corner) - BUS691,40.4174711059017,-86.8757748231754,0,0
+BUS692,BUS692,South St & Main St (NE Corner): BUS692,South St & Main St (NE Corner) - BUS692,40.417408,-86.878397,0,0
+BUS064,BUS064,University Hall: BUS064,University Hall - BUS064,40.4255002990663,-86.9149256893948,0,0
+BUS584SE,BUS584SE,1st St & Jischke Dr (East Corner): BUS584SE,,40.4251770928608,-86.9218819988896,0,0
+BUS470N,BUS470N,Hillenbrand Hall on 3rd St: BUS470N,,40.4274609939731,-86.92643102565,0,0
+BUS491W,BUS491W,McCutcheon Hall on McCutcheon: BUS491W,McCutcheon Hall on McCutcheon - BUS491W,40.425564,-86.929035,0,0
+5417,5417,Airport Rd & Harrison St (SE corner),,40.4218172886533,-86.9306673557819,0,0
+BUS415,BUS415,Purdue Airport Main Terminal: BUS415,Purdue Airport Main Terminal - BUS415,40.416524286063,-86.9312227923407,0,0
+BUS146,BUS146,Aviation Technology Bldg: BUS146,Aviation Technology Bldg - BUS146,40.4165685425144,-86.9298910754854,0,0
+BUS389,BUS389,Beering Hall on University St (@Shelter): BUS389,Beering Hall on University St (@Shelter) - BUS389,40.4259026304426,-86.9166141400703,0,0
+BUS490SE,BUS490SE,N University St & 5th St at PUSH: BUS490SE,,40.429170902322,-86.916608775652,0,0
+BUS413,BUS413,Ford Hall on Stadium Ave (North Side): BUS413,Ford Hall on Stadium Ave (North Side) - BUS413,40.431521,-86.920323,0,0
+BUS509SE,BUS509SE,Jischke Dr & Tower Dr (SE Corner): BUS509SE,Jischke Dr & Tower Dr (SE Corner) - BUS509SE,40.4328844209244,-86.9214300466436,0,0
+BUS472N,BUS472N,Tower Dr & Hilltop Dr (NE Corner): BUS472N,Tower Dr & Hilltop Dr (NE Corner) - BUS472N,40.4332773645685,-86.9231989635944,0,0
+BUS562N,BUS562N,Theta Chi on Tower Dr: BUS562N,Theta Chi on Tower Dr - BUS562N,40.4332438369539,-86.9261467114774,0,0
+BUS554E,BUS554E,Alpha Chi on David Ross Rd: BUS554E,Alpha Chi on David Ross Rd - BUS554E,40.4343180617284,-86.9256786659764,0,0
+BUS794S,BUS794S,Ferry St & 10th St (Southwest of): BUS794S,Ferry St & 10th St (Southwest of) - BUS794S,40.4199964058397,-86.8859900168174,0,0
+BUS796S,BUS796S,Ferry St & Erie St (SW Corner): BUS796S,Ferry St & Erie St (SW Corner) - BUS796S,40.419977,-86.88401,0,0
+BUS797S,BUS797S,Ferry St & Perrin Ave (SW Corner): BUS797S,Ferry St & Perrin Ave (SW Corner) - BUS797S,40.4199803125847,-86.8819130588718,0,0
+BUS798SW,BUS798SW,Ferry St & Asher St (SW Corner): BUS798SW,Ferry St & Asher St (SW Corner) - BUS798SW,40.4192681860487,-86.8790860104016,0,0
+BUS280S,BUS280S,Ferry St & 19th St (SW Corner): BUS280S,Ferry St & 19th St (SW Corner) - BUS280S,40.418836,-86.876066,0,0
+BUS548SW,BUS548SW,Ferry St & 21st St (SW Corner): BUS548SW,Ferry St & 21st St (SW Corner) - BUS548SW,40.4188739013001,-86.8735754116521,0,0
+BUS545S,BUS545S,Ferry St & 23rd St (East of): BUS545S,Ferry St & 23rd St (East of) - BUS545S,40.4189248632744,-86.8711721522315,0,0
+BUS244,BUS244,Ferry St & 26th St (SW Corner): BUS244,Ferry St & 26th St (SW Corner) - BUS244,40.4189771663533,-86.868225745453,0,0
+BUS116S,BUS116S,Ferry St & 28th St (SW Corner): BUS116S,Ferry & 28th St (SW Corner) - BUS116S,40.4190013062359,-86.8652981141387,0,0
+BUS128,BUS128,Ferry St & 31st St (SW Corner): BUS128,Ferry St & 31st (West of Earl Ave) - BUS128,40.419049586001,-86.8616865194849,0,0
+BUS459SE,BUS459SE,Earl Ave & Cason St (SE Corner): BUS459SE,Earl Ave & Cason St (SE Corner) - BUS459SE,40.4204094660526,-86.8604714787287,0,0
+BUS507E,BUS507E,Portledge Commons Apts on Earl Ave: BUS507E,Portledge Commons Apts on Earl Ave BUS507E,40.421752,-86.860458,0,0
+BUS196E,BUS196E,Earl Ave & Union St (East side South of): BUS196E,Earl Ave & Union St (East side South of) - BUS196E,40.424392,-86.860525,0,0
+BUS971,BUS971,RRX on Union St (SW Corner): BUS971,RRX on Union St (SW Corner) - BUS971,40.424785,-86.855534,0,0
+BUS552SW,BUS552SW,Union St & 36th St (SW Corner); BUS552SW,Union St & 36th St (SW Corner) - BUS552SW,40.424808,-86.850958,0,0
+BUS813W,BUS813W,36th St & Coleman Ct (NW Corner @ Bench): BUS813W,36th St & Coleman Ct (NW Corner @ Bench) - BUS813W,40.42243,-86.850988,0,0
+BUS405,BUS405,36th & South St (Laf Animal): BUS405,36th & South St (Laf Animal) - BUS405,40.4181497048229,-86.8500618249215,0,0
+BUS475,BUS475,South St & 36th St (Southeast of): BUS475,South St & 36th St (Southeast of) - BUS475,40.4174027095677,-86.8493081241434,0,0
+BUS384,BUS384,South St & Executive Dr (SE Corner): BUS384,South St & Executive Dr (SE Corner) - BUS384,40.4174389193916,-86.8437143769094,0,0
+BUS816,BUS816,South St & Creasy Ln (Southeast of): BUS816,South St & Creasy Ln (Southeast of) - BUS816,40.417576,-86.836644,0,0
+BUS969,BUS969,Commerce Dr & Fairington Ave (East of): BUS969,Commerce Dr & Fairington Ave (East of) - BUS969,40.4157933840628,-86.8313265938357,0,0
+BUS970,BUS970,Commerce Dr & Park East (SW Corner): BUS970,Commerce Dr & Park East (SW Corner) - BUS970,40.4157866785399,-86.8291110890574,0,0
+BUS808,BUS808,Commerce Dr & Marketplace Dr (SW Corner): BUS808,Marketplace & Commerce Dr (at Shelter) - BUS808,40.4152408489728,-86.826879491024,0,0
+BUS503,BUS503,Walmart (East Lafayette): BUS503,Walmart (East Lafayette) - BUS503,40.4139024265946,-86.8265147105762,0,0
+BUS151,BUS151,Progress DR & South St (SE Corner): BUS151,Progress DR & South St (SE Corner) - BUS151,40.4174576948558,-86.82486112862,0,0
+BUS277S,BUS277S,SR 26 & Frontage Rd (South Side of SR26): BUS277S,SR 26 & Frontage Rd (South Side of SR26) - BUS277S,40.4173664997438,-86.8167219648792,0,0
+BUS372,BUS372,Meijer Ct & Meijer Dr (SW Corner): BUS372,Meijer Ct & Meijer Dr (SW Corner) - BUS372,40.4167455683199,-86.8142959066806,0,0
+BUS162,BUS162,Northwestern Ave & Neil Armstrong Dr (NW): BUS162,Northwestern Ave & Neil Armstrong Dr (NW Corner) - BUS162,40.452088,-86.926868,0,0
+BUS161,BUS161,Northwestern Ave & Yeager Rd (NW Corner): BUS161,Northwestern Ave & Yeager Rd (NW Corner) - BUS161,40.450556,-86.925226,0,0
+BUS897,BUS897,Northwestern Ave & Windsor DR: BUS897,Northwestern Ave & Windsor Dr - BUS897,40.4478795843592,-86.923434119396,0,0
+BUS375W,BUS375W,Northwestern Ave & Lindberg Rd: BUS375W,Northwestern Ave & Lindberg Rd - BUS375W,40.446453,-86.922233,0,0
+BUS205,BUS205,Lindberg Rd & Kestral Blvd (NE Corner): BUS205,Lindberg Rd & Kestral Blvd (NE Corner) - BUS205,40.4460715023322,-86.9366153738866,0,0
+BUS304,BUS304,Blackbird Farms 2 on McCormick Rd: BUS304,Blackbird Farms 2 on McCormick Rd B - US304,40.4454183843981,-86.9441094663208,0,0
+BUS394,BUS394,SW Blackbird Farms Apt Buildings (W): BUS394,SW Blackbird Farms Apt Buildings (W) - BUS394,40.4428890611463,-86.9425470794766,0,0
+BUS906W,BUS906W,Schwartz Tennis Cntr on McCormick Rd: BUS906W,Schwartz Tennis Cntr on McCormick Rd - BUS906W,40.436251,-86.936234,0,0
+BUS251W,BUS251W,McCormick Rd & Stadium Ave (NW Corner): BUS251W,McCormick Rd & Stadium Ave (NW Corner) - BUS251W,40.4311020929278,-86.93265509204,0,0
+BUS501,BUS501,McCormick Rd & 3rd St: BUS501,McCormick Rd & 3rd St - BUS501,40.42751,-86.93075,0,0
+BUS744,BUS744,Brown St & 5th St (SW Corner): BUS744,Brown St & 5th St (SW Corner) - BUS744,40.4218055805272,-86.8920117859304,0,0
+BUS410SW,BUS410SW,Brown St & 6th St (SW Corner): BUS410SW,Brown St & 6th St (SW Corner) - BUS410SW,40.4218283547061,-86.890795194554,0,0
+BUS745,BUS745,6th St & Cincinnati St (SE Corner): BUS745,6th St & Cincinnati St (SE Corner) - BUS745,40.422628,-86.890628,0,0
+BUS746,BUS746,Tippecanoe Co. Health Dept. on 6th St: BUS746,Tippecanoe Co. Health Dept. on 6th St - BUS746,40.4233344151577,-86.8906288975852,0,0
+BUS328,BUS328,6th St & Union St (SE Corner): BUS328,6th St & Union St (SE Corner) - BUS328,40.4246352866075,-86.8906664485136,0,0
+BUS921,BUS921,Linnwood Park at Greenbush St: BUS921,Linnwood Park at Greenbush St - BUS921,40.4320462305574,-86.8806081641083,0,0
+BUS230S,BUS230S,Greenbush Crossing Apartments: BUS230S,Greenbush Crossing Apartments - BUS230S,40.432045,-86.873718,0,0
+BUS245SW,BUS245SW,Market Square (WEST) on Greenbush St: BUS245SW,Market Square (WEST) on Greenbush St - BUS245SW,40.432046,-86.870901,0,0
+BUS245SE,BUS245SE,Market Square (EAST) on Greenbush St: BUS245SE,Market Square (EAST) on Greenbush St -  BUS245SE,40.4320730526491,-86.8691376965724,0,0
+BUS278SW,BUS278SW,Greenbush St & Elmwood Ave (SW Corner): BUS278SW,Greenbush St & Elmwood Ave (SW Corner) - BUS278SW,40.4320703704399,-86.8668792764472,0,0
+BUS453,BUS453,Greenbush St & 28th St (East of): BUS453,Greenbush St & 28th St (East of) - BUS453,40.4320663471262,-86.8632824339439,0,0
+BUS231S,BUS231S,Greenbush St & Sagamore Pkwy N (SW Corner):BUS231S,Greenbush St & Sagamore Pkwy N (SW Corner) - BUS231S,40.432084,-86.859863,0,0
+BUS753,BUS753,RRX on Greenbush St (SW Corner): BUS753,RRX on Greenbush St (SW Corner) - BUS753,40.4320730526491,-86.8568853650621,0,0
+BUS526SW,BUS526SW,Greenbush St & Chauncey Court (SW Corner):BUS526SW,Greenbush St & Chauncey Court (SW Corner) - BUS526SW,40.432063,-86.847826,0,0
+BUS513,BUS513,Greenbush St & Shenandoah Dr (SW Corner); BUS513,Greenbush St & Shenandoah Dr (SW Corner) - BUS513,40.4320998747408,-86.845051458183,0,0
+BUS050,BUS050,Munger Trl on Shenandoah Dr (West Side): BUS050,Munger Trl on Shenandoah Dr (West Side) - BUS050,40.4289710777385,-86.8449548986527,0,0
+BUS757NW,BUS757NW,Shenandoah Dr & Navarre Dr (NW Corner): BUS757NW,Shenandoah Dr & Navarre Dr (NW Corner) - BUS757NW,40.4266594089463,-86.8472721616917,0,0
+BUS485,BUS485,Shenandoah Dr & Union St (NW Corner): BUS485,Shenandoah Dr & Union St (NW Corner) - BUS485,40.4251542940828,-86.8472146598825,0,0
+BUS920NW,BUS920NW,Shenandoah Dr & Claremont Ln (NW Corner): BUS920NW,Shenandoah Dr & Claremont Ln (NW Corner) - BUS920NW,40.4231466605155,-86.8471864966861,0,0
+BUS759W,BUS759W,Shenandoah Dr & Driftwood Dr (SW Corner): BUS759W,Shenandoah Dr & Driftwood Dr (SW Corner) - BUS759W,40.4214541865262,-86.8464998511374,0,0
+BUS820,BUS820,Rome Dr & Shenandoah Dr (SE Corner): BUS820,Rome Dr & Shenandoah Dr (SE Corner) - BUS820,40.420526,-86.845731,0,0
+BUS760,BUS760,Rome Dr & Executive Dr (SE Corner): BUS760,Rome Dr & Executive Dr (SE Corner) - BUS760,40.4205180955242,-86.8435668554048,0,0
+BUS468,BUS468,Rome Dr & Creasy Ln (SW Corner): BUS468,Rome Dr & Creasy Ln (SW Corner) -  BUS468,40.4207943630692,-86.839142551371,0,0
+BUS192,BUS192,Creasy Ln & South St (West Side North of): BUS192,Creasy Ln & South St (West Side North of) -  BUS192,40.417871,-86.839167,0,0
+BUS771,BUS771,Starbucks Coffee on Creasy Ln: BUS771,Starbucks Coffee on Creasy Ln - BUS771,40.4148956778032,-86.8390217217921,0,0
+BUS763W,BUS763W,Creasy Ln & Fortune Dr (Southwest of): BUS763W,Creasy Ln & Fortune Dr (Southwest of) - BUS763W,40.4111370689355,-86.8389065169636,0,0
+BUS775SW,BUS775SW,Stinger St & Harper Dr (SW Corner): BUS775SW,Stinger St & Harper Dr (SW Corner) - BUS775SW,40.40627958812,-86.8381166063617,0,0
+BUS200S,BUS200S,Harper  Dr & Julia Ln (SW Corner): BUS200S,Harper  Dr & Julia Ln (SW Corner) - BUS200S,40.4063560310814,-86.8344339331647,0,0
+BUS765NW,BUS765NW,Julia Ln & Sickle Ct (NW Corner): BUS765NW,Julia Ln & Sickle Ct (NW Corner) - BUS765NW,40.404807055283,-86.83535929533,0,0
+BUS766W,BUS766W,Sickle Ct & McCarty Ln (NW Corner): BUS766W,Sickle Ct & McCarty Ln (NW Corner) - BUS766W,40.4031548144314,-86.8343360325298,0,0
+BUS768,BUS768,Creasy Ln & Burberry Dr (NW Corner): BUS768,Creasy Ln & Burberry Dr (NW Corner) - BUS768,40.4008856654695,-86.8386074506406,0,0
+BUS769NW,BUS769NW,Creasy Ln & Amelia Ave (NW Corner): BUS769NW,Creasy Ln & Amelia Ave (NW Corner) - BUS769NW,40.3983389078581,-86.8385538064572,0,0
+BUS770NW,BUS770NW,Creasy Ct & Creasy Ln (NW Corner): BUS770NW,Creasy Ct & Creasy Ln (NW Corner) - BUS770NW,40.3963862595788,-86.8385108911104,0,0
+BUS915,BUS915,Creasy Ln & St. Francis Way (NW): BUS915,Creasy Ln & St. Francis Way (NW) - BUS915,40.3925493593544,-86.8384652935544,0,0
+BUS499N,BUS499N,Creasy Ln & SR 38/25 (North of): BUS499N,Creasy Ln & SR 38/25 (North of) - BUS499N,40.3894004457832,-86.838635613837,0,0
+BUS499,BUS499,SR 38/25 & Creasy Ln (West of): BUS499,SR 38/25 & Creasy Ln (West of) - BUS499,40.389442,-86.839644,0,0
+BUS717,BUS717,Guaranteed Transmission on SR 38/25: BUS717,Guaranteed Transmission on SR 38/25 - BUS717,40.391429,-86.843658,0,0
+BUS376,BUS376,Acorn Acres on SR 38/25: BUS376,Acorn Acres on SR 38/25 -BUS376,40.3928806121874,-86.8464126793392,0,0
+BUS121,BUS121,MAIL Inc: BUS121,,40.45141,-86.87723,0,0
+BUS145,BUS145,Duncan & 9th St (West of): BUS145,,40.44697,-86.87958,0,0
+BUS122,BUS122,McAllister Park: BUS122,,40.44019,-86.88508,0,0
+BUS160,BUS160,Tick Tock Tavern: BUS160,,40.436664,-86.886507,0,0
+BUS152,BUS152,River Walk Apartments on 9th St: BUS152,River Walk Apartments on 9th St - BUS152,40.4354445895818,-86.8864996365606,0,0
+BUS266,BUS266,9th St & Ferry St (NW Corner): BUS266,9th St & Ferry St (NW Corner) - BUS266,40.420070166592,-86.8868966035185,0,0
+BUS489,BUS489,Wood St & River Rd (NW Corner): BUS489,Wood St & River Rd (NW Corner) - BUS489,40.420205,-86.90565,0,0
+BUS186,BUS186,River Rd & Williams St (NW Corner): BUS186,River Rd & Williams St (NW Corner) - BUS186,40.4189436387386,-86.9061897341126,0,0
+BUS522,BUS522,Williams St & Salisbury St (NE Corner): BUS522,Williams St & Salisbury St (NE Corner) - BUS522,40.4184769343422,-86.9077373688064,0,0
+BUS290,BUS290,Williams St & Grant St (NE Corner): BUS290,Williams St & Grant St (NE Corner) - BUS290,40.418553,-86.91008,0,0
+5419,5419,Airport Rd & Harrison St (NW corner),,40.4215152208192,-86.9304708090822,0,0
+BUS801,BUS801,Village West Apts Club House: BUS801,Village West Apts Club House - BUS801,40.4472570387874,-86.9393954836962,0,0
+BUS802,BUS802,Willowbrook Cir & Willowbrook Dr: BUS802,Willowbrook Cir & Willowbrook Dr - BUS802,40.4492070048575,-86.940420087601,0,0
+BUS009,BUS009,The Cottages on Lindberg on Catalina Dr: BUS009,,40.4500746995255,-86.9418416584636,0,0
+BUS010,BUS010,The Cottages on Lindberg on Mida Dr: BUS010,The Cottages on Lindberg on Mida Dr - BUS010,40.449176,-86.941583,0,0
+BUS312,BUS312,Station 21 Clubhouse: BUS312,Station 21 Clubhouse - BUS312,40.448048290494,-86.9444165792714,0,0
+BUS891,BUS891,Paramount Dr & Pacific Dr: BUS891,,40.4708242697015,-86.9455028739871,0,0
+BUS723,BUS723,18th St & Center St (North of): BUS723,18th St & Center St (North of) - BUS723,40.4146883138828,-86.8772084639793,0,0
+BUS940,BUS940,18th St & Larue St (South of): BUS940,18th St & Larue St (South of) - BUS940,40.4132157810459,-86.8771749363646,0,0
+BUS724,BUS724,18th St & Congress St (NW Corner): BUS724,18th St & Congress St (NW Corner) - BUS724,40.4114723450823,-86.8771829829921,0,0
+BUS725W,BUS725W,18th St & Adams St (NW Corner): BUS725W,18th St & Adams St (NW Corner) - BUS725W,40.4082550351772,-86.8769026921334,0,0
+BUS256S,BUS256S,State St & 18th (SE Corner): BUS256S,State St & 18th (SE Corner) - BUS256S,40.406144,-86.876705,0,0
+BUS726S,BUS726S,State St & 20th St (SW Corner): BUS726S,State St & 20th St (SW Corner) - BUS726S,40.4047279301124,-86.8744457885292,0,0
+BUS727,BUS727,State St & 22nd St (SW Corner): BUS727,State St & 22nd St (SW Corner) - BUS727,40.4030327739139,-86.8719191474866,0,0
+BUS378SW,BUS378SW,Earl Ave & State St (SW Corner): BUS378SW,Earl Ave & State St (SW Corner) - BUS378SW,40.4015884042733,-86.8697277825909,0,0
+BUS414,BUS414,26th St & Gregory Ave (NW Corner): BUS414,26th St & Gregory Ave (NW Corner) - BUS414,40.3991556405518,-86.8670925120766,0,0
+BUS311,BUS311,Rural King on 26th St (at Shelter): BUS311,Rural King on 26th St (at Shelter) - BUS311,40.3967590866541,-86.8669195095849,0,0
+BUS331,BUS331,Teal Rd & 22nd St (East of): BUS331,Teal Rd & 22nd St (East of) - BUS331,40.3955132004924,-86.8704010170937,0,0
+BUS963,BUS963,18th St & Meadow Dr (South of): BUS963,18th St & Meadow Dr (South of) - BUS963,40.39441,-86.876543,0,0
+BUS469S,BUS469S,Georgetown Apts on Shoshone Dr: BUS469S,Georgetown Apts on Shoshone Dr  - BUS469S,40.393376,-86.875047,0,0
+BUS409,BUS409,Osage Dr & Shoshone Dr (SW Corner): BUS409,Osage Dr & Shoshone Dr (SW Corner) - BUS409,40.393386,-86.872178,0,0
+BUS729,BUS729,Iroquois Trl & Osage Dr (NW Corner): BUS729,Iroquois Trl & Osage Dr (NW Corner) - BUS729,40.3920316929836,-86.8723214788628,0,0
+BUS428S,BUS428S,Iroquois Trl& Summerfield Dr (SW Corner): BUS428S,Iroquois Trl & Summerfield Dr (SW Corner) - BUS428S,40.3918466205506,-86.8712901694352,0,0
+BUS730,BUS730,Summerfield Dr & Hiawatha Ln (NW Corner): BUS730,Summerfield Dr & Hiawatha Ln (NW Corner) - BUS730,40.389653,-86.871167,0,0
+BUS416,BUS416,Beck Ln & Summerfield Dr (NW Corner): BUS416,Beck Ln & Summerfield Dr (NW Corner) - BUS416,40.388211,-86.87114,0,0
+BUS344,BUS344,Beck Ln and Cayuga Trail (NE Corner): BUS344,Beck Ln and Cayuga Trail (NE Corner) - BUS344,40.3881693117719,-86.8751203641367,0,0
+BUS155,BUS155,Edgelea Elementary School on 18th St: BUS155,Edgelea Elementary School on 18th St - BUS155,40.3873887889021,-86.8763944134947,0,0
+BUS807W,BUS807W,18th St & Manitou Dr (NW Corner): BUS807W,18th St & Manitou Dr (NW Corner) - BUS807W,40.3854736915513,-86.8763380871021,0,0
+BUS865,BUS865,18th St & Eastway St (NW Corner): BUS865,18th St & Eastway St (NW Corner) - BUS865,40.3836149205932,-86.8762871251278,0,0
+BUS354,BUS354,Brady Ln & 18th St (East of): BUS354,Brady Ln & 18th St (East of) - BUS354,40.3816649545231,-86.8755428120818,0,0
+BUS707S,BUS707S,Brady Ln & Pipers Glen Dr (SW Corner): BUS707S,Brady Ln & Pipers Glen Dr (SW Corner) - BUS707S,40.3816730011507,-86.8724904580409,0,0
+BUS449S,BUS449S,Brady Ln & Commanche Trl (SE Corner): BUS449S,Brady Ln & Commanche Trl (SE Corner) - BUS449S,40.3817025054516,-86.8689539652439,0,0
+BUS181,BUS181,RRX on Brady Ln (SW Corner): BUS181,RRX on Brady Ln (SW Corner) - BUS181,40.381701164347,-86.8668859819702,0,0
+BUS708,BUS708,Brady Ln & Winter St (SW Corner): BUS708,Brady Ln & Winter St (SW Corner)  - BUS708,40.381722,-86.8651,0,0
+BUS301S,BUS301S,Pheasant Run Apts on Brady Ln (South): BUS301S,Pheasant Run Apts on Brady Ln (South) - BUS301S,40.3817808570089,-86.860865313883,0,0
+BUS710S,BUS710S,Village Pantry on Brady Ln (South): BUS710S,Village Pantry on Brady Ln (South) - BUS710S,40.381793,-86.858888,0,0
+BUS712,BUS712,Brady Ln & Reagan Dr (SW Corner): BUS712,,40.3818151582369,-86.855686417561,0,0
+BUS711S,BUS711S,Brady Ln & Imperial Pkwy (SW Corner): BUS711S,Brady Ln & Imperial Pkwy (SW Corner) - BUS711S,40.3818795312571,-86.8491364627562,0,0
+BUS966,BUS966,Griffin Hall on Creasy Ln: BUS966,Griffin Hall on Creasy Ln - BUS966,40.3835197021675,-86.8430062736873,0,0
+BUS142S,BUS142S,Ivy Tech on Creasy Ln (at Shelter): BUS142S,Ivy Tech on Creasy Ln (at Shelter) - BUS142S,40.385448,-86.841398,0,0
+BUS941SE,BUS941SE,Creasy Ln & Bonlou (SE Corner): BUS941SE,Creasy Ln & Bonlou (SE Corner) - BUS941SE,40.3870333961864,-86.8401054644648,0,0
+BUS410SE,BUS410SE,Brown St & 6th St (SE Corner): BUS410SE,Brown St & 6th St (SE Corner) - BUS410SE,40.4217264307574,-86.8906288975852,0,0
+BUS818,BUS818,Union St & 8th St (SW Corner): BUS818,Union St & 8th St (SW Corner) - BUS818,40.424666132013,-86.8884415560032,0,0
+BUS844,BUS844,Union St & 9th St (East of): BUS844,Union St & 9th St (East of) - BUS844,40.4246688142221,-86.8866833678891,0,0
+BUS821,BUS821,Union St & 12th St (SW Corner): BUS821,Union St & 12th St (SW Corner) - BUS821,40.424682225268,-86.8842090299254,0,0
+BUS401,BUS401,Union St & 14th St (SW Corner): BUS401,Union St & 14th St (SW Corner) - BUS401,40.424705024046,-86.8823086847251,0,0
+BUS822,BUS822,Union St & 15th St (East of): BUS822,Union St & 15th St (East of) - BUS822,40.4246902718955,-86.880657784978,0,0
+BUS441,BUS441,Union St & 18th St (SW Corner): BUS441,Union St & 18th St (SW Corner) - BUS441,40.4246849074772,-86.87743376955,0,0
+BUS454,BUS454,Stonecrest Apartments (at Shelter): BUS454,Stonecrest Apartments (at Shelter) -  BUS454,40.4246983185231,-86.8762401864672,0,0
+BUS848,BUS848,21st St & Union St (Northeast of): BUS848,21st St & Union St (Northeast of) - BUS848,40.4251073554222,-86.8728243930831,0,0
+BUS825,BUS825,21st St & Cobblestone Ct (SE Corner): BUS825,21st St & Cobblestone Ct (SE Corner) - BUS825,40.4263210550738,-86.8728029354097,0,0
+BUS325SE,BUS325SE,21st St & Elmwood Ave (SE Corner): BUS325SE,21st St & Elmwood Ave (SE Corner) - BUS325SE,40.4285942273494,-86.8729048593584,0,0
+BUS132,BUS132,Elmwood Ave & Rainbow Dr (SW Corner): BUS132,Elmwood Ave & Rainbow Dr (SW Corner) - BUS132,40.429232593133,-86.8717246873214,0,0
+BUS207,BUS207,Wayne Terrace & Elmwood Ave (SW Corner): BUS207,Wayne Terrace & Elmwood Ave (SW Corner) - BUS207,40.4305656510929,-86.8690532069834,0,0
+BUS938,BUS938,Elmwood Ave &  27th St (Southeast of): BUS938,Elmwood Ave &  27th St (Southeast of) - BUS938,40.4319121200986,-86.8663039425793,0,0
+BUS827,BUS827,Elmwood Ave & 27th St (SE Corner): BUS827,Elmwood Ave & 27th St (SE Corner) - BUS827,40.4332344492217,-86.8652431288506,0,0
+BUS276,BUS276,Vinton St & Elmwood Ave (SE Corner): BUS276,Vinton St & Elmwood Ave  (SE Corner) - BUS276,40.434223,-86.863664,0,0
+BUS829,BUS829,Prairie Ln & Elmwood Ave (SE Corner): BUS829,Prairie Ln & Elmwood Ave (SE Corner) - BUS829,40.4361781737911,-86.8621156729529,0,0
+BUS134,BUS134,Howarth Center: BUS134,Howarth Center - BUS134,40.4230152322659,-86.8771990762472,0,0
+BUS289,BUS289,Jischke Dr & 3rd St (SE Corner): BUS289,Jischke Dr & 3rd St (SE Corner) - BUS289,40.4272102074152,-86.9219798995244,0,0
+BUS841,BUS841,Elmwood Ave & Greenbush St (NW Corner): BUS841,,40.4321897287482,-86.8660142639884,0,0
+BUSLSS,BUSLSS,Lafayette Sunnyside School: BUSLSS,Lafayette Sunnyside School - BUSLSS,40.421891,-86.868168,0,0
+BUS984,BUS984,Subaru SIA: BUS984,,40.388318,-86.810195,0,0
+BUS983,BUS983,CAT Logistics: BUS983,,40.392812,-86.80999,0,0
+BUS981,BUS981,CAT Logistics - North Entrance: BUS981,,40.394993,-86.809646,0,0
+BUS980,BUS980,Oscar Winski eRecycling: BUS980,,40.39684,-86.809643,0,0
+BUS668,BUS668,Kirby Risk Manufacturing Center: BUS668,Kirby Risk Manufacturing Center  - BUS668,40.40629,-86.85038,0,0
+BUS466W,BUS466W,22nd St & JR Hiatt Dr (NW Corner): BUS466W,22nd St & JR Hiatt Dr (NW Corner) - BUS466W,40.3976164276318,-86.8717346265883,0,0
