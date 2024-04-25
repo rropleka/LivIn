@@ -190,6 +190,7 @@ import router from '@/router';
       });
 
       console.log('Sublease updated successfully.');
+
     } else {
       // Sublease does not exist, add a new one
       await setDoc(doc(subleasesCollectionRef), {
@@ -203,6 +204,18 @@ import router from '@/router';
       });
 
       console.log('New sublease added successfully.');
+
+      const propertyDocRef = doc(db, 'properties', this.propertyId);
+      const propertyDocSnap = await getDoc(propertyDocRef);
+
+      if (propertyDocSnap.exists()) {
+        const propertyData = propertyDocSnap.data();
+        await setDoc(propertyDocRef, { ...propertyData, subleaseCount: propertyData.subleaseCount + 1 }, { merge: true });
+
+        console.log('Property updated successfully.');
+      } else {
+        console.error('Property document does not exist.');
+      }
     }
 
     // Optionally, you can redirect to a success page or perform other actions
