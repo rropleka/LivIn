@@ -58,8 +58,8 @@
                         break;
                     }
                 }
-                if (this.currentPage != Math.floor(foundIndex / 3) + 1) {
-                    this.currentPage = Math.floor(foundIndex / 3) + 1;
+                if (this.currentPage != Math.floor(foundIndex / this.pageSize) + 1) {
+                    this.currentPage = Math.floor(foundIndex / this.pageSize) + 1;
                 }
             },
             //return all listings in an array
