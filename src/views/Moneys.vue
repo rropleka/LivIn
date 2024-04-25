@@ -167,6 +167,15 @@ export default {
         },
         async sub() {
             const db = getFirestore(firebaseapp)
+            const auth = getAuth();
+            console.log("auth: " + auth.currentUser)
+            const currentUser = auth.currentUser;
+            const userDoc = currentUser.uid;
+            const userDocRef = doc(db, 'users', userDoc);
+            const userDocSnap = await getDoc(userDocRef);
+            const username = userDocSnap.data().username;
+            console.log("username: " + username)
+            this.username = username;
             if(this.form.date&&this.form.cat&&this.form.cost>0) {
                 console.log("date: " + typeof this.form.date + this.form.cost + " cat: " + this.form.cat)
                 const docRef = await addDoc(collection(db, "purchases"), {
@@ -182,8 +191,16 @@ export default {
                 alert("Please fill in all fields");
             }
         },
-        async load(props) {
+        async load() {
             const db = getFirestore(firebaseapp)
+            const auth = getAuth();
+            const currentUser = auth.currentUser;
+            const userDoc = currentUser.uid;
+            const userDocRef = doc(db, 'users', userDoc);
+            const userDocSnap = await getDoc(userDocRef);
+            const username = userDocSnap.data().username;
+            console.log("username: " + username)
+            this.username = username;
             let startYear=1900
             let startMonth=1
             let startDay=1
@@ -200,14 +217,7 @@ export default {
                 endMonth=Number(this.form.end.substring(5,7)),
                 endDay=Number(this.form.end.substring(8,10))
             }
-            const querySnapshot = await getDocs(query(collection(db, 'purchases') 
-            /*and(
-            or(where('year', '>', startYear), and(where('year', '=', startYear),(where('month', '>', startMonth))), 
-            and(where('year', '=', startYear),(where('month', '=', startMonth)),where('day', '>', startDay))),
-            
-            or(where('year', '<', endYear), and(where('year', '=', endYear),(where('month', '<', endMonth))), 
-            and(where('year', '=', endYear),(where('month', '=', endMonth)),where('day', '<', endDay)))
-            )*/));
+            const querySnapshot = await getDocs(query(collection(db, 'purchases'), where('username', '==', this.username)));
             let foods = 0
             let fc=.0001
             let trans = 0
@@ -259,11 +269,6 @@ export default {
                 }
               }
             })
-            const auth = getAuth();
-            const currentUser = auth.currentUser;
-            const userDoc = currentUser.uid;
-            const userDocRef = doc(db, 'users', userDoc);
-            const userDocSnap = await getDoc(userDocRef);
             let anotherCost = userDocSnap.data().favPrice;
             /*onst querySnapshot2 = await getDocs(query(collection(db, 'users'), where('username', '==', username)))
             querySnapshot2.forEach((doc) => {
@@ -303,7 +308,8 @@ export default {
                 monthly+=anotherCost
             }
             monthly=Math.round((monthly) * 100) / 100
-            let totlabel = 'Total Per Month: $' + monthly + '<br>Total Per Year: $' + monthly*12;
+            let yearly=Math.round((monthly*12) * 100) / 100
+            let totlabel = 'Total Per Month: $' + monthly + '<br>Total Per Year: $' + yearly;
             console.log(monthly);
             var data = [{
                 values: vals,
