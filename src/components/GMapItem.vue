@@ -106,12 +106,16 @@
         }
       })
 
+      let filteredProperties: Array<object> = [];
+      properties.forEach(val => filteredProperties.push(Object.assign({}, val)));
+
       return { 
         center: { lat: 40.420781, lng: -86.918061 },
         campus,
         hotspots,
         favorites,
         properties,
+        filteredProperties,
        };
     },
     computed: {
@@ -173,6 +177,10 @@
         
       },
       filterByCurrentLocation:function(proximity) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         const success = (position) => {
@@ -198,7 +206,7 @@
                 distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
                 console.log("Distance: " + distance);
                 if (distance >= proximity) {
-                  this.properties.splice(index, 1);
+                  this.filteredProperties.splice(index, 1);
                 }
 
               }
@@ -213,6 +221,10 @@
         navigator.geolocation.getCurrentPosition(success, error);
       },
       filterByFavoriteLocation:function(proximity, favoritePosition) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         console.log(favoritePosition);
@@ -237,7 +249,7 @@
             distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
             console.log("Distance: " + distance);
             if (distance >= proximity) {
-              this.properties.splice(index, 1);
+              this.filteredProperties.splice(index, 1);
             }
 
           }
@@ -246,6 +258,10 @@
 
       },
       filterByHotspotLocation:function(proximity, hotspotPosition) {
+        if (!proximity) {
+          this.filteredProperties = this.properties;
+          return;
+        }
         let latitude;
         let longitude;
         console.log(hotspotPosition);
@@ -270,7 +286,7 @@
             distance = this.haversineDistanceBetweenPoints(latitude,longitude,propertyLat,propertyLong);
             console.log("Distance: " + distance);
             if (distance >= proximity) {
-              this.properties.splice(index, 1);
+              this.filteredProperties.splice(index, 1);
             }
 
           }
@@ -279,6 +295,11 @@
 
       },
       filterByZipcode:function(zipcode) {  
+        if (!zipcode) {
+          this.filteredProperties = this.properties;
+          return;
+        }
+
         let currentZipcode;  
         let address;  
         for (let index = this.properties.length - 1; index >= 0; index--) {
@@ -291,7 +312,7 @@
             }
 
             if (currentZipcode != zipcode) {
-              this.properties.splice(index, 1);
+              this.filteredProperties.splice(index, 1);
             }
 
           }
@@ -553,7 +574,7 @@
         </div>
       </InfoWindow>
     </Marker>
-    <Marker v-for="property in properties" :options="property" :key="property.position" @click="onMarkerClick(property.position);goToPropertyTable(property.propertyName)">
+    <Marker v-for="property in filteredProperties" :options="property" :key="property.position" @click="onMarkerClick(property.position);goToPropertyTable(property.propertyName)">
       <InfoWindow>
         <div class="infoWindow">
           Property Name: {{ property.propertyName }} <br>
