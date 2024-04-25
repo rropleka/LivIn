@@ -166,6 +166,7 @@ const router = createRouter({
     {
       path:'/moneys',
       name: 'money',
+      props: true,
       component: () => import('../views/Moneys.vue')
     }
   ]

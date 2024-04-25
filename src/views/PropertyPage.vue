@@ -27,6 +27,7 @@
           <ul class="interestedOthers"></ul>
         </div>
       </div>
+      <button type="button" @click="money">Calculate total cost</button>
       <hr>
       <p class="property-about">About property:</p>
       <p class="property-description">{{ property.structureDetails }}</p>
@@ -1067,6 +1068,20 @@
                 console.error("Error checking if property is favorited: ", error);
               } 
             }
+          }, 
+          async money() {
+            const db = getFirestore(firebaseapp);
+            const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', this.loadPack.username)))
+            let drp = ''
+            querySnapshot.forEach((doc) => {
+              drp=doc.ref.path
+            });
+            await updateDoc(doc(db, drp), {
+                favPrice: this.property.rent
+              })
+            router.push({
+              name: 'money',
+          });
           }
 
 
