@@ -303,7 +303,7 @@ export default {
                 monthly+=anotherCost
             }
             monthly=Math.round((monthly) * 100) / 100
-            let totlabel = 'Total Per Month: $' + monthly;
+            let totlabel = 'Total Per Month: $' + monthly + '<br>Total Per Year: $' + monthly*12;
             console.log(monthly);
             var data = [{
                 values: vals,
