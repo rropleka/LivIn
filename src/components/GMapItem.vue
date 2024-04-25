@@ -1,6 +1,6 @@
 <script lang="ts">
   import {GoogleMap, Marker, Polyline, InfoWindow} from "vue3-google-map";
-  import {defineComponent, normalizeProps} from "vue";
+  import {defineComponent, normalizeProps, } from "vue";
   import { getFirestore, collection, doc, getDocs, setDoc, query, where } from 'firebase/firestore/lite'
   import { firebaseapp } from '../firebaseInit'
   import {MapMouseEvent, LatLng, LatLngLiteral} from "google.maps";
@@ -499,6 +499,9 @@
         this.renderRouteDetails = false;
         this.formattedRouteDetails = ["route_id", "route_long_name", "route_desc", "route_color"]
       },
+      goToPropertyTable: function(propertyName){
+        this.$emit("listingsTableEvent", propertyName);
+      },
 
 
     }
@@ -529,7 +532,7 @@
         </div>
       </InfoWindow>
     </Marker>
-    <Marker v-for="property in properties" :options="property" :key="property.position" @click="onMarkerClick(property.position)">
+    <Marker v-for="property in properties" :options="property" :key="property.position" @click="onMarkerClick(property.position);goToPropertyTable(property.propertyName)">
       <InfoWindow>
         <div class="infoWindow">
           Property Name: {{ property.propertyName }} <br>

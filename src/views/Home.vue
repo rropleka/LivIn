@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, } from "vue";
 import { useStore } from "vuex";
 import { RouterLink } from "vue-router"
 import GMapItem from '@/components/GMapItem.vue';
@@ -54,7 +54,6 @@ hotspotsSnapshot.forEach((doc) => {
 <script lang="ts">
 
    export default defineComponent({
-
       methods: {
          filterByCurrentLocationButton() {
           this.$refs.GMapItem.filterByCurrentLocation(document.getElementById("proximityFilter").value);
@@ -68,6 +67,9 @@ hotspotsSnapshot.forEach((doc) => {
           var dropdown = document.getElementById("hotspotFilter");
           var hotspotPosition = dropdown.options[dropdown.selectedIndex].text;
           this.$refs.GMapItem.filterByHotspotLocation(document.getElementById("proximityFilter").value, hotspotPosition);
+         },
+         goToListingsTable(propertyName) {
+          this.$refs.ListingsTable.goToProperty(propertyName);
          },
       },
     })
@@ -101,12 +103,12 @@ hotspotsSnapshot.forEach((doc) => {
             </select>
           </div>
           <div class="propertiesTable">
-            <listings></listings>
+            <listings ref="ListingsTable"></listings>
           </div>
         </div>
         <div class="map">
           <Suspense>
-            <GMapItem ref="GMapItem" />
+            <GMapItem ref="GMapItem" @listingsTableEvent="goToListingsTable"/>
           </Suspense>
         </div>
       </div>
