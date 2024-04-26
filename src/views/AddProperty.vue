@@ -94,7 +94,7 @@
       classname="form-control"
       placeholder="Please type your address"
       v-on:placechanged="onPlaceChanged"
-      country="sg"
+      country="us"
     >
     </vue-google-autocomplete>
     </div>
