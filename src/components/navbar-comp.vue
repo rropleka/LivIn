@@ -120,6 +120,9 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/favorite-properties" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Favorited Properties</router-link>
 					</li>
+					<li v-if="isLoggedIn">
+						<router-link to="/subleases" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">View Subleases</router-link>
+					</li>
 					<li v-if="isLoggedIn && isModerator">
 						<router-link to="/verification-requests" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Verification Requests</router-link>
 					</li>

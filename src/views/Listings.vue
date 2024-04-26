@@ -163,41 +163,42 @@
 
 <template>
     <div class="listings-page" v-if="listings">
-        <div class="listingtext" style="width: 100%; display: flex;">
-            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')" style="width: 175px;">Property Name</button>
-            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rating')">Rating</button>
-            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
-            <input type="number" v-model="maxPrice" placeholder="Enter max price">
+            <div class="listingtext" style="width: 100%; display: flex;">
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('propertyName')" style="width: 175px;">Property Name</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rating')">Rating</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
+        <input type="number" v-model="maxPrice" placeholder="Enter max price">
+    </div>
             <input type="number" v-model="maxSubleaseCount" placeholder="min amount of subleases">
+    <div class="listings" style="width: 100%; margin-top: 5px;">
             <input type="text" v-model="searchAmenity" placeholder="Search amenities">
-            
-        </div>
-        <div class="listings" style="width: 100%; margin-top: 5px;">
-            <table style="margin-left: 0; width: 50%; border: 1px solid black; box-shadow: 6px 0 5px -2px #888;">
-                <tbody>
-                    <tr v-for="listing in listings" :key="listing.propertyName">
-                        <td>
-                            <div v-bind:id="listing.propertyName" class="propertydiv" @mouseover="propertyHover = true, getPropertyData($event.target.id)" @mouseleave="propertyHover = false">
-                                Property Name: {{ listing.propertyName }} <br>
-                                Rating: {{ listing.rating }} <br>
-                                Price: {{ listing.rent }} <br>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="listingtext" style="width: 100%; display: flex;">
-            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="prevPage">Previous</button>
-            <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="nextPage">Next</button>
-            <p style="margin: auto 10px auto 0px">Properties per Page</p>
-            <select @change="setPageSize($event)">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option selected="selected" value="3">3</option>
-            </select>
-        </div>
-        <div v-show="propertyHover" class="propertydiv" style="float: bottom;">
+        <table style="margin-left: 0; width: 50%; border: 1px solid black; box-shadow: 6px 0 5px -2px #888;">
+            <tbody>
+            <tr v-for="listing in listings" :key="listing.propertyName">
+                <td>
+                    <div v-bind:id="listing.propertyName" class="propertydiv" @mouseover="propertyHover = true, getPropertyData($event.target.id)" @mouseleave="propertyHover = false">
+                        Property Name: {{ listing.propertyName }} <br>
+                        Rating: {{ listing.rating }} <br>
+                        Price: {{ listing.rent }} <br>
+                        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="goToPropertyPage('/' + property.owner + '/' + property.propertyName)">Go to Property Page</button>
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="listingtext" style="width: 100%; display: flex;">
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="prevPage">Previous</button>
+        <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="nextPage">Next</button>
+        <p style="margin: auto 10px auto 0px">Properties per Page</p>
+        <select @change="setPageSize($event)">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option selected="selected" value="3">3</option>
+        </select>
+    </div>
+    <div v-show="propertyHover" class="propertydiv" style="float: bottom;">
             Amenities: <span v-for="(amenity, index) in this.property.amenities">
                 {{ amenity }}{{ (index+1 < this.property.amenities.length) ? ', ' : '' }}
             </span> <br>
