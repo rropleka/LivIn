@@ -167,7 +167,7 @@ export default {
                 usertype = "notLeasingCompany"
             }
             else {
-                usertype = "sitemoderator"
+                usertype = ""
             }
             await updateDoc(userDocRef, {userType: usertype});
         },
