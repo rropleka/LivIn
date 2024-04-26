@@ -262,15 +262,17 @@
           this.filteredProperties = this.properties;
           return;
         }
-        let latitude;
-        let longitude;
+        let latitude = hotspotPosition.lat;
+        let longitude = hotspotPosition.lng;
         console.log(hotspotPosition);
+        /*
         let commaIndex;
         let longIndex;
         commaIndex = hotspotPosition.indexOf(",");
         longIndex = hotspotPosition.indexOf("lng");
         latitude  = parseFloat(hotspotPosition.substring(9, commaIndex));
         longitude = parseFloat(hotspotPosition.substring(longIndex + 5, hotspotPosition.length - 1));
+        */
         console.log("Lat: " + latitude);
         console.log("Long: " + longitude);
         let propertyLat;
