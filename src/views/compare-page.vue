@@ -154,14 +154,14 @@ export default {
           </div>
           <div class="mb-6">
             <label for="owner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property owner</label>
-            <input v-model="property1.address" type="owner" id="owner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly>
+            <input v-model="property1.owner" type="owner" id="owner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly>
           </div>
           <div class="mb-6">
             <label for="review" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property reviews</label>
             <input v-model="property1.reviews" type="review" id="review" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly>
           </div>
           <div class="mb-6">
-            <label for="details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property reviews</label>
+            <label for="details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property details</label>
             <textarea v-model="property1.details" type="details" id="details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly></textarea>
           </div>
         </div>
@@ -213,14 +213,14 @@ export default {
           </div>
           <div class="mb-6">
             <label for="owner" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property owner</label>
-            <input v-model="property2.address" type="owner" id="owner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly>
+            <input v-model="property2.owner" type="owner" id="owner" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly>
           </div>
           <div class="mb-6">
             <label for="review" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property reviews</label>
             <input v-model="property2.reviews" type="review" id="review" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly>
           </div>
           <div class="mb-6">
-            <label for="details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property reviews</label>
+            <label for="details" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Property details</label>
             <textarea v-model="property2.details" type="details" id="details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" readonly></textarea>
           </div>
         </div>
