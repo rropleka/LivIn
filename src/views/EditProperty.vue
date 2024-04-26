@@ -22,7 +22,7 @@
     <label for="fees">Optional Fees</label>
     <ul id="fees">
         <li v-for="(fee, index) in fees" :key="index">
-            <span class="amenity-name">{{ fee.name }}: {{fee.cost}}</span>
+            <span class="amenity-name">{{ fee.name }}: ${{fee.cost}}</span>
             <button type="button" @click="removeFee(index)" class="remove-button">×</button>
         </li>
     </ul>
