@@ -40,7 +40,7 @@ export default {
                 const data = doc.data()
                 if (data.verifiedUsers) {
                     console.log(data.verifiedUsers);
-                    data.verifiedUsers.append(request.user)
+                    data.verifiedUsers.push(request.user)
                 }
                 else {
                     data.verifiedUsers = [request.user]
