@@ -45,6 +45,22 @@
             setPageSize:function(event) {
                 this.pageSize = event.target.value;
             },
+            goToPropertyPage:function(propertyURL) {
+                router.push({ path: propertyURL });
+            },
+            //takes user to page in table with property
+            goToProperty:function(propertyName) {
+                let foundIndex = 0;
+                for (let i = 0; i < this.sortedListings.length; i++) {
+                    if (this.sortedListings[i].propertyName === propertyName) {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+                if (this.currentPage != Math.floor(foundIndex / this.pageSize) + 1) {
+                    this.currentPage = Math.floor(foundIndex / this.pageSize) + 1;
+                }
+            },
             //return all listings in an array
             async getListings() {
                 try {
@@ -84,9 +100,39 @@
                 }
             },
         },
-        computed:{
-            //performs sort and pagination
-            listings:function() {
+        computed: {
+            listings() {
+                this.sortedListings = this.listings
+                    .filter(listing => {
+                        if (this.maxPrice === null) {
+                            return true; // Show all properties when maxPrice is empty
+                        } else {
+                            return listing.rent <= this.maxPrice; // Filter by maxPrice
+                        }
+                    })
+                    .filter(listing => {
+                        if (this.minSubleaseCount === null) {
+                            return true; // Show all properties when minSubleaseCount is empty
+                        } else {
+                            return listing.subleaseCount >= this.minSubleaseCount; // Filter by minSubleaseCount
+                        }
+                    })
+                    .filter(listing => {
+                if (!this.searchAmenity) {
+                    return true; // Show all properties when searchAmenity is empty
+                } else {
+                    return listing.amenities && listing.amenities.some(amenity =>
+                        amenity.toLowerCase().includes(this.searchAmenity.toLowerCase())
+                    ); // Filter by matching amenities if amenities array is not null or undefined
+                }
+            })
+                    .sort((a, b) => {
+                        let modifier = 1;
+                        if (this.sortDir === 'desc') modifier = -1;
+                        if (a[this.sortName] < b[this.sortName]) return -1 * modifier;
+                        if (a[this.sortName] > b[this.sortName]) return 1 * modifier;
+                        return 0;
+                    })
                 return this.listings
                     // .filter(listing => listing.rent <= this.maxPrice) // Filter by maxPrice
                     .filter(listing => {
