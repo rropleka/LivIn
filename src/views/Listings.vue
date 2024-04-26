@@ -55,8 +55,8 @@
             //takes user to page in table with property
             goToProperty:function(propertyName) {
                 let foundIndex = 0;
-                for (let i = 0; i < this.sortedListings.length; i++) {
-                    if (this.sortedListings[i].propertyName === propertyName) {
+                for (let i = 0; i < this.listings.length; i++) {
+                    if (this.listings[i].propertyName === propertyName) {
                         foundIndex = i;
                         break;
                     }
