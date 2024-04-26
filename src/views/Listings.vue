@@ -109,8 +109,9 @@
                 }
             },
         },
-        computed: {
-            listings() {
+        computed:{
+            //performs sort and pagination
+            listings:function() {
                 return this.listings
                     .filter(listing => {
                         if (this.maxPrice === null) {
