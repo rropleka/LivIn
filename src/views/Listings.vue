@@ -29,7 +29,7 @@
                 currentPage: 1,
                 propertyHover: false,
                 maxPrice: null,
-                maxSubleaseCount: null, // Added property for filtering by min number of subleases
+                minSubleaseCount: null, // Added property for filtering by min number of subleases
                 sortedListings: []
             };
         },
@@ -120,6 +120,13 @@
                         }
                     })
                     .filter(listing => {
+                        if (this.minSubleaseCount === null) {
+                            return true; // Show all properties when minSubleaseCount is empty
+                        } else {
+                            return listing.subleaseCount >= this.minSubleaseCount; // Filter by minSubleaseCount
+                        }
+                    })
+                    .filter(listing => {
                 if (!this.searchAmenity) {
                     return true; // Show all properties when searchAmenity is empty
                 } else {
@@ -169,7 +176,7 @@
         <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" @click="sort('rent')">Price</button>
         <input type="number" v-model="maxPrice" placeholder="Enter max price">
     </div>
-            <input type="number" v-model="maxSubleaseCount" placeholder="min amount of subleases">
+            <input type="number" v-model="minSubleaseCount" placeholder="min amount of subleases">
     <div class="listings" style="width: 100%; margin-top: 5px;">
             <input type="text" v-model="searchAmenity" placeholder="Search amenities">
         <table style="margin-left: 0; width: 50%; border: 1px solid black; box-shadow: 6px 0 5px -2px #888;">
