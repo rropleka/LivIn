@@ -1,0 +1,10 @@
+[
+  {
+    "feed_publisher_name": "CityBus",
+    "feed_publisher_url": "https://gocitybus.com",
+    "feed_lang": "en",
+    "feed_start_date": "20240301",
+    "feed_end_date": "20240818",
+    "feed_version": "2024.1.2"
+  }
+]

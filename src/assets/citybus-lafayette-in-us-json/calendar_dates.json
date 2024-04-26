@@ -1,0 +1,857 @@
+[
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240301",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240302",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240303",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240304",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240305",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240306",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240307",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240308",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240309",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240310",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240311",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240312",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240313",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240314",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240315",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240316",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240317",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240318",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240319",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240320",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240321",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240322",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240323",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240324",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240325",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240326",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240327",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240328",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240329",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240330",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "84a181a9-bcea-4cf5-be21-883768b9fa7e",
+    "date": "20240331",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240401",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240402",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240403",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240404",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240405",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240406",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240407",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240408",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240409",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240410",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240411",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240412",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240413",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240414",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240415",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240416",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240417",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240418",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240419",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240420",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240421",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240422",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240423",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240424",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240425",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240426",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240427",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240428",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240429",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240430",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240501",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240502",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "fa343618-f0c9-4323-ab20-867cd279d1dc",
+    "date": "20240503",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0e1530cc-6e40-43b5-8e1d-43e0354129f4",
+    "date": "20240504",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "0b390844-9953-4b97-b90b-025406946a27",
+    "date": "20240505",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240506",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240507",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240508",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240509",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240510",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240511",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240512",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240513",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240514",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240515",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240516",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240517",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240518",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240519",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240520",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240521",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240522",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240523",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240524",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240525",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240526",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "84a181a9-bcea-4cf5-be21-883768b9fa7e",
+    "date": "20240527",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240528",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240529",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240530",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240531",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240601",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240602",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240603",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240604",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240605",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240606",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240607",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240608",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240609",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240610",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240611",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240612",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240613",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240614",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240615",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240616",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240617",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240618",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240619",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240620",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240621",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240622",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240623",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240624",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240625",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240626",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240627",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240628",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240629",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240630",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240701",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240702",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240703",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "84a181a9-bcea-4cf5-be21-883768b9fa7e",
+    "date": "20240704",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240705",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240706",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240707",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240708",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240709",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240710",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240711",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240712",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240713",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240714",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240715",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240716",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240717",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240718",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240719",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240720",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240721",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240722",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240723",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240724",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240725",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240726",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240727",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240728",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240729",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240730",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240731",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240801",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240802",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240803",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240804",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240805",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240806",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240807",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240808",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240809",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240810",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240811",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240812",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240813",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240814",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240815",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "bd1f023b-1854-4288-a132-97ae9b736bc2",
+    "date": "20240816",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "2cb2254e-620a-457f-a13c-efe2c7e97d43",
+    "date": "20240817",
+    "exception_type": "1"
+  },
+  {
+    "service_id": "b9f680f6-0fa5-4fb9-bffa-d3a48651cf68",
+    "date": "20240818",
+    "exception_type": "1"
+  }
+]

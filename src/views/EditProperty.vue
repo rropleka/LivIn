@@ -9,7 +9,7 @@
         </div>
   
         <div class="form-group">
-    <label for="amenities">Amenities:</label>
+    <label for="amenities">Included Utilities/Amenities:</label>
     <ul id="amenities">
         <li v-for="(amenity, index) in amenities" :key="index">
             <span class="amenity-name">{{ amenity }}</span>
@@ -18,6 +18,17 @@
     </ul>
     <input type="text" placeholder="Add Amenity" v-model="newAmenity">
     <button type="button" @click="addAmenity">Add Amenity</button>
+
+    <label for="fees">Optional Fees</label>
+    <ul id="fees">
+        <li v-for="(fee, index) in fees" :key="index">
+            <span class="amenity-name">{{ fee.name }}: ${{fee.cost}}</span>
+            <button type="button" @click="removeFee(index)" class="remove-button">×</button>
+        </li>
+    </ul>
+    <input type="text" placeholder="Add Fee" v-model="newFeeName">
+    <input type="number" placeholder="0" v-model="newFeeCost">
+    <button type="button" @click="addFee()">Add Fee</button>
 </div>
   
         <div class="form-group">
@@ -104,6 +115,9 @@ import { firebaseapp } from '../main'
       const propertyId = ref('');
       const errorMessage = ref('');
       const ownerUsername = ref('');
+      const fees = ref([]);
+      const newFeeName = ref('');
+      const newFeeCost = ref(0);
       const db = getFirestore(firebaseapp);
   
       const addAmenity = () => {
@@ -115,7 +129,20 @@ import { firebaseapp } from '../main'
 
       const removeAmenity = (index) => {
         amenities.value.splice(index, 1);
-    };
+      };
+
+      const addFee = () => {
+        if (newFeeName.value.trim() !== '' && newFeeCost.value > 0) {
+          fees.value.push({name: newFeeName.value.trim(), cost: newFeeCost.value});
+          newFeeName.value = '';
+          newFeeCost.value = 0;
+        }
+        console.log(fees.value.toString());
+      };
+
+      const removeFee = (index) => {
+        fees.value.splice(index, 1);
+      };
 
     // Fetch property data based on the propertyId
     const fetchPropertyData = async (propertyId) => {
@@ -132,6 +159,7 @@ import { firebaseapp } from '../main'
           structureDetails.value = data.structureDetails;
           location.value = data.location;
           ownerUsername.value = data.owner;
+          fees.value = data.fees ? data.fees : [];
         } else {
           console.error('Property document does not exist.');
         }
@@ -188,14 +216,15 @@ import { firebaseapp } from '../main'
           const propertyDocRef = doc(db, 'properties', propertyId.value);
           if (typeof rent.value !== 'undefined' && rent.value !== null) {
             console.log("within");
-            await updateDoc(propertyDocRef, {
+            await setDoc(propertyDocRef, {
                 propertyName: propertyName.value,
                 amenities: amenities.value.map(amenity => amenity.trim()),
                 rent: rent.value,
                 propertySize: propertySize.value,
                 structureDetails: structureDetails.value,
-                location: location.value
-            });
+                location: location.value,
+                fees: fees.value,
+            }, {merge: true});
           }
           console.log('Property updated successfully.');
           const updatedName = propertyName.value;
@@ -227,7 +256,12 @@ import { firebaseapp } from '../main'
         fetchPropertyData,
         propertyId,
         errorMessage,
-        ownerUsername
+        ownerUsername,
+        fees,
+        newFeeName,
+        newFeeCost,
+        addFee,
+        removeFee,
       };
     }
   }

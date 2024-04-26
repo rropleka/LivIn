@@ -60,9 +60,30 @@ const router = createRouter({
       component: () => import('../views/PostSublease.vue')
     },
     {
+      path: '/subleases',
+      name: 'subleases',
+      component: () => import('../views/Subleases.vue')
+    },
+    {
+    // {
+    //   path: '/:leasingCompany/:PropertyName',
+    //   name: 'property-page',
+    //   component: PropertyPage
+    // },
       path: '/favorite-properties',
       name: 'favorite-properties',
       component: () => import('../views/FavoriteProperties.vue')
+    },
+    {
+      path: '/verify/:leasingCompany/:propertyName/:user?',
+      //path: '/verify',
+      name: 'verify-user',
+      component: () => import('../views/VerifyUser.vue'),
+    },
+    {
+      path: '/verification-requests',
+      name: 'verification-requests',
+      component: () => import('../views/VerificationRequests.vue')
     },
     {
       path: '/:leasingCompany?/:PropertyName?',
@@ -162,6 +183,12 @@ const router = createRouter({
       path:'/find-roommates',
       name: 'roommates',
       component: () => import('../views/find-roommates.vue')
+    },
+    {
+      path:'/moneys',
+      name: 'money',
+      props: true,
+      component: () => import('../views/Moneys.vue')
     }
   ]
 })

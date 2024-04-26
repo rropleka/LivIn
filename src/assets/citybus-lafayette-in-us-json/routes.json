@@ -1,0 +1,232 @@
+[
+  {
+    "route_id": "35",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "35",
+    "route_long_name": "Lindberg Express",
+    "route_desc": "35 Lindberg Express Operates Monday - Friday during Purdue's Fall & Spring Semesters, on days when classes are held",
+    "route_type": "3",
+    "route_color": "53575A",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "28",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "28",
+    "route_long_name": "Gold Loop",
+    "route_desc": "28 Gold Loop, operates Monday - Friday only during Purdue's Fall & Spring Semesters, on days when classes are held",
+    "route_type": "3",
+    "route_color": "CF8A00",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "6A",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "6A",
+    "route_long_name": "Fourth St",
+    "route_desc": "6A Fourth St, operates Monday - Saturday",
+    "route_type": "3",
+    "route_color": "F4436C",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "1B",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "1B",
+    "route_long_name": "Salisbury",
+    "route_desc": "1B Salisbury, operates Monday - Sunday",
+    "route_type": "3",
+    "route_color": "0075C9",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "20",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "20",
+    "route_long_name": "South Campus",
+    "route_desc": "13 South Campus, operates Monday - Friday only during Purdue's Fall & Spring Semesters, on days when classes are held",
+    "route_type": "3",
+    "route_color": "B0008E",
+    "route_text_color": "FFFFFF"
+  },
+  {
+    "route_id": "5",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "5",
+    "route_long_name": "Happy Hollow",
+    "route_desc": "5 Happy Hollow, operates Monday - Friday",
+    "route_type": "3",
+    "route_color": "E65300",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "3",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "3",
+    "route_long_name": "Lafayette Square",
+    "route_desc": "3 Lafayette Square, operates Monday - Sunday",
+    "route_type": "3",
+    "route_color": "5C068C",
+    "route_text_color": "FFFFFF"
+  },
+  {
+    "route_id": "21A",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "21A",
+    "route_long_name": "Lark & Alight",
+    "route_desc": "21A Lark & Alight, operates Monday - Friday",
+    "route_type": "3",
+    "route_color": "CDDE00",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "13",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "13",
+    "route_long_name": "Silver Loop",
+    "route_desc": "13 Silver Loop, operates Monday - Friday only during Purdue's Fall & Spring Semesters, on days when classes are held",
+    "route_type": "3",
+    "route_color": "696969",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "8",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "8",
+    "route_long_name": "Klondike Extension",
+    "route_desc": "8 Klondike Extension, operates every 30 minutes Monday through Sunday",
+    "route_type": "3",
+    "route_color": "00BBB4",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "2A",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "2A",
+    "route_long_name": "Schuyler Ave",
+    "route_desc": "2A Schuyler Ave, operates Monday - Saturday",
+    "route_type": "3",
+    "route_color": "CE0E2D",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "4B",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "4B",
+    "route_long_name": "Purdue West",
+    "route_desc": "4B Purdue West, operates Monday - Sunday",
+    "route_type": "3",
+    "route_color": "007934",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "4A",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "4A",
+    "route_long_name": "Tippecanoe Mall",
+    "route_desc": "4A Tippecanoe Mall, operates Monday - Sunday",
+    "route_type": "3",
+    "route_color": "638C1C",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "2B",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "2B",
+    "route_long_name": "Union St",
+    "route_desc": "2B Union St, operates Monday - Saturday",
+    "route_type": "3",
+    "route_color": "CE0E2D",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "23",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "23",
+    "route_long_name": "The Connector",
+    "route_desc": "23 Connector, operates Monday-Saturday with limited hours on Saturday",
+    "route_type": "3",
+    "route_color": "00AE42",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "6B",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "6B",
+    "route_long_name": "South 9th St",
+    "route_desc": "6B South 9th St, operates Monday - Saturday",
+    "route_type": "3",
+    "route_color": "F4436C",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "1A",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "1A",
+    "route_long_name": "Market Square",
+    "route_desc": "1A Market Square, operates Monday - Sunday",
+    "route_type": "3",
+    "route_color": "0075C9",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "14",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "14",
+    "route_long_name": "Black Loop",
+    "route_desc": "13 Black Loop, operates Monday - Friday only during Purdue's Fall & Spring Semesters, on days when classes are held",
+    "route_type": "3",
+    "route_color": "000000",
+    "route_text_color": "FFFFFF"
+  },
+  {
+    "route_id": "24",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "24",
+    "route_long_name": "Redpoint",
+    "route_desc": "24 Redpoint",
+    "route_type": "3",
+    "route_color": "F4A460",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "7",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "7",
+    "route_long_name": "South St",
+    "route_desc": "7 South St, operates Monday - Sunday",
+    "route_type": "3",
+    "route_color": "FF9E18",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "10",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "10",
+    "route_long_name": "Northwestern",
+    "route_desc": "10 Northwestern, operates Monday - Saturday",
+    "route_type": "3",
+    "route_color": "E65300",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "15",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "15",
+    "route_long_name": "Tower Acres",
+    "route_desc": "15 Tower Acres, operates Monday - Friday only during Purdue's Fall & Spring Semesters, on days when classes are held",
+    "route_type": "3",
+    "route_color": "FF6B00",
+    "route_text_color": "000000"
+  },
+  {
+    "route_id": "9",
+    "agency_id": "9eca155d-a6ad-42b1-8ad5-4888c7c42aaa",
+    "route_short_name": "9",
+    "route_long_name": "Park East",
+    "route_desc": "9 Park East, operates Monday - Friday",
+    "route_type": "3",
+    "route_color": "21145F",
+    "route_text_color": "FFFFFF"
+  }
+]

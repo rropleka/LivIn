@@ -113,8 +113,13 @@ export default {
         const classTo = ref()
         function filterUsers() {
             filteredUsers.value = users.value.filter((el) => {
-                let userGender = el.gender.toLowerCase()
-                if (userGender === 'male' && !genderFil.value[0] || userGender === 'female' && !genderFil.value[1] || (userGender !== 'female' && userGender !== 'male') && !genderFil.value[2]){
+                let userGender = ''
+                if (el.gender != undefined)
+                {
+                    userGender = el.gender.toLowerCase()
+                }
+
+                if ((genderFil.value[0] || genderFil.value[1] || genderFil.value[2]) && (userGender === 'male' && !genderFil.value[0] || userGender === 'female' && !genderFil.value[1] || (userGender !== 'female' && userGender !== 'male') && !genderFil.value[2])){
                     return
                 }
 

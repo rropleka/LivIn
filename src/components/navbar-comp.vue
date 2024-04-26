@@ -36,12 +36,14 @@
 					/* Set moderator flag to allow delete button to appear */
 					if (userDocSnap.exists()) {
 						const userData = userDocSnap.data();
-						//console.log(userData);
 						if (userData.userType) {
 							if (userData.userType == "sitemoderator") {
 								isModerator.value = true
 							} else {
 								isModerator.value = false
+							}
+							if (userData.userType == "notLeasingCompany") {
+								isLeasingCompany.value = false;
 							}
 						}
 					} else {
@@ -109,14 +111,23 @@
 					<li v-if="isLoggedIn">
 						<router-link to="/revprop" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Property</router-link>
 					</li>
-					<li v-if="isLoggedIn">
-						<router-link to="/lenderlist" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">List of Lenders</router-link>
+					<li>
+						<router-link to="/moneys" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Cost of Living</router-link>
 					</li>
+          <li v-if="isLoggedIn">
+              <router-link to="/lenderlist" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">List of Lenders</router-link>
+            </li>
 					<li v-if="isLoggedIn && isLeasingCompany">
 						<router-link to="/add-property" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Add Property</router-link>
 					</li>
 					<li v-if="isLoggedIn">
 						<router-link to="/favorite-properties" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Favorited Properties</router-link>
+					</li>
+					<li v-if="isLoggedIn">
+						<router-link to="/subleases" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">View Subleases</router-link>
+					</li>
+					<li v-if="isLoggedIn && isModerator">
+						<router-link to="/verification-requests" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Review Verification Requests</router-link>
 					</li>
 				</ul>
 				</div>
@@ -149,6 +160,9 @@
 							</li>
 							<li v-if="isLoggedIn && isModerator">
 								<router-link to="/check-reports" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Reports</router-link>
+							</li>
+							<li v-if="isLoggedIn && isModerator">
+								<router-link to="/verification-requests" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Verification Requests</router-link>
 							</li>
 							<li>
 								<router-link to="/find-roommates" class="block text-center py-1 px-8 md:bg-light-orange md:text-white text-lg font-default-font">Find Roommates</router-link>

@@ -27,6 +27,7 @@
           <ul class="interestedOthers"></ul>
         </div>
       </div>
+      <button type="button" @click="money">Calculate total cost</button>
       <hr>
       <p class="property-about">About property:</p>
       <p class="property-description">{{ property.structureDetails }}</p>
@@ -37,11 +38,18 @@
       <button v-if="isCurrentUserOwner1 || isSiteModerator" class="remove-property-button" @click="removeProperty">Remove Property</button>
       <button v-if="isCurrentUserOwner1" class="edit-property-button" @click="editProperty">Edit Property</button>
       <button class="post-sublease-button" @click="postSublease">Post Sublease</button>
+  <h2 v-if="hasSublease">You have a sublease on this property</h2>
+  <button v-if="hasSublease" @click="confirmDeleteSublease">Delete Sublease</button>
       <hr>
-      <p class="amenities-title">Amenities:</p>
+      <p class="amenities-title">Included Utilities/Amenities:</p>
       <div class="amenities-list">
   <button v-for="(amenity, index) in property.amenities" :key="index" class="amenity-button">{{ amenity }}</button>
-</div>
+      </div>
+  <hr>
+      <p class="amenities-title">Optional Fees:</p>
+          <div class="amenities-list">
+      <button v-for="(fee, index) in property.fees" :key="index" class="amenity-button">{{fee.name }}: ${{fee.cost}}</button>
+    </div>
       <div class="rating">
       </div>
     </div>
@@ -114,12 +122,17 @@
       <!--<input type="text" placeholder="Review" v-model="form.text">-->
       <textarea id="ta" v-model="cform.text" rows="7"></textarea>
       <br>
+      
       <button v-if="cloadPack.isEdit==false" v-on:click="csub" type="button">Submit review</button>
       <button v-if="cloadPack.isEdit==true" v-on:click="cupd" type="button">Update review</button>
     </div>
   </form>
 </div>
 <div class="notes-section">
+  <router-link v-if="!amIVerified" :to="{ name: 'verify-user', params: { leasingCompany: ownername, propertyName: propertyName, user: currusername } }">
+        <button >Verify</button> 
+  </router-link>
+  <button v-else @click="amIVerified=!amIVerified">Verified!</button>
   <h2>Notes Section</h2>
   <textarea id="user-notes" rows="4" cols="50" placeholder="Write your notes here..." v-model="notesText"></textarea>
   <button @click="saveNotes">Save</button>
@@ -136,6 +149,8 @@
   import { getFirestore, collection, doc, getDocs, getDoc, query, where, deleteDoc, addDoc, updateDoc, setDoc } from 'firebase/firestore/lite'
   import { firebaseapp } from '../main'
   import ConfirmationDialog from "@/components/ConfirmationDialog.vue";
+  import { useStore } from "vuex";
+import { computed } from "vue";
   
   export default {
     props: {
@@ -151,6 +166,7 @@
     data() {
         return {
             property: null,
+            hasSublease: false, // Add this property to track sublease status
             isPropertyFavorited: false,
             isCurrentUserOwner1: false,
             isSiteModerator: false,
@@ -177,7 +193,8 @@
                 interest:false,
                 pubInterest:false,
                 interestedUsers: ["user1", "user2", "user3"],
-                publicUsers: ["pu1"]
+                publicUsers: ["pu1"],
+                verifiedUsers: [""],
             },
             cform: {
                 stars: '',
@@ -196,7 +213,9 @@
                 isEdit: false,
                 hasLoaded: false,
                 username: ''
-            }
+            },
+            amIVerified: false,
+            currusername: '',
         };
     },
     async mounted() {
@@ -207,6 +226,11 @@
             router.push({ name: 'login' });
             return;
         }
+
+        const store = useStore();
+        const curruser = computed(() => store.getters.currentUser)
+        this.currusername = curruser.value.username
+
         try {
             const propertyData = await this.propertyExists(this.leasingCompany, this.propertyName);
             // call to validateCurrentUser if owner and display edit and remove button
@@ -223,6 +247,14 @@
             console.error("Error fetching property data:", error);
             router.push({ name: 'not-found' });
         }
+        try {
+      const subleaseExists = await this.checkSubleaseExists();
+      this.hasSublease = subleaseExists;
+      console.log("hasSublease", this.hasSublease);
+    } catch (error) {
+      console.error('Error checking sublease:', error);
+      // Handle the error appropriately, such as setting this.hasSublease = false
+    }
         if(this.loadPack.interest){document.getElementById('interest').checked=true;}
         if(this.loadPack.pubInterest){document.getElementById('publicity').checked=true;}
         this.updateUsersList();
@@ -275,6 +307,10 @@
                 } else {
                   this.loadPack.publicUsers=[];
                 }
+                if (!(data.verifiedUsers === undefined)){
+                  this.loadPack.verifiedUsers = data.verifiedUsers
+                  this.amIVerified = this.loadPack?.verifiedUsers?.includes(username);
+                }
                 console.log("int: " + this.loadPack.interestedUsers + " pub: " + this.loadPack.publicUsers)
                 this.loadPack.docRef = doc.ref.path;
             });
@@ -298,6 +334,9 @@
               ${data.username} says <br>
               ${data.reviewText} <br>
               `;
+                if (this.loadPack.verifiedUsers.includes(data.username)) {
+                  userItem.innerHTML = "<b style=\"color:blue\">This user is verified</b><br>" + userItem.innerHTML
+                }
                 // Create the report button element with inline styles
                 if (true) {
                     const reportButton = document.createElement('button');
@@ -359,6 +398,9 @@
                 ${data.username} says <br>
                 ${data.reviewText} <br>
               `;
+                if (this.loadPack.verifiedUsers.includes(data.username)) {
+                  userItem.innerHTML = "<b style=\"color:blue\">This user is verified</b><br>" + userItem.innerHTML
+                }
                 // Create the report button element with inline styles
                 if (true) {
                     const reportButton = document.createElement('button');
@@ -564,6 +606,71 @@
                 });
             }
         },
+        async confirmDeleteSublease() {
+      const confirmed = window.confirm('Are you sure you want to delete this sublease?');
+  if (confirmed) {
+    this.deleteSublease();
+  }
+  },
+      async deleteSublease() {
+    console.log("inside delete sublease");
+    try {
+      const db = getFirestore(firebaseapp);
+      const currentUser = getAuth().currentUser;
+      const propertyName = this.propertyName;
+  const ownerName = this.leasingCompany;
+    const userDocRef = doc(db, 'users', currentUser.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    const username = userDocSnap.data().username;
+
+    const subleasesCollectionRef = collection(db, 'subleases');
+
+    // Construct the query to find the specific sublease document
+    const subleaseQuerySnapshot = await getDocs(
+      query(subleasesCollectionRef, 
+        where('leaseOwner', '==', username), // Use username as leaseOwner
+        where('propertyName', '==', propertyName)
+      )
+    );
+
+    if (!subleaseQuerySnapshot.empty) {
+      // Assuming only one sublease per user and property combination
+      const subleaseDocRef = subleaseQuerySnapshot.docs[0].ref;
+
+      // Delete the sublease document from subleases collection
+      await deleteDoc(subleaseDocRef);
+      console.log('Sublease deleted successfully.');
+      this.hasSublease = false; // Update UI after deletion
+
+      const propertiesCollectionRef = collection(db, 'properties');
+      const propertyQuerySnapshot = await getDocs(
+        query(propertiesCollectionRef, 
+          where('propertyName', '==', propertyName),
+          where('owner', '==', ownerName)
+        )
+      );
+
+      if (!propertyQuerySnapshot.empty) {
+        propertyQuerySnapshot.forEach(async propertyDoc => {
+          const propertyData = propertyDoc.data();
+          const propertyUID = propertyDoc.id;
+
+          // Decrement subleaseCount by 1 if it's greater than 0
+          const updatedSubleaseCount = Math.max(0, propertyData.subleaseCount - 1);
+
+          // Update the property document with the updated subleaseCount
+          const propertyRef = doc(db, 'properties', propertyUID);
+          await setDoc(propertyRef, { ...propertyData, subleaseCount: updatedSubleaseCount }, { merge: true });
+          console.log('Property updated successfully.');
+        });
+      }
+    } else {
+      console.error('Sublease document does not exist.');
+    }
+    } catch (error) {
+      console.error('Error deleting sublease:', error);
+    }
+  },
         async removeProperty() {
             const confirmDelete = confirm("Are you sure you want to delete this property?");
             if (confirmDelete) {
@@ -593,6 +700,24 @@
                 console.log("Deletion canceled.");
             }
         },
+        async checkSubleaseExists() {
+    const db = getFirestore(firebaseapp);
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const propertyName = this.propertyName;
+    const ownerName = this.leasingCompany;
+    try {
+      const userDocRef = doc(db, 'users', currentUser.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      const username = userDocSnap.data().username;
+      console.log("checking sublease for", propertyName, ownerName, username);
+      const querySnapshot = await getDocs(query(collection(db, 'subleases'), where('propertyName', '==', propertyName), where('ownerUsername', '==', ownerName), where('leaseOwner', '==', username)));
+      return !querySnapshot.empty;
+    } catch (error) {
+      console.error('Error checking sublease:', error);
+      return false;
+    }
+  },
         async propertyExists(leasingCompany, propertyName) {
             console.log("inside property page");
             console.log(leasingCompany, propertyName);
@@ -1067,6 +1192,20 @@
                 console.error("Error checking if property is favorited: ", error);
               } 
             }
+          }, 
+          async money() {
+            const db = getFirestore(firebaseapp);
+            const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', this.loadPack.username)))
+            let drp = ''
+            querySnapshot.forEach((doc) => {
+              drp=doc.ref.path
+            });
+            await updateDoc(doc(db, drp), {
+                favPrice: this.property.rent
+              })
+            router.push({
+              name: 'money',
+          });
           }
 
 
@@ -1075,7 +1214,16 @@
 
 
   },
-    components: { ConfirmationDialog }
+    components: { ConfirmationDialog },
+    computed: {
+      verifyRoute() {
+            if (this.ownername && this.propertyName && this.currusername) {
+              return `/verify/${this.ownername}/${this.propertyName}/${this.currusername}`
+            } else {
+              return ""
+            }
+          }
+    }
 
 };
   </script>
@@ -1439,5 +1587,14 @@ div[property] > p {
   button:hover {
     background-color: darkcyan;
   }
+
+  .delete-button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 </style> 
