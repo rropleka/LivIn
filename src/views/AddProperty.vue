@@ -70,14 +70,14 @@
 
 
           <div v-if="selectedMapType === 'gmap'" class="map">
+            <div>
+    <label for="autocomplete-input">Location:</label>
+    <input type="text" id="autocomplete-input" v-model="location" @input="onInputChange">
+  </div>
+
             <GMapItem />
           </div>
           <div v-else>
-            <!-- <div>
-    <label for="autocomplete-input">Location:</label>
-    <input type="text" id="autocomplete-input" v-model="location" @input="onInputChange">
-  </div> -->
-
   <!-- <div> -->
   <!-- <label for="autocomplete-input">Location:</label> -->
   <!-- <Autocomplete
