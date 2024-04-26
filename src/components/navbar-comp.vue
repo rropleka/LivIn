@@ -43,6 +43,9 @@
 							} else {
 								isModerator.value = false
 							}
+							if (userData.userType == "notLeasingCompany") {
+								isLeasingCompany.value = false;
+							}
 						}
 					} else {
 						console.error('User data does not exist.');

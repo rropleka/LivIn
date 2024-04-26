@@ -93,6 +93,8 @@
             <button type="submit" v-if="isInfoEditable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Save Changes</button>
             <button style="color: red;" @click="showConfirmation">Delete Account</button>
             <confirmation-dialog v-if="confirmVisible" :message="confirmationMessage" @cancel="hideConfirmation" @confirm="deleteAccount" />
+            <button style="color: red;" @click="deregisterVisible=true">Deregister as Leasing Company</button>
+            <confirmation-dialog v-if="deregisterVisible" :message="deregisterMessage" @cancel="deregisterVisible=false" @confirm="toggleDeregister" />
 
         </form>
         </div>
@@ -130,7 +132,9 @@ export default {
     data() {         
         return {             
             confirmVisible: false,             
-            confirmationMessage: "Are you sure you want to delete your account? This action cannot be undone."         
+            deregisterVisible: false,
+            confirmationMessage: "Are you sure you want to delete your account? This action cannot be undone.",
+            deregisterMessage: "Are you sure you want to deregister as a leasing company? This action cannot be undone. (NOTE: For demo purposes only this action can be undone)"
         };     
     },
     methods: {
@@ -152,6 +156,20 @@ export default {
             this.user.class = this.origUser.class;
             this.user.aboutme = this.origUser.aboutme;
             this.user.contactinfo = this.origUser.contactinfo;
+        },
+        async toggleDeregister() {
+            const db = getFirestore(firebaseapp);
+            const userDocRef = doc(db, 'users', this.user.uid);
+            const userDocSnapshot = await getDoc(userDocRef); // Use getDoc to get the document snapshot
+
+            let usertype = ""
+            if (userDocSnapshot.data().userType != "notLeasingCompany") {
+                usertype = "notLeasingCompany"
+            }
+            else {
+                usertype = "sitemoderator"
+            }
+            await updateDoc(userDocRef, {userType: usertype});
         },
         async saveAccountPrivacy() {
     // Save the user's account privacy to the database
