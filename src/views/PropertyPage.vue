@@ -41,10 +41,15 @@
   <h2 v-if="hasSublease">You have a sublease on this property</h2>
   <button v-if="hasSublease" @click="confirmDeleteSublease">Delete Sublease</button>
       <hr>
-      <p class="amenities-title">Amenities:</p>
+      <p class="amenities-title">Included Utilities/Amenities:</p>
       <div class="amenities-list">
   <button v-for="(amenity, index) in property.amenities" :key="index" class="amenity-button">{{ amenity }}</button>
-</div>
+      </div>
+  <hr>
+      <p class="amenities-title">Optional Fees:</p>
+          <div class="amenities-list">
+      <button v-for="(fee, index) in property.fees" :key="index" class="amenity-button">{{fee.name }}: ${{fee.cost}}</button>
+    </div>
       <div class="rating">
       </div>
     </div>
