@@ -64,8 +64,20 @@ hotspotsSnapshot.forEach((doc) => {
           this.$refs.GMapItem.filterByFavoriteLocation(document.getElementById("proximityFilter").value, favoritePosition);
          },
          filterByHotspotLocationButton() {
-          var dropdown = document.getElementById("hotspotFilter");
-          var hotspotPosition = dropdown.options[dropdown.selectedIndex].text;
+          var select = document.getElementById("hotspotFilter");
+          //var hotspotPosition = dropdown.options[dropdown.selectedIndex].text;
+          let totalLat = 0, totalLng = 0, count = 0;
+          Array.from(select.options).forEach((option) => {
+            if (option.selected) {
+              const hotspot = JSON.parse(option.value)
+              console.log(Object.entries(hotspot));
+              totalLat += hotspot["lat"];
+              totalLng += hotspot["lng"];
+              count++;
+            }
+          })
+          const hotspotPosition = {lat: (totalLat / count), lng: (totalLng / count)};
+          console.log(hotspotPosition)
           this.$refs.GMapItem.filterByHotspotLocation(document.getElementById("proximityFilter").value, hotspotPosition);
          },
          filterByZipcodeButton() {
@@ -74,6 +86,9 @@ hotspotsSnapshot.forEach((doc) => {
          goToListingsTable(propertyName) {
           this.$refs.ListingsTable.goToProperty(propertyName);
          },
+         toggleSelected(hotspot) {
+
+         }
       },
     })
 </script>
@@ -100,9 +115,8 @@ hotspotsSnapshot.forEach((doc) => {
           </div>
           <div>
             <button class="block py-1 px-2 rounded md:bg-light-orange md:text-white text-lg font-default-font" style="float:left;" @click="filterByHotspotLocationButton()">Filter by Hotspot Location</button>
-            <select id="hotspotFilter" style="color: black; width: 250px; float: top;">
-              <option value="" disabled selected hidden>Select a Hotspot Location</option>
-              <option v-for="hotspot in hotspots" :value="hotspot.position" :key="hotspot.position">
+            <select id="hotspotFilter" style="color: black; width: 400px; float: top;" multiple>
+              <option v-for="hotspot in hotspots" :value="JSON.stringify(hotspot.position)" :key="hotspot.position">
                 {{ hotspot.position }}
               </option>
             </select>
