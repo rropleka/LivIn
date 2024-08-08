@@ -1,46 +1,86 @@
-# livin
+# Livin
 
-This template should help get you started developing with Vue 3 in Vite.
+Livin is a web application designed to provide a single point of access for housing options specifically tailored to university students nationwide. Users can sign up as Renters or Leasing companies, with different permissions based on their roles.
 
-## Recommended IDE Setup
+## Inspiration
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+The idea for Livin came from a desire to create a platform where students can easily find housing options and connect with potential roommates, based on shared experiences at university campuses.
 
-## Type Support for `.vue` Imports in TS
+## Purpose
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+The primary purpose of Livin is to reconnect students with housing options and potential roommates, enhancing their university experience.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Features
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- **User Authentication & Authorization**: Secure login and role-based access control.
+- **Resident Connections**: Connect users as potential residents.
+- **Property Ratings & Reviews**: Rate properties and add reviews for both properties and leasing companies.
+- **Integrated Map**: Utilizes Google Maps API and CityBus route data for dynamic filtering of points of interest.
+- **Dynamic Filtering**: Filter properties and points of interest dynamically.
 
-## Customize configuration
+## Technologies
+
+- **Frontend**: Vue.js (HTML, JS, CSS)
+- **Backend**: Firebase (Authentication & Database)
+- **APIs**: Google Maps API
+- **Language**: TypeScript
+
+## Project Setup
+
+### Recommended IDE Setup
+
+- [VSCode](https://code.visualstudio.com/) 
+- [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (Disable Vetur)
+- [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+
+### Type Support for `.vue` Imports in TypeScript
+
+TypeScript does not handle type information for `.vue` imports by default. To enable type checking:
+
+1. Replace the `tsc` CLI with `vue-tsc` for type checking.
+2. Install [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+For improved performance, enable Volar's [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669):
+
+1. Disable the built-in TypeScript Extension:
+   - Run `Extensions: Show Built-in Extensions` from VSCode's command palette.
+   - Find `TypeScript and JavaScript Language Features`, right-click, and select `Disable (Workspace)`.
+2. Reload the VSCode window:
+   - Run `Developer: Reload Window` from the command palette.
+
+### Customize Configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+### Installation
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Development
+
+Compile and hot-reload for development:
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Production
+
+Type-check, compile, and minify for production:
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Linting
+
+Lint with [ESLint](https://eslint.org/):
 
 ```sh
 npm run lint
 ```
+
+
+
